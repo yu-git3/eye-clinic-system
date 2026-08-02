@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./baseline-print.css";
+import "./baseline-composite.css";
+import "./baseline-ordered.css";
+import "./print-override.css";
+import "./archive-lifecycle.css";
+import "./specialty-record.css";
 
 export const metadata: Metadata = {
   title: "眼科专科系统高保真原型",

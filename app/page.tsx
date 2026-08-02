@@ -1,5 +1,5 @@
-import { ClinicalIndicatorModule } from "./modules/clinical-indicator/ClinicalIndicatorModule";
+import { OphthalmologyPrototype } from "./OphthalmologyPrototype";
 
 export default function Home() {
-  return <ClinicalIndicatorModule />;
+  return <OphthalmologyPrototype />;
 }

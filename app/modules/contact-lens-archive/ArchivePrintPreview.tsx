@@ -1,0 +1,19 @@
+"use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { ContactLensArchive } from "./archive-store";
+export function ArchivePrintPreview({archive,onClose}:{archive:ContactLensArchive;onClose:()=>void}){
+ const find=(g:string,i:string)=>archive.checks.find(x=>x.group===g)?.rows.find(x=>x.item===i);
+ const cell=(g:string,i:string,e:"od"|"os")=>{const r=find(g,i);return `${r?.[e]||""}${r?.unit||""}`};
+ const owner=(g:string)=>{const x=archive.checks.find(v=>v.group===g);return x?.reporterName?`报告人：${x.reporterName}`:`${x?.source==="护士采集"?"采集人":"录入人"}：${x?.enteredBy||""}`};
+ const topo=(e:"od"|"os")=>`Ks：${find("角膜地形图","Ks曲率")?.[e]}D@${find("角膜地形图","Ks轴位")?.[e]}°；MinK：${find("角膜地形图","MinK曲率")?.[e]}D@${find("角膜地形图","MinK轴位")?.[e]}°`;
+ const ref=(g:string,e:"od"|"os")=>`${find(g,"球镜")?.[e]}DS/${find(g,"柱镜")?.[e]}DC×${find(g,"轴位")?.[e]}°；BCVA ${find(g,"矫正视力")?.[e]}`;
+ const rows:[[string,string,string,string]]|any=[
+  ["视力",`${cell("视力与眼压","裸眼视力","od")}　矫正 ${cell("视力与眼压","矫正视力","od")}`,`${cell("视力与眼压","裸眼视力","os")}　矫正 ${cell("视力与眼压","矫正视力","os")}`,owner("视力与眼压")],
+  ["眼压",cell("视力与眼压","眼压","od"),cell("视力与眼压","眼压","os"),owner("视力与眼压")],["主视眼",cell("视力与眼压","主视眼","od"),cell("视力与眼压","主视眼","os"),owner("视力与眼压")],
+  ["睑裂高度及眼睑张力",`${cell("角膜地形图","睑裂高度","od")}；${cell("角膜地形图","眼睑张力","od")}`,`${cell("角膜地形图","睑裂高度","os")}；${cell("角膜地形图","眼睑张力","os")}`,owner("角膜地形图")],
+  ["结膜","无明显充血","无明显充血","录入人：方红全"],["角膜","基质层散在白色颗粒混浊","基质层散在白色颗粒混浊","录入人：方红全"],["晶体","透明","透明","录入人：方红全"],["散瞳眼底","未见明显异常","未见明显异常","录入人：方红全"],
+  ["角膜横径",cell("眼前节与瞳孔","角膜横径","od"),cell("眼前节与瞳孔","角膜横径","os"),owner("眼前节与瞳孔")],["暗光下瞳孔直径",cell("眼前节与瞳孔","暗光下瞳孔直径","od"),cell("眼前节与瞳孔","暗光下瞳孔直径","os"),owner("眼前节与瞳孔")],
+  ["角膜地形图",topo("od"),topo("os"),owner("角膜地形图")],["眼轴",cell("眼生物测量","眼轴长度","od"),cell("眼生物测量","眼轴长度","os"),owner("眼生物测量")],["角膜厚度",cell("眼前节与瞳孔","角膜厚度（最薄点）","od"),cell("眼前节与瞳孔","角膜厚度（最薄点）","os"),owner("眼前节与瞳孔")],["角膜内皮计数",cell("角膜内皮","角膜内皮细胞密度 CD","od"),cell("角膜内皮","角膜内皮细胞密度 CD","os"),owner("角膜内皮")],
+  ["NIBUT",`${cell("眼表综合报告","NIBUT First","od")}/${cell("眼表综合报告","NIBUT Average","od")}`,`${cell("眼表综合报告","NIBUT First","os")}/${cell("眼表综合报告","NIBUT Average","os")}`,owner("眼表综合报告")],["泪河高度",cell("眼表综合报告","泪河高度 TMH","od"),cell("眼表综合报告","泪河高度 TMH","os"),owner("眼表综合报告")],["散瞳医学验光",ref("散瞳医学验光","od"),ref("散瞳医学验光","os"),owner("散瞳医学验光")],["小瞳医学验光",ref("小瞳医学验光","od"),ref("小瞳医学验光","os"),owner("小瞳医学验光")],["备注","","","录入人：方红全"]];
+ return <><div className="overlay print-overlay"/><div className="cl-print-dialog"><header><div><b>打印预览</b><span>南医角膜接触镜档案 · A4固定版式</span></div><button onClick={onClose}>×</button></header><main className="cl-print-scroll"><article className="cl-print-page cl-print-one"><h1>南京医科大学眼科医院</h1><h2>{archive.currentTreatmentMethod}配戴者档案</h2><div className="print-top"><span>门诊号：V00000009340</span><span>录入人：{archive.responsibleDoctor}</span></div><h3>一、患者一般情况</h3><div className="print-lines">姓名：吴四　性别：男　年龄：14岁　出生年月日：2012-03-18　职业：学生<br/>建档日期：{archive.createdAt.slice(0,10)}　邮编和通讯地址：北京市市辖区　联系电话：15551052656<br/>联系电话2：18155523535</div><h3>二、病史</h3><div className="print-lines">1. 目的：{archive.baseline.purpose}　近视发展史：每年约-0.75D<br/>2. 既往戴镜史：{archive.baseline.lensHistory}<br/>3. 全身疾病史：{archive.baseline.systemicHistory}　4. 外伤手术史：否认<br/>5. 眼部病史：{archive.baseline.eyeHistory}　药物过敏史：{archive.baseline.allergyHistory}<br/>6. 原先视力矫正方式：{archive.baseline.correctionHistory}　7. {archive.baseline.workAndLife}；{archive.baseline.electronicUsage}</div><h3>三、配前检查</h3><table><thead><tr><th>检查项目</th><th>右眼</th><th>左眼</th></tr></thead><tbody>{rows.map((r:any[],i:number)=><tr key={`${r[0]}-${i}`}><td>{r[0]}<small>{r[3]}</small></td><td>{r[1]}</td><td>{r[2]}</td></tr>)}</tbody></table></article></main><div className="cl-print-actions"><button onClick={onClose}>关闭</button><button className="primary" onClick={()=>window.print()}>打印</button></div></div></>;
+}
