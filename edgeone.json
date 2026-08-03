@@ -1,6 +1,6 @@
 {
-  "installCommand": "npm install --include=optional --no-audit --no-fund",
+  "installCommand": "npm install --no-audit --no-fund",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "nodeVersion": "22.17.1"
+  "nodeVersion": "22.11.0"
 }
