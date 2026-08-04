@@ -79,6 +79,20 @@ test("exam reports are embedded in the doctor workspace instead of a standalone 
   assert.doesNotMatch(report, /er-project-filter/);
 });
 
+test("product documents expose the latest PRDs as online-only reading pages", async () => {
+  const shell = await readFile(new URL("../app/OphthalmologyPrototype.tsx", import.meta.url), "utf8");
+  const docs = await readFile(new URL("../app/modules/product-docs/ProductDocsModule.tsx", import.meta.url), "utf8");
+  assert.match(shell, /产品文档/);
+  assert.match(docs, /临床指标定义.*V1\.3/s);
+  assert.match(docs, /检查模板配置.*V1\.2/s);
+  assert.match(docs, /检查报告查询.*V1\.3/s);
+  assert.match(docs, /治疗方案基础档案.*V1\.4/s);
+  assert.match(docs, /角膜接触镜专科病历.*V1\.0/s);
+  assert.match(docs, /在线阅读/);
+  assert.match(docs, /<iframe/);
+  assert.doesNotMatch(docs, /download|下载 DOCX|下载文档/);
+});
+
 test("baseline supports report-assisted manual editing", async () => {
   const source = await readFile(
     new URL("../app/modules/contact-lens-archive/ContactLensArchiveModule.tsx", import.meta.url),

@@ -1,0 +1,828 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>眼科专科系统——检查模板配置功能需求说明 PRD V1.1</title>
+  <meta name="Author" content="python-docx">
+  <meta name="LastAuthor" content="卿青 俞">
+  <meta name="Subject" content="检查模板配置">
+  <meta name="Description" content="依据2026-08-02确认高保真原型生成">
+  <meta name="CreationTime" content="2013-12-23T23:15:00Z">
+  <meta name="ModificationTime" content="2013-12-23T23:15:00Z">
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 4.0px 0.0px; text-align: center; font: 22.0px Arial; color: #2f5b91}
+    p.p2 {margin: 0.0px 0.0px 18.0px 0.0px; text-align: center; font: 16.0px Arial}
+    p.p3 {margin: 0.0px 0.0px 1.0px 0.0px; font: 16.0px Arial; min-height: 18.0px}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Arial}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 9.0px Arial}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 8.5px Arial}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 8.5px Arial}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times}
+    p.p9 {margin: 0.0px 0.0px 1.0px 0.0px; font: 12.0px Times; min-height: 14.0px}
+    p.p10 {margin: 0.0px 0.0px 3.0px 0.0px; font: 12.0px Arial}
+    p.p11 {margin: 0.0px 0.0px 1.0px 0.0px; font: 8.5px Arial; min-height: 10.0px}
+    p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; min-height: 14.0px}
+    p.p13 {margin: 0.0px 0.0px 4.0px 0.0px; font: 12.0px Arial}
+    p.p14 {margin: 0.0px 0.0px 4.0px 0.0px; font: 12.0px Arial; min-height: 14.0px}
+    table.t1 {border-collapse: collapse}
+    td.td1 {border-style: solid; border-width: 1.0px 1.0px 1.0px 1.0px; border-color: #bfbfbf #bfbfbf #bfbfbf #bfbfbf; padding: 0.0px 5.0px 0.0px 5.0px}
+  </style>
+</head>
+<body>
+<p class="p1"><b>眼科专科系统</b></p>
+<p class="p2"><b>检查模板配置功能需求说明（PRD V1.2）</b></p>
+<p class="p3"><b></b><br></p>
+<p class="p4">1. 版本记录</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>版本</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>日期</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>变更说明</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">V1.0</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">2026-08-01</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">初版检查模板配置说明。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8">V1.2</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8">2026-08-04</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8">同步人工调整后的正式稿；业务规则与V1.1一致。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p9"><br></p>
+<p class="p4">2. 背景与目标</p>
+<p class="p4">眼科医技检查和医生查体涉及不同的数据结构。系统需要通过统一的检查模板，将服务项目、临床指标、适用科室和报告展示顺序进行租户级配置。医技检查场景中，服务项目是医生开立医嘱、PACS报告回传与检查模板匹配的核心关联。</p>
+<p class="p4">本功能用于建立可维护、可复用的检查模板：PACS没有可直接展示的报告结构时，系统按匹配模板及其指标配置组织展示；医生查体则按模板定义组织查体指标。</p>
+<p class="p4">3. 范围与非范围</p>
+<p class="p4">3.1 本期范围</p>
+<p class="p10">检查模板列表查询、查看、新增、编辑和启停。</p>
+<p class="p10">模板类型维护：医技检查、医生查体。</p>
+<p class="p10">医技检查模板关联Hi-HIS检查类型的服务项目。</p>
+<p class="p10">按租户维护机构—科室使用权限。</p>
+<p class="p10">从临床指标定义选择已启用指标，并维护指标顺序。</p>
+<p class="p10">按模板及指标定义组织无PACS结构化展示的数据。</p>
+<p class="p4">4. 用户、权限与数据范围</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>对象</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">产品/系统管理员</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">可查询、新增、编辑、查看及启停当前租户的检查模板。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">租户</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">模板数据归属于当前租户，不跨租户共享。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">机构</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">机构归属于租户，用于组织科室和控制模板适用范围。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">科室</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">科室归属于机构，可被模板多选授权。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">默认权限</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">模板未维护任何科室关联时，当前租户下所有机构、所有科室均可使用。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">指定权限</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">维护一个或多个科室后，仅被选科室可使用；列表显示已选科室数量。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p11"><br></p>
+<p class="p4">5. 页面一：检查模板列表</p>
+<p class="p12"><br></p>
+<p class="p4">5.1 查询条件</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>控件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">模板名称/编码</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">文本框</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">按模板名称或模板编码模糊查询。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">模板类型</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">下拉框</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">全部、医技检查、医生查体；默认全部。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">状态</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">下拉框</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">全部、启用、停用；默认全部。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">查询</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">按钮</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">按当前条件查询并刷新结果。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">重置</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">按钮</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">清空查询条件并恢复全部结果。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p11"><br></p>
+<p class="p4">5.2 列表字段与操作</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>字段/操作</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>说明</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">模板编码</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">租户内唯一编码。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">模板名称</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">模板业务名称。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">模板类型</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">医技检查或医生查体。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">服务项目</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">医技检查显示已关联项目；医生查体显示“—”。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">指标数</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">模板已关联指标数量。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">适用科室</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">无科室关联显示“全部机构 / 全部科室”；否则显示已选科室数量。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">状态</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">启用或停用。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">更新时间</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">最后保存时间。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">查看</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">只读打开全部配置。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">编辑</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">打开并允许修改，模板编码创建后不可修改。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">启用/停用</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">切换模板状态；停用后不可供新业务选择，历史数据不受影响。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p11"><br></p>
+<p class="p4">6. 页面二：新增/编辑检查模板</p>
+<p class="p12"><br></p>
+<p class="p4">6.1 基础信息</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>必填</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>控件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">模板名称</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">是</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">文本框</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">用于业务识别；建议不超过50个字符。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">模板编码</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">是</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">文本框</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">租户内唯一；仅允许大写字母、数字和下划线；创建后不可修改。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">模板类型</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">是</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">下拉框</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">仅医技检查、医生查体；默认医技检查。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">服务项目</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">条件必填</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">搜索选择</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">仅医技检查显示且必填；按编码或服务名称模糊查找，单选。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">状态</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">是</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">分段按钮</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">启用、停用；新增默认启用。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">模板说明</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">否</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">多行文本</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">说明模板用途和适用场景。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p11"><br></p>
+<p class="p4">6.2 模板类型动态规则</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>模板类型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>服务项目</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>指标配置</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>用途</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">医技检查</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">显示且必填</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">从临床指标定义选择</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">服务项目用于医嘱与PACS报告回传匹配；按模板指标组织检查报告。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">医生查体</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">不显示并清空</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">从临床指标定义选择</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">按模板指标组织医生查体内容。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p11"><br></p>
+<p class="p4">7. 服务项目选择</p>
+<p class="p10">点击服务项目控件打开选择窗口。</p>
+<p class="p10">支持输入服务项目编码或服务名称进行模糊查找。</p>
+<p class="p10">结果同时展示服务项目名称和编码。</p>
+<p class="p10">仅允许单选；选择后回填名称和编码展示。</p>
+<p class="p10">服务项目数据来自当前租户可用的Hi-HIS检查服务项目目录。</p>
+<p class="p10">保存医技检查模板时未选择服务项目，提示“请选择服务项目”并阻止保存。</p>
+<p class="p4">8. 科室权限选择</p>
+<p class="p10">权限结构按“租户 → 机构 → 科室”展示；当前租户固定，机构下展示所属科室。</p>
+<p class="p10">支持按机构名称、科室名称或科室编码模糊搜索。</p>
+<p class="p10">科室可跨机构多选，并显示已选科室数量。</p>
+<p class="p10">选择“全部科室”时清空模板科室关联记录，表示当前租户全部机构和科室可用。</p>
+<p class="p10">搜索仅过滤可见候选，不清除已选但未命中的科室。</p>
+<p class="p10">编辑时回显已选科室；查看模式下只读展示权限范围。</p>
+<p class="p4">9. 指标选择与排序</p>
+<p class="p12"><br></p>
+<p class="p4">9.1 指标选择窗口</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>能力</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">数据来源</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">读取“临床指标定义”中状态为启用的指标。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">搜索</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">按指标名称或指标编码模糊查找。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">信息展示</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">展示指标名称、指标编码、数据类型、单位、眼别、数据来源和添加状态。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">选择</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">支持多选；已关联指标显示“已添加”；窗口底部显示本次已选数量。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">提交</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">点击“添加选中”后写入模板；点击取消或关闭不提交本次选择变化。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">重复控制</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">同一模板不得重复关联同一指标。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p11"><br></p>
+<p class="p4">9.2 已选指标</p>
+<p class="p10">按当前顺序展示序号、指标名称、编码、数据类型和眼别。</p>
+<p class="p10">支持上移、下移调整顺序；第一项不可上移，最后一项不可下移。</p>
+<p class="p10">支持移除指标。</p>
+<p class="p10">模板至少选择一个指标，否则提示“请至少选择一个指标”并阻止保存。</p>
+<p class="p10">保存时将展示顺序持久化为排序号；报告展示按排序号升序。</p>
+<p class="p4">10. 保存、退出与状态规则</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>场景</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>处理</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">保存成功</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">新增插入模板，编辑更新模板；关闭抽屉并提示成功。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">校验失败</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">定位并展示字段错误，不保存数据，不关闭抽屉。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">未保存退出</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">关闭抽屉或点击遮罩时，若内容有变化，提示继续编辑或放弃修改。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">查看模式</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">所有字段和选择器只读，仅提供关闭。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">停用模板</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">不再供新医嘱/新查体业务选择；已有业务记录和历史报告仍可查看。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">接口异常</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">保留当前编辑内容，提示加载或保存失败，支持重试。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7">无候选数据</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">服务项目、科室或指标搜索无结果时显示空态，不允许提交无效选择。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p11"><br></p>
+<p class="p4">11. 数据模型建议</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>实体</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>关键字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>说明</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">Exam_Template</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">template_id, tenant_id, template_code, template_name, template_type, service_item_code, status, description, updated_at</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">模板主表；service_item_code仅医技检查有值。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">Exam_Template_Item</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">item_id, template_id, indicator_id, sort_no</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">模板指标关系；template_id+indicator_id唯一。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">Exam_Template_Department</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">rel_id, template_id, institution_id, department_id</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">模板科室权限；无关联记录代表全租户可用。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">Indicator_Definition</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">indicator_id, indicator_code, indicator_name, data_type, unit, eye_rule, source, status</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">指标候选及报告展示定义；外部字段映射仍在指标定义维护。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">Service_Item</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">service_item_code, service_item_name, tenant_id, status</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">Hi-HIS服务项目目录，只选择当前租户可用项目。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p11"><br></p>
+<p class="p4">12. 业务关联与报告展示</p>
+<p class="p4">医技检查链路：医生选择服务项目开立医嘱 → 检查申请/医嘱携带服务项目编码 → PACS报告回传服务项目关联信息 → 系统在当前租户内按服务项目匹配启用的医技检查模板 → 按模板排序读取关联指标 → 依据临床指标定义中的眼别、数据类型及外部映射字段转换并展示结果。</p>
+<p class="p4">当PACS未返回可直接展示的报告结构时，系统使用匹配模板及指标配置生成结构化展示；未匹配模板时不得错误套用其他租户或其他服务项目模板，应按接口异常/未配置状态提示并保留原始报告信息。</p>
+<p class="p4">医生查体链路：进入查体业务 → 按当前租户及当前科室筛选启用的医生查体模板 → 按模板指标顺序展示查体项。</p>
+<p class="p4">13. 核心校验规则</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>编号</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>校验规则</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p5"><b>提示/结果</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">V01</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">模板名称不能为空。</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">请输入模板名称。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">V02</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">模板编码不能为空、格式正确且租户内唯一。</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">请输入模板编码/编码格式不正确/模板编码已存在。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">V03</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">模板类型必须为医技检查或医生查体。</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">请选择模板类型。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">V04</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">医技检查必须选择服务项目。</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">请选择服务项目。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">V05</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">至少关联一个已启用指标。</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">请至少选择一个指标。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">V06</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">同一模板同一指标仅能关联一次。</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">忽略重复选择或提示已添加。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">V07</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">指定科室必须属于当前租户下机构。</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">无效科室不可保存。</p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6">V08</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">医生查体不得保存服务项目关联。</p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7">切换类型时自动清空服务项目。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p11"><br></p>
+<p class="p8"></p>
+<p class="p4">14. 验收标准</p>
+<p class="p13"><b>AC01　</b>列表仅包含模板名称/编码、模板类型、状态查询条件，不出现检查类型或数据来源。</p>
+<p class="p13"><b>AC02　</b>模板类型仅有医技检查和医生查体；切换为医生查体后服务项目立即隐藏并清空。</p>
+<p class="p13"><b>AC03　</b>服务项目可按编码或名称模糊搜索，结果展示编码和名称，医技检查未选时不能保存。</p>
+<p class="p13"><b>AC04　</b>科室可按机构、科室名称或科室编码搜索并跨机构多选；不维护时显示全部机构/全部科室。</p>
+<p class="p13"><b>AC05　</b>指标可按编码或名称模糊搜索，候选展示名称、编码、类型、单位、眼别、来源和添加状态。</p>
+<p class="p13"><b>AC06　</b>指标支持批量勾选后添加；取消选择窗口不改变模板当前指标。</p>
+<p class="p13"><b>AC07　</b>已选指标支持上移、下移和移除，保存后顺序正确回显。</p>
+<p class="p13"><b>AC08　</b>查看为只读；编辑正确回显；有未保存修改时退出必须二次确认。</p>
+<p class="p13"><b>AC09　</b>停用模板不影响历史报告；租户、机构和科室数据隔离正确。</p>
+<p class="p14"><br></p>
+</body>
+</html>

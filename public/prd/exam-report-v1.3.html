@@ -1,0 +1,962 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Author" content="Un-named">
+  <meta name="LastAuthor" content="Un-named">
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 6.0px 0.0px; font: 19.0px 'Songti SC'; color: #17365d}
+    p.p2 {margin: 0.0px 0.0px 1.5px 0.0px; font: 9.5px 'Songti SC'; color: #667085}
+    p.p3 {margin: 0.0px 0.0px 6.0px 0.0px; font: 10.5px 'Songti SC'; color: #23374d}
+    p.p4 {margin: 14.0px 0.0px 5.0px 0.0px; font: 15.5px 'Songti SC'; color: #2e74b5}
+    p.p5 {margin: 0.0px 0.0px 6.0px 18.0px; font: 10.5px 'Songti SC'; color: #23374d}
+    p.p6 {margin: 9.0px 0.0px 5.0px 0.0px; font: 12.5px 'Songti SC'; color: #17365d}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px 'Songti SC'; color: #17365d}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px 'Songti SC'; color: #23374d}
+    p.p10 {margin: 0.0px 0.0px 6.0px 0.0px; font: 9.0px 'Songti SC'; color: #23374d; min-height: 13.0px}
+    p.p11 {margin: 6.0px 0.0px 4.0px 0.0px; font: 11.0px 'Songti SC'; color: #17365d}
+    li.li7 {margin: 0.0px 0.0px 4.0px 0.0px; font: 10.5px 'Songti SC'; color: #23374d}
+    table.t1 {border-collapse: collapse}
+    td.td1 {border-style: solid; border-width: 1.0px 1.0px 1.0px 1.0px; border-color: #bfbfbf #bfbfbf #bfbfbf #bfbfbf; padding: 0.0px 5.0px 0.0px 5.0px}
+    ul.ul1 {list-style-type: disc}
+  </style>
+</head>
+<body>
+<p class="p1"><b>眼科专科系统：检查报告查询功能需求说明（PRD）</b></p>
+<p class="p2"><b>版本：V1.3</b></p>
+<p class="p2"><b>日期：2026-08-04</b></p>
+<p class="p2"><b>产品基线：眼科专科系统产品基线 V1.2</b></p>
+<p class="p3">原型依据：眼科专科系统高保真原型中嵌入门诊医生工作台的“检查报告”页面，并参考历史 Axure 与蓝湖设计稿</p>
+<p class="p4"><b>1. 背景与目标</b></p>
+<p class="p3">眼科医技检查报告可能来自 PACS/医技系统，既有可按字段接入的结构化结果，也可能仅有 PDF、图片或文本结论。医生需要在接诊、专科病历、治疗方案基础档案与复查时，快速确认本次检查结果，并纵向比较历次同一检查项目的指标变化。</p>
+<p class="p3">本模块以已经定义的“临床指标—检查模板—眼科检查组件”为基础，提供统一的检查报告查询入口：</p>
+<p class="p5">1. 按本次/历史就诊查看检查单与报告；</p>
+<p class="p5">2. 按检查项目查看历次结构化指标、对比结果和趋势；</p>
+<p class="p5">3. 直接查看医院提供并已脱敏的原始 PDF/图片报告；</p>
+<p class="p5">4. 使用眼科检查组件补录或修订结构化指标；</p>
+<p class="p5">5. 向治疗方案基础档案、专科病历及后续治疗复查复用同一检查结果。</p>
+<p class="p4"><b>2. 范围与边界</b></p>
+<p class="p6"><b>2.1 本期范围</b></p>
+<ul class="ul1">
+  <li class="li7">检查报告“按就诊记录”和“按检查项目”两个查询视图；</li>
+  <li class="li7">已开立检查单的未出报告、已出报告状态展示，并展示结构化结果/补录情况；</li>
+  <li class="li7">按检查模板配置的展示格式呈现结构化报告结果，并直接预览原始报告；</li>
+  <li class="li7">结构化指标的历次表格对比和数值趋势图；</li>
+  <li class="li7">医生基于非结构化报告进行结构化指标补录与文本摘要补录；</li>
+  <li class="li7">报告来源、报告人、报告时间、录入人、录入时间和人工修订留痕；</li>
+  <li class="li7">与检查模板、眼科检查组件、专科病历和治疗方案基础档案的复用关系。</li>
+</ul>
+<p class="p6"><b>2.2 不在本期范围</b></p>
+<ul class="ul1">
+  <li class="li7">临床指标定义、检查模板定义、服务项目关联和外部字段映射的配置页面；</li>
+  <li class="li7">PACS/医技系统接口的具体厂商改造与字段字典实施；</li>
+  <li class="li7">OCR 自动识别 PDF/图片中的数值；</li>
+  <li class="li7">非数值文本的自动趋势分析；</li>
+  <li class="li7">通用门诊病历、医嘱和收费功能重建。</li>
+</ul>
+<p class="p4"><b>3. 角色与权限</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>角色</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>查询</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>原始报告查看</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>补录/修订</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>配置</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>眼科医生</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>有权限患者的报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>否</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>配镜师/视光人员</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>有权限档案患者的报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>否，除后续授权节点</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>否</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医技人员</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>本职能产生的报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>不在本模块修改原始报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>否</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>租户/系统管理员</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按授权查询</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按授权</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>临床指标、检查模板及映射在其对应模块维护</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p3">访问范围遵循 HIHIS 租户→机构→科室组织权限；治疗方案配置的应用科室决定该方案下相关档案和页面的可用范围，但不改变报告的患者、就诊和原始来源归属。</p>
+<p class="p4"><b>4. 业务对象与数据关系</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>对象</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>定义</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>关键字段/关系</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>检查医嘱/服务项目</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>本次就诊开立的检查项目</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>关联就诊、患者、服务项目、执行科室、医嘱状态</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>检查报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医技系统/PACS返回的一份报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>检查项目、报告状态、报告人、报告时间、原始报告地址</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>结构化检查结果</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告中的指标值或医生补录的指标值</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>指标编码、眼别、值、单位、参考范围、来源、修订信息</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>检查模板/眼科检查组件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>定义并承载某检查项目的指标</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医技检查模板与服务项目关联；组件可被档案和病历引用</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告引用</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>当前档案/病历对同项目多份报告的选择</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>引用对象、报告标识、引用人、引用时间；不在本查询页显示“已引用”状态</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p3">同一患者、同一次就诊、同一检查项目可能存在多份报告。查询页展示全部有效报告；在档案、病历、趋势默认值中，优先使用医生已明确引用的报告，未引用时提示选择，不能静默混合多份报告数据。</p>
+<p class="p4"><b>5. 页面与功能需求</b></p>
+<p class="p6"><b>5.1 入口、患者上下文与公共筛选</b></p>
+<p class="p3">本功能嵌入门诊医生工作台，通过页面右下方悬浮按钮“检查报告”打开覆盖式报告面板。打开时自动使用当前接诊患者，不提供患者查询条件；医生切换接诊患者后，面板随患者上下文刷新。</p>
+<p class="p3">页面提供“按就诊记录”“按检查项目”两个视图。报告状态仅包含“全部、已出报告、未出报告”，采用平铺单选按钮，减少医生操作步骤。</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>字段/控件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>适用视图</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>控件与默认值</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>属性与交互规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>患者上下文</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>两个视图</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>自动带入当前接诊患者</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>只读显示姓名、性别、年龄、病历号；不提供患者筛选；切换接诊患者时重新初始化页面数据</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>就诊时间范围</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按就诊记录</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>日期范围；默认覆盖当前就诊</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按就诊时间过滤左侧就诊记录；开始时间不得晚于结束时间</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告时间范围</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按检查项目</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>日期范围；默认最近一年</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按报告时间过滤历次报告，不使用就诊时间代替</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>执行科室</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>两个视图</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>可搜索下拉；默认全部</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按实际检查执行科室过滤，不使用接诊科室代替</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告状态</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>两个视图</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>平铺单选：全部、已出报告、未出报告；默认全部</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>一次点击立即选中；状态只表达报告是否出具，不包含“已引用”</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>检查项目</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按检查项目</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>左侧平铺复选列表；默认全部</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>支持按项目名称或编码模糊搜索；项目较少时不使用下拉或二次弹窗；支持全部、逐项多选，选中后立即刷新右侧内容</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p3">按检查项目视图不设置“指标”和“眼别”查询条件。指标及眼别直接作为结果表列展示，趋势弹窗内再选择需要绘制的指标序列。</p>
+<p class="p6"><b>5.2 按就诊记录</b></p>
+<p class="p11"><b>5.2.1 就诊记录列表与初始化</b></p>
+<ul class="ul1">
+  <li class="li7">左侧就诊记录按就诊时间倒序，展示就诊时间、接诊科室、接诊医生、初复诊类型；</li>
+  <li class="li7">从医生工作台首次打开时默认选中本次就诊；</li>
+  <li class="li7">初始化加载范围如下：</li>
+</ul>
+<p class="p3"><span class="Apple-converted-space">  </span>1. 本次医生查体：本次就诊医生已在病历中录入的所有查体模板记录；</p>
+<p class="p3"><span class="Apple-converted-space">  </span>2. 当日护士采集：按患者、机构和就诊日期加载当日全部体征记录。现有系统未保存就诊流水号，因此不按就诊流水过滤；</p>
+<p class="p3"><span class="Apple-converted-space">  </span>3. 本次就诊医嘱：本次就诊医生已开立的全部检查项目，包含未出报告；</p>
+<p class="p3"><span class="Apple-converted-space">  </span>4. 医生补录：医生基于原始报告保存的结构化补录记录。</p>
+<p class="p11"><b>5.2.2 数据分组与报告卡片</b></p>
+<p class="p3">右侧按“本次医生查体、当日护士采集、本次就诊医嘱、医生补录”分组展示。</p>
+<p class="p3">护士采集只展示一个分组表格，多次采集分行展示。字段依次为：指标、指标结果、参考范围、采集人、采集时间；所有数据只读，不提供编辑。</p>
+<p class="p3">医生查体、医技检查和医生补录使用报告卡片：</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>区域</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>展示内容</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>交互规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>标题栏左侧</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>检查项目、报告状态、结果来源；同一检查存在多份原始报告时显示报告份数</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告状态仅为已出报告/未出报告</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>标题栏右侧</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>执行科室、报告/录入人、报告/录入时间、补录/修订信息</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>信息与“编辑、查看原始报告”操作放在同一标题栏，不在卡片底部重复展示</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>模板展示结果</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按检查模板定义的固定拼接格式展示结构化结果</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按眼别、指标排序和模板展示规则生成；按就诊记录视图不再展开逐指标明细表</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>操作</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>编辑、查看原始报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>护士采集只读；未出报告不可编辑结果或查看原始报告</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p11"><b>5.2.3 模板展示结果</b></p>
+<p class="p3">模板展示结果必须使用检查模板配置的排序、组合与拼接规则。例如角膜地形图按以下格式展示：</p>
+<ul class="ul1">
+  <li class="li7">OD：Ks曲率值@轴位值；MinK曲率值@轴位值；</li>
+  <li class="li7">OS：Ks曲率值@轴位值；MinK曲率值@轴位值。</li>
+</ul>
+<p class="p3">按就诊记录视图以医生快速浏览为目标，不重复展示“眼别—指标—结果—参考范围”的明细表。参考范围在编辑组件、按检查项目对比和趋势分析中使用。</p>
+<p class="p6"><b>5.3 按检查项目</b></p>
+<p class="p11"><b>5.3.1 检查项目选择</b></p>
+<ul class="ul1">
+  <li class="li7">左侧平铺展示患者已有的检查项目，默认全部选中；</li>
+  <li class="li7">支持按检查项目名称或编码模糊搜索；</li>
+  <li class="li7">“全部”复选框可一键全选/清空；单项勾选立即生效；</li>
+  <li class="li7">右侧按已选项目分别形成结果区，检查项目较多时可滚动查看；</li>
+  <li class="li7">未选任何项目时展示空状态，不保留上一次趋势结果。</li>
+</ul>
+<p class="p11"><b>5.3.2 历次结果表</b></p>
+<p class="p3">每个检查项目单独形成历次结果表，按报告时间倒序。每行代表一次报告/采集记录，字段包括：报告时间、报告人、模板内各指标结果、结果来源、补录/修订信息、操作。</p>
+<ul class="ul1">
+  <li class="li7">每项结构化指标直接成列，表头显示眼别、指标名称、单位和参考范围；</li>
+  <li class="li7">不展示报告编号；</li>
+  <li class="li7">数值、枚举、布尔、文本均可进行历次表格对比；</li>
+  <li class="li7">护士采集结果只读；医生查体、医技检查及医生补录按权限允许编辑；</li>
+  <li class="li7">有原始报告的记录提供“查看原始报告”；</li>
+  <li class="li7">同一次检查因左右眼形成多份报告时，仍作为同一次结构化检查结果展示，原始报告预览中切换各报告文件。</li>
+</ul>
+<p class="p6"><b>5.4 趋势分析</b></p>
+<ul class="ul1">
+  <li class="li7">仅数值型结构化指标进入趋势；枚举、布尔和文本指标保留在历次结果表；</li>
+  <li class="li7">点击某检查项目的“趋势分析”后，默认勾选该项目全部数值型指标序列；医生可全选、清空或逐项选择；</li>
+  <li class="li7">每个“指标 + 眼别 + 单位”是一条独立序列，勾选项、图例、实际曲线和明细表列必须一一对应；</li>
+  <li class="li7">不同单位拆分为独立图表，每个图表标题显示单位和实际曲线数量；</li>
+  <li class="li7">每条曲线使用稳定且不同的颜色，图例显示眼别和指标名称；数据点直接显示实际值，悬停显示报告时间、数值、报告/采集人；</li>
+  <li class="li7">图表下方同步展示数据明细表，字段为报告/采集时间、报告/采集人及各选中指标值；</li>
+  <li class="li7">报告只有原始 PDF/图片且无结构化补录时不进入趋势；医生补录至已定义数值型指标后可以进入趋势。</li>
+</ul>
+<p class="p6"><b>5.5 原始报告查看</b></p>
+<p class="p3">点击“查看原始报告”后直接弹出 PDF/图片预览，不增加二次“打开”操作。弹窗显示检查项目、执行科室、当前报告人和报告时间。</p>
+<p class="p3">同一次检查存在多份报告文件时，弹窗左侧/顶部以标签切换，例如 OD 右眼报告、OS 左眼报告；切换后同步更新预览文件、报告人和报告时间。原始报告只读，原型与演示环境必须使用已脱敏的医院样例。</p>
+<p class="p3">本期业务前提为已出报告均可查看原始报告，不设计“原始报告不可用”状态；未出报告不显示原始报告入口。</p>
+<p class="p6"><b>5.6 编辑、补录与修订</b></p>
+<p class="p11"><b>5.6.1 统一眼科检查组件</b></p>
+<p class="p3">点击“编辑”后，以抽屉加载该检查项目关联的眼科检查组件，不重新设计独立报告表单。组件直接读取“临床指标定义—检查模板定义”的元数据：指标排序、眼别、数据类型、单位、参考范围、枚举值和组合布局。</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>指标数据类型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>编辑控件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>校验/展示规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>数值型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>数值输入框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>紧邻显示单位和参考范围；超出参考范围提示确认，不阻断医生保存</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>文本型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>单行或多行文本框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按指标定义的最大长度校验</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>枚举型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>单选下拉/单选控件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>只展示指标定义中已启用的枚举值</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>多选枚举</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>可多选复选控件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按枚举排序展示，保存枚举编码集合</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>布尔型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>两段式单选控件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>使用指标定义的真值/假值显示名称</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p3">成对或组合指标沿用眼科检查组件既定布局。例如角膜地形图同一眼别的 Ks曲率、Ks轴位、MinK曲率、MinK轴位在一行组合录入。</p>
+<p class="p11"><b>5.6.2 数据与审计规则</b></p>
+<ul class="ul1">
+  <li class="li7">医技接口原值保留，不被人工编辑覆盖；保存后形成修订版本；</li>
+  <li class="li7">修订必须记录修订人、修订时间和修订原因；</li>
+  <li class="li7">编辑结果重新按检查模板规则生成展示摘要；</li>
+  <li class="li7">医生补录至已定义数值型指标后可进入历次对比和趋势；仅补录报告摘要/结论文本时不进入趋势；</li>
+  <li class="li7">护士采集数据不可在本模块修改，只用于展示和趋势；</li>
+  <li class="li7">未出报告不允许编辑结构化结果。</li>
+</ul>
+<p class="p6"><b>5.7 与其他模块的复用</b></p>
+<ul class="ul1">
+  <li class="li7">专科病历、治疗方案基础档案可选择引用本次或历史检查结果；</li>
+  <li class="li7">同一就诊、同一检查模板优先复用同一个眼科检查组件实例；</li>
+  <li class="li7">被病历或基础档案采用的结果保存引用快照，后续报告修订不得静默回写历史快照；</li>
+  <li class="li7">当前查询页不展示“已引用”报告状态，引用关系由使用结果的病历/档案页面处理。</li>
+</ul>
+<p class="p4"><b>6. 报告状态与数据来源</b></p>
+<p class="p6"><b>6.1 报告状态</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>状态</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>含义</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>允许操作</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>未出报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>已开检查单但尚无正式报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>查看检查单；不可查看原始报告或趋势</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>已出报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>已获取有效报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>查看模板展示结果、原始报告、补录/修订、趋势分析</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p3">“是否已引用”不作为报告状态，也不在当前查询页展示；“医生补录”作为结果来源展示。</p>
+<p class="p6"><b>6.2 结果来源</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>来源</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>含义</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>是否可参与数值趋势</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医技接口自动回传</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>来自 PACS/医技报告结构化字段映射</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>护士采集</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>来自既有 HIHIS 体征采集结果</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是，限数值型指标</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医生查体</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医生在检查组件中录入</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是，限数值型指标</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医生补录（依据原始报告）</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医生根据 PDF/图片/文本报告录入至定义指标</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是，限数值型指标</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>文本摘要/结论</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告所见、结论或医生说明</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>否</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p4"><b>7. 数据字段要求</b></p>
+<p class="p6"><b>7.1 报告主记录</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>必填</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>说明</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>患者标识、就诊标识</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>来自 HIHIS 上下文</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>检查项目/服务项目</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>服务项目编码、名称及关联模板</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告内部标识</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>用于系统关联和审计；页面列表不展示报告编号</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告状态</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>见 6.1</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>执行科室</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>实际检查执行科室</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告人、报告时间</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>已出报告必填</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>来源于医技报告</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>原始报告地址/附件标识</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>已出报告必填</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>PDF、图片或正文入口；同次检查可关联多份文件</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>引用关系</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>否</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>供病历/档案保存快照使用；不作为当前页面状态展示</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p6"><b>7.2 指标结果记录</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>必填</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>说明</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>指标编码、指标名称</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>来自临床指标定义</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>眼别</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按指标定义</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>OD、OS、OU、无眼别或其他</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>结果值、值类型、单位</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是/按类型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>保留原始输入与展示单位</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>参考范围、异常标识</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>否</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>依据指标定义计算/展示</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>结果来源</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>见 6.2</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>原始报告关联</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>条件必填</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医技接口及医生补录须关联内部报告标识</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告人/报告时间</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>条件必填</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>取医技报告信息</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>录入人/录入时间</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>自动回传记录系统时间；人工补录记录医生及时间</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>修订版本、修订原因</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>修订时必填</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>不能覆盖历史值</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p4"><b>8. 接口与同步要求</b></p>
+<p class="p5">1. HIS 提供患者、就诊、医嘱、服务项目、执行科室等上下文；</p>
+<p class="p5">2. 医技/PACS 返回报告唯一标识、报告状态、报告人、报告时间、结构化数据和原始报告地址；</p>
+<p class="p5">3. 医技检查模板通过服务项目与报告匹配，按指标定义中的外部字段、眼别及枚举映射转换结果；</p>
+<p class="p5">4. 报告状态变更为已出报告时，系统同步/刷新结果；重复回传须幂等处理，保留接口原始版本；</p>
+<p class="p5">5. 护士采集指标读取 HIHIS 既有体征字典及结果，不在本模块重复维护字典；</p>
+<p class="p5">6. 接口失败或字段映射失败须记录错误原因，不得阻断医生查看已存在的有效报告或进行授权补录。</p>
+<p class="p4"><b>9. 验收标准</b></p>
+<p class="p5">1. 医生可从当前就诊进入“按就诊记录”视图，查看已开检查单及未出/已出报告状态；</p>
+<p class="p5">2. 按就诊记录时，报告卡片标题栏显示执行科室、报告/录入人和时间，正文只显示检查模板配置的拼接结果，不展开逐指标明细；</p>
+<p class="p5">3. 当日护士多次采集在一个分组内分行只读展示，并显示参考范围、采集人和采集时间；</p>
+<p class="p5">4. 按检查项目默认全选项目，支持名称/编码搜索和便捷多选；历次结果按报告时间倒序，每项指标直接成列并显示报告人，不展示报告编号；</p>
+<p class="p5">5. 点击编辑后复用眼科检查组件：数值型录入数值、枚举型选择枚举、多选枚举和布尔型使用对应控件，并显示单位与参考范围；</p>
+<p class="p5">6. 数值型结构化指标可展示趋势图；勾选序列、图例、曲线和数据表严格一致，不同单位拆图；文本、枚举、布尔结果仅展示历次对比；</p>
+<p class="p5">7. 原始非结构化报告本身不进入趋势；医生补录至定义临床指标后，数值结果带来源和审计信息进入对比与趋势；</p>
+<p class="p5">8. 查看原始报告时直接弹出预览；同次检查存在多份报告时可在预览弹窗中切换；</p>
+<p class="p5">9. 医生补录不会修改原始 PACS 报告或丢失接口原始值；护士采集不可编辑；</p>
+<p class="p5">10. 无权限用户不能查询、预览、补录或修订超出其机构/科室范围的报告。</p>
+<p class="p4"><b>10. 待实施时确认</b></p>
+<ul class="ul1">
+  <li class="li7">各医技厂商的报告状态码、报告字段、结构化 JSON 格式与附件访问鉴权方式；</li>
+  <li class="li7">报告修订、撤回、重签后的版本选择与已引用结果的告警策略；</li>
+  <li class="li7">数值趋势图异常区间的视觉呈现和临床单位换算规则；</li>
+  <li class="li7">允许哪些角色在治疗管理节点中查看或补录检查结果。</li>
+</ul>
+<p class="p4"><b>版本记录</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>版本</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>日期</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>说明</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>V1.0</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>2026-08-03</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>依据最终确认 Axure 检查报告查询页面及产品基线编写。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>V1.1</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>2026-08-03</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告状态仅保留“未出报告、已出报告”；“已引用”“存在医生补录”为独立标记，附件异常不作为报告状态。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>V1.2</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>2026-08-04</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>补充查询条件字段属性、默认值、筛选规则及两个视图的查询交互。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>V1.3</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>2026-08-04</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>按最终高保真原型修订：嵌入医生站、固定患者上下文、平铺项目多选、按模板拼接展示、标题栏报告信息、眼科检查组件类型化编辑、多报告切换及趋势曲线一致性。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+</body>
+</html>

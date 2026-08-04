@@ -11,6 +11,7 @@ import "../app/archive-lifecycle.css";
 import "../app/specialty-record.css";
 import "../app/exam-report.css";
 import "../app/exam-report-iteration.css";
+import "../app/product-docs.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

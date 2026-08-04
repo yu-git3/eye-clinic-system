@@ -1,0 +1,631 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>眼科专科系统_角膜接触镜专科病历_功能需求说明_PRD_V1.0</title>
+  <meta name="Author" content="Codex">
+  <meta name="LastAuthor" content="Un-named">
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 3.5px 0.0px; font: 10.0px Times; color: #2e74b5}
+    p.p2 {margin: 0.0px 0.0px 9.0px 0.0px; font: 20.0px Times; color: #1f4d78}
+    p.p3 {margin: 0.0px 0.0px 11.0px 0.0px; font: 10.0px Times; color: #66788c}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.5px Times; color: #25384d}
+    p.p5 {margin: 12.5px 0.0px 6.0px 0.0px; font: 15.0px Times; color: #2e74b5}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Times; color: #1f4d78}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Times; color: #25384d}
+    p.p8 {margin: 0.0px 0.0px 5.5px 0.0px; font: 10.5px Times; color: #25384d}
+    p.p10 {margin: 8.5px 0.0px 4.0px 0.0px; font: 13.0px Times; color: #2e74b5}
+    li.li9 {margin: 0.0px 0.0px 2.2px 0.0px; font: 10.5px Times; color: #25384d}
+    span.s1 {color: #1f4d78}
+    table.t1 {border-collapse: collapse}
+    td.td1 {border-style: solid; border-width: 1.0px 1.0px 1.0px 1.0px; border-color: #bfbfbf #bfbfbf #bfbfbf #bfbfbf; padding: 0.0px 5.0px 0.0px 5.0px}
+    ul.ul1 {list-style-type: disc}
+  </style>
+</head>
+<body>
+<p class="p1"><b>眼科专科系统</b></p>
+<p class="p2"><b>角膜接触镜专科病历</b></p>
+<p class="p2"><b>功能需求说明（PRD）</b></p>
+<p class="p3">版本：V1.0　　状态：原型确认后待研发评审　　日期：2026-08-02</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p4"><span class="s1"><b>文档依据<span class="Apple-converted-space">  </span></b></span>以已确认的高保真原型为准；采用南医眼科角膜接触镜病历的固定版式，第一版不建设病历模板配置。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p5"><b>1. 文档信息</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>版本</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>日期</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>说明</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>状态</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>V1.0</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>2026-08-02</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>首次形成：历史就诊记录优先、右侧抽屉录入、眼科检查组件直接展开指标。</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>待研发评审</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p5"><b>2. 背景与目标</b></p>
+<p class="p8">角膜接触镜患者在门诊复诊时，医生需要快速了解既往诊疗变化，并在同一就诊中完成结构化的专科病历、检查结果引用或补录、处理建议和复诊安排。现有南医眼科系统以文档方式保存，历史信息不便检索，检查结果也难以复用。</p>
+<ul class="ul1">
+  <li class="li9">在门诊医生工作台内提供角膜接触镜专科病历，保留南医眼科的核心阅读与书写顺序。</li>
+  <li class="li9">进入页面先展示历史就诊记录表，帮助医生先判断患者既往情况，再按需新建本次病历。</li>
+  <li class="li9">复用检查模板定义产生的眼科检查组件；已选择组件直接展开指标录入，避免“选择后再进入录入”的二次操作。</li>
+  <li class="li9">保存专科病历后生成普通门诊病历所需文本并回传，避免重复书写。</li>
+</ul>
+<p class="p5"><b>3. 范围与非范围</b></p>
+<p class="p10"><b>3.1 本期范围</b></p>
+<ul class="ul1">
+  <li class="li9">门诊医生站内的角膜接触镜初诊、复诊专科病历；每次门诊形成一份独立记录。</li>
+  <li class="li9">历史病历表格、历史详情、引用上次记录、新建病历右侧抽屉。</li>
+  <li class="li9">治疗方案档案、当前治疗方式、当前镜片信息的只读展示。</li>
+  <li class="li9">医嘱检查自动加载、搜索/多选添加眼科检查组件、报告引用与人工补录。</li>
+  <li class="li9">暂存、保存并回传、回传预览、复诊时间推荐与调整。</li>
+</ul>
+<p class="p10"><b>3.2 非本期范围</b></p>
+<ul class="ul1">
+  <li class="li9">专科病历模板的后台配置；第一版使用代码内置的南医眼科角膜接触镜固定版式。</li>
+  <li class="li9">非角膜接触镜治疗方案的专科病历、镜片品牌参数模板、定制下单及订单维护。</li>
+  <li class="li9">在专科病历内变更治疗方案、治疗方式或镜片参数；相关操作仍在治疗档案/治疗管理中完成。</li>
+</ul>
+<p class="p5"><b>4. 角色、入口与权限</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>角色</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>入口</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>权限</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>门诊医生</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>门诊医生工作台 → 专科病历</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>查看历史、引用上次记录、新建/暂存/保存本次病历；按HIHIS权限编辑检查结果和处理建议。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>配镜师/视光师</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>专科人群管理</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>查看档案及已保存信息；不在本页面书写或修改专科病历。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>医技人员</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>PACS/检查系统</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>通过检查报告接口提供报告编号、报告人、报告时间及可用结构化结果；不直接操作本页面。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p5"><b>5. 页面与交互流程</b></p>
+<p class="p10"><b>5.1 默认页面：历史就诊记录</b></p>
+<p class="p8">医生接诊患者后，专科病历页默认显示历史专科病历表格，不自动打开录入表单。记录按就诊日期/时间倒序排列；同日多次就诊时按接诊时间倒序。表格宽度不足时允许横向滚动。</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>展示规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>就诊日期/时间</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>倒序排列；最近一次增加“最近一次”标记。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>就诊类型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>展示初诊或复诊。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>科室 / 接诊医生</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>展示本次就诊归属科室与接诊医生。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>主诉及现病史摘要</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>优先展示戴镜时长、裸眼视力变化、主要不适。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>专科检查摘要</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>优先展示角膜/结膜情况和关键异常。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>诊断、处理及医嘱</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>展示关键检查、处理建议、治疗方式及复诊安排。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>操作</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>查看详情；医生可引用上次记录。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b>5.2 新建专科病历抽屉</b></p>
+<p class="p8">点击“新建专科病历”后，从右侧打开大抽屉。抽屉独立滚动，顶部显示本次就诊信息，底部固定“普通门诊病历回传预览、暂存、保存并回传”。关闭时如存在未保存修改，提示继续编辑、暂存后退出或放弃修改。</p>
+<p class="p10"><b>5.3 引用上次记录</b></p>
+<ul class="ul1">
+  <li class="li9">可从历史表格或抽屉顶部引用最近一次记录。</li>
+  <li class="li9">仅带入主诉、现病史和处理建议等叙述性内容，带入后仍可编辑。</li>
+  <li class="li9">不复制检查结果、报告人/报告时间、诊断、医嘱、签名和历史操作记录。</li>
+  <li class="li9">引用来源需记录历史病历日期，保存后形成新的本次病历，不覆盖历史记录。</li>
+</ul>
+<p class="p5"><b>6. 本次专科病历字段</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>区域</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>属性与规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>患者与就诊</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>姓名、性别、年龄、病历号、就诊日期、机构、科室、接诊医生</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>只读；由门诊就诊上下文带入。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>治疗与镜片</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>治疗方案、档案编号/状态、当前治疗方式、当前镜片信息</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>只读；治疗方式来自治疗档案，镜片信息来自治疗管理中当前已交付/使用的订单。无数据时显示“暂无当前镜片信息”。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>主诉</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>主诉</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>多行文本，必填；支持引用上次记录后修改。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>现病史</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>现病史</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>多行文本，选填；重点记录戴镜时长、视力变化及眼部不适。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>专科检查摘要</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>检查摘要</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>多行文本，必填；组件结果生成候选文本，医生确认或修改后保存。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>处理建议</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>检查报告与处理建议</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>多行文本；支持戴镜随访、规范护理、停戴提醒等常用语插入。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>复诊安排</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>推荐日期、实际复诊日期、调整说明</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>按治疗方案随访规则推荐；医生可调整实际日期，修改推荐日期时填写调整说明。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>备注</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>备注</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>多行文本，选填。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p5"><b>7. 眼科检查组件</b></p>
+<p class="p10"><b>7.1 组件来源与加载</b></p>
+<ul class="ul1">
+  <li class="li9">检查模板定义中的全部模板均可作为“眼科检查组件”，不局限于眼健康检查。</li>
+  <li class="li9">本次已开立医嘱对应的检查组件自动加载，标记为“本次医嘱”。</li>
+  <li class="li9">医生查体组件和其他未开医嘱检查通过“添加眼科检查”选择后加载，标记为“医生添加”。</li>
+  <li class="li9">组件加载后直接展开该模板的指标及OD/OS录入区域，与基本档案的指标录入交互保持一致。</li>
+</ul>
+<p class="p10"><b>7.2 添加与移除</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>操作</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>搜索</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>按检查模板名称或编码模糊搜索。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>选择</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>支持多选；每行展示名称、编码、模板类型、眼别及指标数；已添加项显示“已添加”且不可重复选择。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>确认</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>点击“添加选中”后，所有选中组件直接插入本次病历并展开指标。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>移除</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>仅“医生添加”且尚未保存的组件可移除；本次医嘱组件和已保存组件不可移除。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b>7.3 报告引用与医生补录</b></p>
+<ul class="ul1">
+  <li class="li9">接口返回结构化结果时自动带入指标；存在多次检查时，医生可选择引用某份报告结果。</li>
+  <li class="li9">引用后保留报告编号、报告人、报告时间、引用时间和引用审计。</li>
+  <li class="li9">仅返回PDF/图文报告时，允许医生查看原始报告后补录结构化指标；系统保留原始报告关联和医生修订痕迹。</li>
+  <li class="li9">医生手工修订接口结果时，保留接口原值、修订人和修订时间。</li>
+</ul>
+<p class="p5"><b>8. 数据与接口要求</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>实体/接口</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>关键字段或约束</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>专科病历</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>病历ID、患者ID、就诊ID、治疗方案档案ID（可空）、模板版本、病历状态、文本快照、创建/保存/修改人及时间。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>病历检查实例</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>病历ID、检查模板ID、检查实例ID、来源（本次医嘱/医生添加）、是否已保存、展示顺序、指标快照。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>医技报告引用</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>检查实例ID、报告ID、检查时间、报告人、报告时间、报告原文/附件地址、引用审计。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>治疗档案接口</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>按患者+治疗方案查询当前可访问档案；返回当前治疗方式、档案状态、当前镜片订单摘要。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>普通门诊病历回传</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>保存并回传时生成“主诉—现病史—专科检查—处理建议—复诊安排”文本；失败不丢失专科病历，可重试。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p5"><b>9. 状态、校验与异常</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>场景</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>处理规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>无治疗方案档案</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>允许完成固定专科病历；治疗及镜片区展示空态。后续建立档案后可补充关联，不要求重新书写病历。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>无历史病历</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>显示空态和“新建专科病历”主操作。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>待报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>显示检查已开立/报告待返回，允许先暂存病历。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>无结构化结果</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>允许查看原始报告并手工补录。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>必填校验</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>保存并回传校验主诉、专科检查摘要；校验失败定位字段并提示。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>只读/无权限</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>历史病历只读；无编辑权限时禁止新建、移除组件、修改指标和保存。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>回传失败</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>专科病历保持已保存，状态标记“回传失败”；支持重试并记录日志。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p5"><b>10. 普通门诊病历回传</b></p>
+<p class="p8">回传预览及最终写入普通门诊病历“专科查体及处理建议”段落，按以下固定顺序拼装：</p>
+<ul class="ul1">
+  <li class="li9">主诉</li>
+  <li class="li9">现病史</li>
+  <li class="li9">专科检查摘要（含医生确认后的组件结果）</li>
+  <li class="li9">处理建议</li>
+  <li class="li9">复诊安排：实际日期、随访规则、调整说明</li>
+</ul>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p4"><span class="s1"><b>回传原则<span class="Apple-converted-space">  </span></b></span>暂存不回传；保存并回传时保存专科病历结构化数据、组件实例及文本快照。回传失败不得影响专科病历保存。</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p5"><b>11. 验收标准</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>编号</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>验收项</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p6"><b>通过标准</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>AC-01</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>历史优先</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>接诊进入专科病历页默认展示按时间倒序的历史表格，字段符合第5.1节。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>AC-02</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>抽屉录入</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>点击新建后打开右侧抽屉，底部操作固定；未保存关闭有提示。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>AC-03</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>检查组件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>本次医嘱检查自动加载并直接展示指标；搜索、多选、确认后直接展开录入。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>AC-04</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>组件移除</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>仅未保存的医生添加组件可移除；医嘱和已保存组件不可移除。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>AC-05</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>报告与补录</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>可引用多次报告；无结构化结果时可查看报告并补录，保留审计。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>AC-06</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>引用上次</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>仅带入叙述内容，不复制检查结果和报告信息，生成新的本次病历。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>AC-07</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>回传</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p7"><b>保存并回传后普通门诊病历按固定顺序获得文本；失败可重试且不丢失病历。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p5"><b>12. 跨模块依赖与后续演进</b></p>
+<ul class="ul1">
+  <li class="li9">复用：临床指标定义、检查模板定义、眼科检查组件运行时、治疗方案配置、角膜接触镜基础档案与基线评估。</li>
+  <li class="li9">依赖：门诊就诊上下文、医嘱/检查报告接口、普通门诊病历回传接口、治疗管理镜片订单信息。</li>
+  <li class="li9">后续：开放病历模板配置，使治疗方案可选择不同专科病历模板；扩展至RGP、软性离焦镜等治疗方式。</li>
+</ul>
+</body>
+</html>
