@@ -91,6 +91,11 @@ test("product documents expose the latest PRDs as online-only reading pages", as
   assert.match(docs, /在线阅读/);
   assert.match(docs, /<iframe/);
   assert.doesNotMatch(docs, /download|下载 DOCX|下载文档/);
+  const prdHtml = await readFile(new URL("../public/prd/clinical-indicator-v1.3.html", import.meta.url), "utf8");
+  const readerCss = await readFile(new URL("../public/prd/reader.css", import.meta.url), "utf8");
+  assert.match(prdHtml, /\/prd\/reader\.css/);
+  assert.match(readerCss, /font-size:15px/);
+  assert.match(readerCss, /td p\{font-size:14px/);
 });
 
 test("baseline supports report-assisted manual editing", async () => {
