@@ -109,6 +109,8 @@ test("the prototype uses the shared Ant Design 4.x visual baseline", async () =>
   assert.match(baseline, /min-height:32px/);
   assert.match(baseline, /\.overlay\{z-index:70\}/);
   assert.match(baseline, /\.drawer\{z-index:71\}/);
+  assert.match(baseline, />\.cl-app>\.overlay\{z-index:90\}/);
+  assert.match(baseline, />\.cl-app>\.drawer\{z-index:91\}/);
 });
 
 test("baseline supports report-assisted manual editing", async () => {
