@@ -106,7 +106,7 @@ export function ContactLensArchiveModule({ entryMode }: { entryMode: EntryMode }
 
       {archives.length > 0 && <div className="cl-archive-switcher"><b>档案切换器</b><select aria-label="档案切换器" value={selectedArchiveId} onChange={(e) => setSelectedArchiveId(e.target.value)}>{archives.map((item) => <option value={item.id} key={item.id}>{item.treatmentPlan}｜{item.currentTreatmentMethod}｜{item.status}</option>)}</select><span>仅展示当前科室有权限访问的治疗方案档案</span>{!readOnly && <button onClick={() => setCreateOpen(true)}>＋ 新建其他档案</button>}</div>}
       {activeTab === "record" && <RecordTab archive={archive} readOnly={readOnly} eyeHealthExam={eyeHealthExam} onEyeHealthChange={setEyeHealthExam} onRevise={reviseValue} onReport={setReportGroup} onCreate={() => setCreateOpen(true)} onLoad={loadExamples} onBaseline={openBaseline} onChange={() => setChangeOpen(true)} onTerminate={() => setTerminateOpen(true)} onReopen={submitReopen} />}
-      {activeTab === "tracking" && <TrackingTab archive={archive} onLoad={loadExamples} />}
+      {activeTab === "tracking" && <TrackingTab />}
       {activeTab === "overview" && <OverviewTab archive={archive} readOnly={readOnly} onLoad={loadExamples} onBaseline={openBaseline} onChange={() => setChangeOpen(true)} />}
     </main><aside className="cl-rightbar"><b>功能</b><button className="active">▣　眼科</button>{["病历","诊断","医嘱","一键打印","医疗证明","诊间记账","住院证","生命体征","发热登记","手术申请","复诊预约","检查申请预约","检查预约","360视图","科室转介","高危评估"].map((item) => <button key={item}>{item}</button>)}</aside></div>
 
@@ -144,9 +144,8 @@ function RecordTab({ archive, readOnly, eyeHealthExam, onEyeHealthChange, onRevi
   </div>;
 }
 
-function TrackingTab({ archive, onLoad }: { archive: ContactLensArchive | null; onLoad: () => void }) {
-  if (!archive) return <EmptyState title="暂无治疗跟踪记录" detail="建立档案并完成基线评估后生成治疗阶段时间轴。" action="载入示例档案" onAction={onLoad}/>;
-  return <div className="cl-panel"><div className="cl-panel-head"><div><h2>治疗阶段时间轴</h2><p>当前治疗方式：<b>{archive.currentTreatmentMethod}</b>　当前节点：<strong>{archive.currentNode}</strong></p></div><span className="cl-plan-badge">{archive.treatmentPlan}</span></div><div className="cl-timeline">{archive.timeline.map((item, index) => <div className={`cl-time-item ${item.state}`} key={`${item.title}-${index}`}><div className="cl-time-marker">{item.state === "done" ? "✓" : item.state === "change" ? "↻" : index + 1}</div><div><time>{item.date}</time><h3>{item.title}</h3><p>{item.detail}</p></div></div>)}</div><section className="cl-method-history"><h3>治疗方式历史</h3>{archive.methodHistory.map((stage, index) => <div key={`${stage.method}-${stage.startedAt}`}><b>{stage.method}</b><span>{stage.startedAt} 至 {stage.endedAt || "当前"}</span><span>责任医生：{stage.doctor}</span>{stage.reason && <p>{stage.reason}；{stage.assessmentStrategy}</p>}<em>{index === archive.methodHistory.length - 1 ? "当前阶段" : "历史阶段"}</em></div>)}</section></div>;
+function TrackingTab() {
+  return <section className="legacy-module-page treatment-legacy-page" aria-label="OK镜治疗管理"><iframe title="OK镜治疗管理" src="/legacy/ok-lens-treatment.html" /></section>;
 }
 
 function OverviewTab({ archive, readOnly, onLoad, onBaseline, onChange }: { archive: ContactLensArchive | null; readOnly: boolean; onLoad: () => void; onBaseline: () => void; onChange: () => void }) {

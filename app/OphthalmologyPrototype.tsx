@@ -60,7 +60,7 @@ export function OphthalmologyPrototype() {
       </aside>
       <section className="his-workspace">
         {activeModule === "doctor" && <><ContactLensArchiveModule entryMode="doctor" /><button className="doctor-report-float" onClick={() => setReportOpen(true)}><span>▤</span><b>检查报告</b><em>3</em></button>{reportOpen&&<><div className="doctor-report-mask" onClick={()=>setReportOpen(false)}/><section className="doctor-report-panel"><header><div><span>当前患者报告</span><h2>吴四 · 检查报告</h2></div><button onClick={()=>setReportOpen(false)}>×</button></header><ExamReportModule embedded onClose={()=>setReportOpen(false)}/></section></>}</>}
-        {activeModule === "population" && <ContactLensArchiveModule entryMode="population" />}
+        {activeModule === "population" && <section className="legacy-module-page population-legacy-page" aria-label="专科人群管理与治疗方案配置"><iframe title="专科人群管理与治疗方案配置" src="/legacy/population-treatment-config.html" /></section>}
         {activeModule === "indicator" && <ClinicalIndicatorModule onNavigateTemplate={() => openModule("template")} />}
         {activeModule === "template" && <CheckTemplateModule onNavigateIndicator={() => openModule("indicator")} />}
         {activeModule === "docs" && <ProductDocsModule onOpenPrototype={(target) => { if (target === "report") { openModule("doctor"); setReportOpen(true); } else openModule(target); }} />}

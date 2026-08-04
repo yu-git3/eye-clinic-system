@@ -1,0 +1,5 @@
+.legacy-module-page{min-width:0;background:#fff;overflow:hidden}
+.legacy-module-page iframe{display:block;width:100%;height:100%;border:0;background:#fff}
+.population-legacy-page{height:calc(100vh - 52px)}
+.treatment-legacy-page{height:calc(100vh - 236px);min-height:620px;border:1px solid var(--ant-border)}
+@media(max-width:900px){.treatment-legacy-page{height:calc(100vh - 220px);min-height:560px}}

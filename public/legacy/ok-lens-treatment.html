@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OK镜全生命周期管理 - 完整原型</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:"Helvetica Neue","Microsoft YaHei",Arial,sans-serif;background:#f5f7fa;color:#1f2a3a;padding:24px;display:flex;justify-content:center}
+        .container{max-width:1400px;width:100%;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.08);padding:28px 32px}
+        .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #e9edf4;flex-wrap:wrap;gap:12px}
+        .header-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+        .header-left h2{font-size:22px;font-weight:600;display:flex;align-items:center;gap:8px}
+        .header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+        .lens-selector{display:flex;align-items:center;gap:8px}
+        .lens-selector select{padding:6px 12px;border-radius:8px;border:1px solid #d0d7e2;font-size:14px;background:#fff;outline:none;cursor:pointer}
+        .lens-selector select:focus{border-color:#2469F2}
+        .patient-info{font-size:14px;color:#6b7a8f;white-space:nowrap}
+        .patient-info strong{color:#1f2a3a}
+        .action-buttons{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+        .action-buttons .btn{font-size:12px;padding:4px 14px}
+        .status-grid{position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;background:#f8faff;border-radius:12px;padding:18px 24px;margin-bottom:24px;border:1px solid #e9edf4}
+        .status-item{display:flex;flex-direction:column}
+        .status-item .label{font-size:12px;color:#8c9aa8;text-transform:uppercase;letter-spacing:0.3px}
+        .status-item .value{font-size:16px;font-weight:600;margin-top:2px}
+        .status-item .sub{font-size:13px;color:#6b7a8f;font-weight:400}
+        .status-item .value.success{color:#1f9d5e}
+        .status-item .value.warning{color:#d97706}
+        .status-item .value.primary{color:#2469F2}
+        .payment-badge{position:absolute;top:12px;right:16px;background:#e6f7ff;color:#0b7bc0;padding:2px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid #bae7ff}
+        .payment-badge.paid{background:#f6ffed;color:#389e0d;border-color:#b7eb8f}
+        .payment-badge.unpaid{background:#fff2e8;color:#d4380d;border-color:#ffccc7}
+        .step-scroll{overflow-x:auto;padding:12px 0 20px 0;margin-bottom:8px;-webkit-overflow-scrolling:touch}
+        .step-row{display:flex;align-items:flex-start;min-width:900px;padding:4px 0}
+        .step-item{display:flex;flex-direction:column;align-items:center;flex-shrink:0;min-width:70px;text-align:center}
+        .step-item .circle{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2px solid #d0d7e2;background:#fff;color:#8c9aa8;transition:all .2s;position:relative}
+        .step-item.done .circle{background:#1f9d5e;border-color:#1f9d5e;color:#fff}
+        .step-item.current .circle{border-color:#2469F2;background:#fff;color:#2469F2;box-shadow:0 0 0 4px rgba(36,105,242,0.15)}
+        .step-item .step-label{font-size:12px;margin-top:6px;color:#6b7a8f;font-weight:500;white-space:nowrap}
+        .step-item.done .step-label{color:#1f9d5e}
+        .step-item.current .step-label{color:#2469F2}
+        .step-item .step-date{font-size:10px;color:#8c9aa8;margin-top:2px;white-space:nowrap}
+        .step-item.done .step-date{color:#1f9d5e}
+        .step-item.current .step-date{color:#2469F2}
+        .step-connector{flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:0 4px;min-width:40px}
+        .step-connector .line{width:100%;height:2px;background:#d0d7e2;margin-top:19px;min-width:20px}
+        .step-connector.done .line{background:#1f9d5e}
+        .step-connector .dur{font-size:9px;color:#8c9aa8;margin-top:4px;white-space:nowrap}
+        .step-connector.done .dur{color:#1f9d5e}
+        .btn{padding:6px 18px;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+        .btn-primary{background:#2469F2;color:#fff}
+        .btn-primary:hover{background:#1a56d6}
+        .btn-outline{background:#fff;color:#2469F2;border:1px solid #d0d7e2}
+        .btn-outline:hover{border-color:#2469F2;background:#f0f5ff}
+        .btn-success{background:#1f9d5e;color:#fff}
+        .btn-success:hover{background:#188a4e}
+        .btn-warning{background:#d97706;color:#fff}
+        .btn-warning:hover{background:#c56a05}
+        .btn-danger{background:#dc3545;color:#fff}
+        .btn-danger:hover{background:#c82333}
+        .btn-sm{padding:4px 12px;font-size:12px}
+        .ops-section{margin-top:16px;padding-top:16px;border-top:1px solid #e9edf4}
+        .ops-section .title{font-size:15px;font-weight:600;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+        .ops-table{width:100%;border-collapse:collapse;font-size:13px}
+        .ops-table th{background:#f5f7fa;text-align:left;padding:10px 12px;font-weight:500;color:#6b7a8f;border-bottom:1px solid #e9edf4}
+        .ops-table td{padding:10px 12px;border-bottom:1px solid #eef2f6;vertical-align:middle}
+        .ops-table tr:hover td{background:#f8faff}
+        .badge-op{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:500}
+        .badge-op.trial{background:#e0f2fe;color:#0369a1}
+        .badge-op.order{background:#e0e7ff;color:#4338ca}
+        .badge-op.custom{background:#fef3c7;color:#92400e}
+        .badge-op.pickup{background:#ede9fe;color:#5b21b6}
+        .badge-op.deliver{background:#dbeafe;color:#1e40af}
+        .badge-op.checkup{background:#fce7f3;color:#9d174d}
+        .badge-op.replace{background:#fef3c7;color:#b45309}
+        .badge-op.terminate{background:#fee2e2;color:#b91c1c}
+        .link-detail{color:#2469F2;cursor:pointer;font-size:12px;font-weight:500}
+        .link-detail:hover{text-decoration:underline}
+        .interval-tag{display:inline-block;background:#f0f4ff;color:#2469F2;font-size:11px;padding:0 8px;border-radius:12px;font-weight:500}
+        .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.35);z-index:9999;justify-content:center;align-items:center}
+        .modal-overlay.show{display:flex}
+        .modal{background:#fff;border-radius:16px;width:850px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,0.15);overflow:hidden}
+        .modal-header{padding:18px 24px;border-bottom:1px solid #e9edf4;display:flex;justify-content:space-between;align-items:center}
+        .modal-header h3{font-size:18px;font-weight:600}
+        .modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#8c9aa8;padding:0 4px}
+        .modal-close:hover{color:#1f2a3a}
+        .modal-body{padding:24px;overflow-y:auto;flex:1}
+        .modal-footer{padding:14px 24px;border-top:1px solid #e9edf4;display:flex;justify-content:flex-end;gap:10px}
+        .form-group{margin-bottom:12px}
+        .form-group label{display:block;font-size:13px;font-weight:500;color:#3d4a5a;margin-bottom:4px}
+        .form-group input,.form-group select,.form-group textarea{width:100%;padding:8px 12px;border:1px solid #d0d7e2;border-radius:8px;font-size:14px;outline:none;transition:border-color .15s}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#2469F2;box-shadow:0 0 0 3px rgba(36,105,242,0.1)}
+        .form-group textarea{resize:vertical;min-height:40px}
+        .form-row{display:flex;gap:16px;flex-wrap:wrap}
+        .form-row .form-group{flex:1;min-width:120px}
+        .detail-item{margin-bottom:10px}
+        .detail-item .dlabel{font-weight:500;color:#3d4a5a}
+        .detail-item .dvalue{color:#1f2a3a}
+        .divider{height:1px;background:#e9edf4;margin:12px 0}
+        .eye-block{background:#f8faff;padding:12px;border-radius:8px;margin-bottom:12px}
+        .eye-title{font-weight:600;color:#2469F2;margin-bottom:6px}
+        .checkup-eye-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .deliver-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .deliver-subtitle{font-weight:600;color:#2469F2;margin:8px 0 4px 0}
+        .inline-radio-group{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+        .inline-radio-group label{display:flex;align-items:center;gap:4px;font-weight:400;font-size:13px}
+        .inline-radio-group input[type="radio"]{width:16px;height:16px;accent-color:#2469F2}
+        .inline-check-group{display:flex;gap:16px;flex-wrap:wrap}
+        .inline-check-group label{display:flex;align-items:center;gap:4px;font-weight:400;font-size:13px}
+        .inline-check-group input[type="checkbox"]{width:16px;height:16px;accent-color:#2469F2}
+        .deliver-param-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .deliver-param-grid .form-group{margin-bottom:6px}
+        .pagination{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;justify-content:center}
+        .pagination button{padding:4px 12px;border:1px solid #d0d7e2;background:#fff;border-radius:6px;cursor:pointer;font-size:13px}
+        .pagination button:hover:not(:disabled){background:#f0f5ff;border-color:#2469F2}
+        .pagination button:disabled{color:#ccc;cursor:not-allowed}
+        .pagination .page-info{font-size:13px;color:#6b7a8f}
+        .pagination .page-input{width:50px;padding:4px 6px;border:1px solid #d0d7e2;border-radius:6px;text-align:center;font-size:13px}
+        .pagination .page-input:focus{border-color:#2469F2;outline:none}
+        .sms-template{background:#f7f9fc;padding:12px;border-radius:8px;border-left:3px solid #2469F2;margin-top:6px}
+        .sms-template .label{font-size:12px;color:#6b7a8f;margin-bottom:4px}
+        .btn-send-sms{background:#52c41a;color:#fff;border:none;padding:4px 16px;border-radius:6px;cursor:pointer;font-size:13px}
+        .btn-send-sms:hover{background:#389e0d}
+        .param-group{background:#fafcff;padding:12px;border-radius:8px;border:1px solid #e9edf4;margin-bottom:8px}
+        .param-group .param-label{font-size:12px;color:#6b7a8f;font-weight:500;margin-bottom:4px}
+        .param-group input{width:100%;padding:6px 10px;border:1px solid #d0d7e2;border-radius:6px;font-size:13px}
+        .param-group input:focus{border-color:#2469F2;outline:none}
+        .brand-hint{font-size:12px;color:#8c9aa8;padding:4px 0 8px 0;border-bottom:1px dashed #e9edf4;margin-bottom:8px}
+        .search-group{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+        .search-group input{padding:5px 10px;border:1px solid #d0d7e2;border-radius:6px;font-size:13px;width:180px}
+        .search-group input:focus{border-color:#2469F2;outline:none}
+        .search-group .btn-clear{background:transparent;border:none;color:#8c9aa8;cursor:pointer;font-size:16px}
+        .search-group .btn-clear:hover{color:#1f2a3a}
+        .btn-doc{background:#f0f5ff;color:#2469F2;border:1px solid #bae7ff;border-radius:20px;padding:4px 16px;font-size:13px;cursor:pointer}
+        .btn-doc:hover{background:#d6e4ff}
+        .doc-content{font-size:14px;line-height:1.8;color:#1f2a3a;padding:4px 0}
+        .doc-content h3{font-size:16px;margin:16px 0 8px 0;color:#2469F2}
+        .doc-content h4{font-size:15px;margin:12px 0 6px 0;color:#1f2a3a}
+        .doc-content ul{padding-left:20px;margin:6px 0}
+        .doc-content table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}
+        .doc-content th,.doc-content td{border:1px solid #d0d7e2;padding:6px 10px;text-align:left}
+        .doc-content th{background:#f5f7fa}
+        .doc-section{margin-bottom:16px}
+        @media (max-width:600px){.container{padding:16px}.modal{width:95%}.status-grid{grid-template-columns:1fr 1fr}.checkup-eye-grid{grid-template-columns:1fr}.deliver-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- ====== 头部 ====== -->
+    <div class="header">
+        <div class="header-left">
+            <h2>👁️ OK镜治疗跟踪</h2>
+            <div class="patient-info">患者：<strong>张明熙</strong> ｜ 女，12岁 ｜ 建档：2024-06-15 ｜ 电话：<strong>13812341234</strong></div>
+        </div>
+        <div class="header-right">
+            <button class="btn-doc" onclick="openDocModal()">📄 需求说明</button>
+            <div class="lens-selector">
+                <span style="font-size:14px;color:#6b7a8f;">镜片：</span>
+                <select id="lensSelect" onchange="switchLens()"></select>
+            </div>
+            <div class="action-buttons" id="actionButtons"></div>
+        </div>
+    </div>
+
+    <!-- ====== 镜片信息卡 ====== -->
+    <div class="status-grid" id="statusGrid">
+        <div class="payment-badge" id="paymentBadge">✅ 已缴费</div>
+        <div class="status-item"><span class="label">镜片品牌</span><span class="value" id="lensBrand">梦戴维</span><span class="sub" id="lensParams">BC 42.75 / DIA 10.6 / -3.00D</span><span class="sub" id="lensOrder">订单 OK-20240618-001</span></div>
+        <div class="status-item"><span class="label">当前阶段</span><span class="value primary" id="currentStage">复查随访</span><span class="sub" id="stageDetail">第6月复查 · 佩戴9个月</span></div>
+        <div class="status-item"><span class="label">交付日期</span><span class="value" id="deliverDate">2024-07-03</span><span class="sub" id="wearDuration">佩戴 276 天</span></div>
+        <div class="status-item"><span class="label">结束日期</span><span class="value" id="endDate">—</span><span class="sub" id="endReason">—</span></div>
+    </div>
+
+    <!-- ====== 时间轴（方案B） ====== -->
+    <div class="step-scroll"><div class="step-row" id="stepRow"></div></div>
+
+    <!-- ====== 操作记录（含搜索与分页） ====== -->
+    <div class="ops-section">
+        <div class="title">
+            <span>📋 操作记录</span>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                <div class="search-group">
+                    <input type="text" id="searchInput" placeholder="搜索操作/关键信息/操作人" oninput="applySearch()">
+                    <button class="btn-clear" onclick="clearSearch()" title="清空搜索">✕</button>
+                </div>
+                <span style="font-size:13px;font-weight:400;color:#8c9aa8;">共 <span id="opsCount">0</span> 条</span>
+            </div>
+        </div>
+        <table class="ops-table">
+            <thead><tr><th>日期</th><th>操作</th><th>关键信息</th><th>间隔</th><th>操作人</th><th></th></tr></thead>
+            <tbody id="opsBody"></tbody>
+        </table>
+        <div class="pagination" id="pagination"></div>
+    </div>
+</div>
+
+<!-- 模态框（业务操作） -->
+<div class="modal-overlay" id="modalOverlay"><div class="modal"><div class="modal-header"><h3 id="modalTitle">操作</h3><button class="modal-close" onclick="closeModal()">×</button></div><div class="modal-body" id="modalBody"></div><div class="modal-footer"><button class="btn btn-outline" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="saveModal()">保存</button></div></div></div>
+
+<!-- 模态框（详情） -->
+<div class="modal-overlay" id="detailModal"><div class="modal" style="width:700px;"><div class="modal-header"><h3 id="detailTitle">操作详情</h3><button class="modal-close" onclick="closeDetailModal()">×</button></div><div class="modal-body" id="detailBody" style="padding:20px 24px;"></div><div class="modal-footer" style="justify-content:flex-end;"><button class="btn btn-outline" onclick="closeDetailModal()">关闭</button></div></div></div>
+
+<!-- 模态框（需求说明） -->
+<div class="modal-overlay" id="docModal"><div class="modal" style="width:900px; max-height:90vh;"><div class="modal-header"><h3>📄 OK镜全生命周期管理系统需求说明书</h3><button class="modal-close" onclick="closeDocModal()">×</button></div><div class="modal-body" id="docBody" style="padding:24px 28px;"></div><div class="modal-footer" style="justify-content:flex-end;"><button class="btn btn-outline" onclick="closeDocModal()">关闭</button></div></div></div>
+
+<script>
+// ============================================================
+// 数据模型
+// ============================================================
+const LENSES = [
+    {
+        number: 1, brand: '梦戴维', params: 'BC 42.75 / DIA 10.6 / -3.00D', orderNo: 'OK-20240618-001',
+        payment: { amount: 6800, date: '2024-06-19' }, endDate: '2025-04-03', endReason: '换片（1年周期结束）',
+        operations: [
+            { date: '2024-06-15', type: 'trial', label: '试戴', detail: '左眼试戴 #1 · 需调整', operator: '林医生',
+                trialData: { left: { brand: '梦戴维', baseCurve: '42.75', steepK: '44.50', reduction: '3.00', power: '-3.00', diameter: '10.6', centerPos: '偏颞', slide: '0.5mm', staining: '1级', conclusion: '需调整参数' },
+                    right:{ brand: '梦戴维', baseCurve: '42.50', steepK: '44.20', reduction: '3.25', power: '-3.25', diameter: '10.6', centerPos: '居中', slide: '0.8mm', staining: '0级', conclusion: '配适良好' } } },
+            { date: '2024-06-16', type: 'trial', label: '试戴', detail: '左眼试戴 #2 · 右眼试戴 #2 · 染色0级 ✅ 通过', operator: '林医生',
+                trialData: { left: { brand: '梦戴维', baseCurve: '42.75', steepK: '44.50', reduction: '3.00', power: '-3.00', diameter: '10.6', centerPos: '居中', slide: '0.6mm', staining: '0级', conclusion: '配适良好' },
+                    right:{ brand: '梦戴维', baseCurve: '42.50', steepK: '44.20', reduction: '3.25', power: '-3.25', diameter: '10.6', centerPos: '居中', slide: '0.7mm', staining: '0级', conclusion: '配适良好' } } },
+            { date: '2024-06-18', type: 'order', label: '定片', detail: '梦戴维 BC42.75/DIA10.6/-3.00D', operator: '林医生' },
+            { date: '2024-06-24', type: 'custom', label: '验片', detail: '验片完成 · 预计7天', operator: '林医生' },
+            { date: '2024-07-01', type: 'pickup', label: '电话通知取片', detail: '已电话通知患者取片', operator: '林医生' },
+            { date: '2024-07-03', type: 'deliver', label: '交付', detail: '交付取片完成', operator: '林医生',
+                deliverData: {
+                    od: { correctedVision: '1.0', vision: '0.8', sphere: '-3.00', cylinder: '-0.75', axis: '180', va: '1.0' },
+                    os: { correctedVision: '1.0', vision: '0.8', sphere: '-2.75', cylinder: '-0.50', axis: '175', va: '1.0' },
+                    adapt: {
+                        od: { baseCurveZone: '适中', centerContact: '适中', reverseArc: '好', alignmentArc: '好', blinkPos: '中心', postBlinkPos: '中心', peripheralArc: '好', mobility: '正常' },
+                        os: { baseCurveZone: '适中', centerContact: '适中', reverseArc: '好', alignmentArc: '好', blinkPos: '中心', postBlinkPos: '中心', peripheralArc: '好', mobility: '正常' }
+                    },
+                    brand: '梦戴维',
+                    baseCurve: '42.75',
+                    steepK: '44.50',
+                    reduction: '3.00',
+                    power: '-3.00',
+                    diameter: '10.6',
+                    needNewPrescription: false,
+                    guide: {戴镜摘镜: true, 镜片护理: true},
+                    nextFollowup: '1月后'
+                }
+            },
+            { date: '2024-07-04', type: 'checkup', label: '复查', detail: '1天复查 · VA OD 1.0 OS 1.0 · 镜片清洁', operator: '林医生',
+                checkupData: { od: { va: '1.0', iop: '16', axial: '24.53', cornea: '透明', cleanliness: '清洁', scratches: '无', deposit: '无', integrity: '完好' },
+                    os: { va: '1.0', iop: '15', axial: '24.38', cornea: '透明', cleanliness: '清洁', scratches: '无', deposit: '无', integrity: '完好' } } },
+            { date: '2024-07-10', type: 'checkup', label: '复查', detail: '1周复查 · 角膜正常 · 镜片清洁', operator: '林医生',
+                checkupData: { od: { va: '1.0', iop: '16', axial: '24.55', cornea: '透明', cleanliness: '清洁', scratches: '无', deposit: '无', integrity: '完好' },
+                    os: { va: '1.0', iop: '15', axial: '24.40', cornea: '透明', cleanliness: '清洁', scratches: '无', deposit: '无', integrity: '完好' } } },
+            { date: '2024-08-03', type: 'checkup', label: '复查', detail: '1月复查 · 眼轴稳定 · 镜片良好', operator: '林医生',
+                checkupData: { od: { va: '1.0', iop: '16', axial: '24.56', cornea: '透明', cleanliness: '清洁', scratches: '无', deposit: '轻度', integrity: '完好' },
+                    os: { va: '1.0', iop: '15', axial: '24.41', cornea: '透明', cleanliness: '清洁', scratches: '无', deposit: '轻度', integrity: '完好' } } },
+            { date: '2024-10-03', type: 'checkup', label: '复查', detail: '3月复查 · VA 1.0/1.0 · 镜片轻微划痕', operator: '林医生',
+                checkupData: { od: { va: '1.0', iop: '16', axial: '24.60', cornea: '透明', cleanliness: '清洁', scratches: '轻微', deposit: '轻度', integrity: '完好' },
+                    os: { va: '1.0', iop: '15', axial: '24.45', cornea: '透明', cleanliness: '清洁', scratches: '轻微', deposit: '轻度', integrity: '完好' } } },
+            { date: '2025-01-03', type: 'checkup', label: '复查', detail: '6月复查 · VA 1.0/1.0 · 角膜正常', operator: '林医生',
+                checkupData: { od: { va: '1.0', iop: '17', axial: '24.70', cornea: '透明', cleanliness: '清洁', scratches: '轻微', deposit: '轻度', integrity: '完好' },
+                    os: { va: '1.0', iop: '16', axial: '24.52', cornea: '透明', cleanliness: '清洁', scratches: '轻微', deposit: '轻度', integrity: '完好' } } },
+            { date: '2025-04-03', type: 'replace', label: '换片', detail: '换片 · 1年周期结束，开启第2副', operator: '林医生' },
+        ]
+    },
+    {
+        number: 2, brand: '梦戴维（换片）', params: 'BC 42.50 / DIA 10.6 / -3.25D', orderNo: 'OK-20250401-002',
+        payment: { amount: 6800, date: '2025-04-05' }, endDate: null, endReason: null,
+        operations: [
+            { date: '2025-04-01', type: 'trial', label: '试戴', detail: '新镜片试戴 #1 · 染色0级 ✅ 通过', operator: '林医生',
+                trialData: { left: { brand: '梦戴维', baseCurve: '42.50', steepK: '44.30', reduction: '3.25', power: '-3.25', diameter: '10.6', centerPos: '居中', slide: '0.5mm', staining: '0级', conclusion: '配适良好' },
+                    right:{ brand: '梦戴维', baseCurve: '42.30', steepK: '44.00', reduction: '3.50', power: '-3.50', diameter: '10.6', centerPos: '居中', slide: '0.6mm', staining: '0级', conclusion: '配适良好' } } },
+            { date: '2025-04-02', type: 'order', label: '定片', detail: '梦戴维 BC42.50/DIA10.6/-3.25D', operator: '林医生' },
+            { date: '2025-04-10', type: 'custom', label: '验片', detail: '验片完成', operator: '林医生' },
+        ]
+    }
+];
+
+// 患者信息
+const PATIENT = { name: '张明熙', phone: '13812341234', contactPerson: '张先生', contactPhone: '13912345678' };
+
+// ============================================================
+// 品牌参数项目定义
+// ============================================================
+const BRAND_PARAMS = {
+    '梦戴维': {
+        label: '梦戴维（中国）',
+        params: ['baseCurve', 'steepK', 'reduction', 'power', 'diameter'],
+        paramLabels: {
+            baseCurve: '基弧 (D)',
+            steepK: '陡峭曲率 (D)',
+            reduction: '降度 (D)',
+            power: '度数 (D)',
+            diameter: '直径 (mm)'
+        },
+        hint: '常规片，基弧33-46D，降幅0.50-6.00D'
+    },
+    'CRT': {
+        label: 'CRT（美国）',
+        params: ['baseCurve', 'steepK', 'reduction', 'power', 'diameter', 'centerThickness'],
+        paramLabels: {
+            baseCurve: '基弧 (mm)',
+            steepK: '陡峭曲率 (D)',
+            reduction: '降度 (D)',
+            power: '度数 (D)',
+            diameter: '直径 (mm)',
+            centerThickness: '中心厚度 (mm)'
+        },
+        hint: '三区独立设计，厚度0.16mm'
+    },
+    '阿尔法': {
+        label: '阿尔法（日本）',
+        params: ['baseCurve', 'steepK', 'reduction', 'power', 'diameter', 'centerThickness'],
+        paramLabels: {
+            baseCurve: '基弧 (D)',
+            steepK: '陡峭曲率 (D)',
+            reduction: '降度 (D)',
+            power: '度数 (D)',
+            diameter: '直径 (mm)',
+            centerThickness: '中心厚度 (mm)'
+        },
+        hint: '日本进口，做工精细，中心厚度0.22mm'
+    },
+    'Dreamlite': {
+        label: 'Dreamlite（荷兰）',
+        params: ['baseCurve', 'steepK', 'reduction', 'power', 'diameter', 'centerThickness'],
+        paramLabels: {
+            baseCurve: '基弧 (mm)',
+            steepK: '陡峭曲率 (D)',
+            reduction: '降度 (D)',
+            power: '度数 (D)',
+            diameter: '直径 (mm)',
+            centerThickness: '中心厚度 (mm)'
+        },
+        hint: '四弧区反几何设计，舒适度高'
+    },
+    '欧几里得': {
+        label: '欧几里得（美国）',
+        params: ['baseCurve', 'steepK', 'reduction', 'power', 'diameter', 'centerThickness'],
+        paramLabels: {
+            baseCurve: '基弧 (D)',
+            steepK: '陡峭曲率 (D)',
+            reduction: '降度 (D)',
+            power: '度数 (D)',
+            diameter: '直径 (mm)',
+            centerThickness: '中心厚度 (mm)'
+        },
+        hint: '个性化调整程度高，近视≤600D'
+    },
+    '普诺瞳': {
+        label: '普诺瞳（中国）',
+        params: ['baseCurve', 'steepK', 'reduction', 'power', 'diameter', 'centerThickness'],
+        paramLabels: {
+            baseCurve: '基弧 (D)',
+            steepK: '陡峭曲率 (D)',
+            reduction: '降度 (D)',
+            power: '度数 (D)',
+            diameter: '直径 (mm)',
+            centerThickness: '中心厚度 (mm)'
+        },
+        hint: '全弧段非球面设计，透氧125'
+    }
+};
+
+const BRAND_NAMES = Object.keys(BRAND_PARAMS);
+
+let currentIndex = 0;
+let currentPage = 1;
+const PAGE_SIZE = 10;
+let currentSearch = '';
+
+function getLens() { return LENSES[currentIndex]; }
+function getStartDate(lens) { return lens.operations.length ? lens.operations[0].date : null; }
+function getDeliverDate(lens) { const op = lens.operations.find(o => o.type === 'deliver'); return op ? op.date : null; }
+function getWearDays(lens) {
+    const delDate = getDeliverDate(lens);
+    if (!delDate) return null;
+    return Math.floor((new Date() - new Date(delDate)) / (1000*60*60*24));
+}
+function getCheckupInterval(lens, op) {
+    if (op.type !== 'checkup') return null;
+    const delDate = getDeliverDate(lens);
+    if (!delDate) return null;
+    return Math.floor((new Date(op.date) - new Date(delDate)) / (1000*60*60*24));
+}
+function getLastTrialData(lens) {
+    const trials = lens.operations.filter(o => o.type === 'trial' && o.trialData);
+    if (!trials.length) return null;
+    const last = trials[trials.length-1];
+    const result = {};
+    ['left','right'].forEach(eye => {
+        if (last.trialData[eye]) {
+            const d = last.trialData[eye];
+            result[eye] = { brand: d.brand, baseCurve: d.baseCurve, steepK: d.steepK, reduction: d.reduction, power: d.power, diameter: d.diameter };
+        }
+    });
+    return result;
+}
+
+// ============================================================
+// 生成关键信息（用于搜索与显示）
+// ============================================================
+function buildKeyInfo(op) {
+    let statusSummary = '';
+    if (op.type === 'checkup' && op.checkupData) {
+        const od = op.checkupData.od || {};
+        const os = op.checkupData.os || {};
+        const parts = [];
+        if (od.cleanliness && od.cleanliness !== '清洁') parts.push(`OD:${od.cleanliness}`);
+        if (os.cleanliness && os.cleanliness !== '清洁') parts.push(`OS:${os.cleanliness}`);
+        if (od.scratches && od.scratches !== '无') parts.push(`OD划痕:${od.scratches}`);
+        if (os.scratches && os.scratches !== '无') parts.push(`OS划痕:${os.scratches}`);
+        if (parts.length) statusSummary = `镜片: ${parts.join('; ')}`;
+    } else if (op.type === 'deliver' && op.deliverData) {
+        const d = op.deliverData;
+        statusSummary = `品牌:${d.brand} 下次:${d.nextFollowup}`;
+    } else if (op.type === 'pickup' && op.pickupData) {
+        const p = op.pickupData;
+        statusSummary = `联系人:${p.contactPerson || ''} 方式:${p.method || ''}`;
+    }
+    return op.detail + (statusSummary ? ' ' + statusSummary : '');
+}
+
+// ============================================================
+// 渲染主函数
+// ============================================================
+function renderAll() {
+    const lens = getLens();
+    renderLensSelect();
+
+    document.getElementById('lensBrand').textContent = lens.brand;
+    document.getElementById('lensParams').textContent = lens.params;
+    document.getElementById('lensOrder').textContent = `订单 ${lens.orderNo}`;
+    const paid = lens.payment && lens.payment.amount > 0;
+    const badge = document.getElementById('paymentBadge');
+    if (paid) {
+        badge.textContent = `✅ 已缴费 ¥${lens.payment.amount.toLocaleString()}`;
+        badge.className = 'payment-badge paid';
+    } else {
+        badge.textContent = '⏳ 未缴费';
+        badge.className = 'payment-badge unpaid';
+    }
+    const delDate = getDeliverDate(lens);
+    if (delDate) {
+        document.getElementById('deliverDate').textContent = delDate;
+        document.getElementById('wearDuration').textContent = `佩戴 ${getWearDays(lens) || 0} 天`;
+    } else {
+        document.getElementById('deliverDate').textContent = '尚未交付';
+        document.getElementById('wearDuration').textContent = '—';
+    }
+    if (lens.endDate) {
+        document.getElementById('endDate').textContent = lens.endDate;
+        document.getElementById('endReason').textContent = lens.endReason || '已结束';
+        document.getElementById('endDate').style.color = '#b91c1c';
+    } else {
+        document.getElementById('endDate').textContent = '—';
+        document.getElementById('endReason').textContent = '—';
+        document.getElementById('endDate').style.color = '#1f2a3a';
+    }
+
+    const ops = lens.operations;
+    const lastOp = ops.length ? ops[ops.length-1] : null;
+    let stageText = '未开始', stageDetail = '';
+    if (lastOp) {
+        const map = { trial:'试戴中', order:'已定片', custom:'验片中', pickup:'待取片', deliver:'已交付', checkup:'复查随访', replace:'已换片', terminate:'已终止' };
+        stageText = map[lastOp.type] || lastOp.label;
+        if (lastOp.type === 'checkup') {
+            const idx = ops.filter(o => o.type === 'checkup').length;
+            const times = ['首次','1周','1月','3月','6月','9月','12月'];
+            stageDetail = `${idx <= times.length ? times[idx-1] : idx+'次'}复查 · 佩戴${getWearDays(lens)||0}天`;
+        } else if (lastOp.type === 'deliver') { stageDetail = '已交付 · 等待首次复查'; }
+        else if (lastOp.type === 'replace' || lastOp.type === 'terminate') { stageDetail = `结束于 ${lastOp.date}`; }
+        else { stageDetail = `${stageText} · 进行中`; }
+    }
+    document.getElementById('currentStage').textContent = stageText;
+    document.getElementById('stageDetail').textContent = stageDetail || '';
+
+    renderSteps(lens);
+    renderActions(lens);
+    if (currentSearch.trim() !== '') {
+        renderOps(lens, currentPage, currentSearch);
+    } else {
+        renderOps(lens, currentPage, '');
+    }
+}
+
+// ============================================================
+// 下拉选项
+// ============================================================
+function renderLensSelect() {
+    const sel = document.getElementById('lensSelect');
+    sel.innerHTML = '';
+    LENSES.forEach((lens, idx) => {
+        const del = getDeliverDate(lens) || '未交付';
+        const end = lens.endDate || '进行中';
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = `第${lens.number}副 - ${lens.brand} (交付:${del}, 结束:${end})`;
+        sel.appendChild(opt);
+    });
+    sel.value = currentIndex;
+}
+
+// ============================================================
+// 时间轴（方案B）
+// ============================================================
+function renderSteps(lens) {
+    const ops = lens.operations;
+    const checkups = ops.filter(o => o.type === 'checkup').sort((a,b) => new Date(a.date) - new Date(b.date));
+    const stepTypes = [];
+    const pre = ['trial','order','custom','pickup','deliver'];
+    pre.forEach(t => {
+        const found = ops.find(o => o.type === t);
+        if (found) stepTypes.push({ type: t, date: found.date, label: found.label });
+    });
+    checkups.forEach((c, idx) => {
+        const days = getCheckupInterval(lens, c);
+        let label = `复查${idx+1}`;
+        if (days !== null) {
+            if (days === 0) label += ' (当日)';
+            else if (days < 7) label += ` (${days}天)`;
+            else if (days < 30) label += ` (${Math.floor(days/7)}周)`;
+            else if (days < 365) label += ` (${Math.floor(days/30)}月)`;
+            else label += ` (${Math.floor(days/365)}年)`;
+        }
+        stepTypes.push({ type: 'checkup', date: c.date, label: label, isCheckup: true });
+    });
+    const replace = ops.find(o => o.type === 'replace');
+    if (replace) stepTypes.push({ type: 'replace', date: replace.date, label: '换片' });
+    const terminate = ops.find(o => o.type === 'terminate');
+    if (terminate) stepTypes.push({ type: 'terminate', date: terminate.date, label: '终止' });
+
+    const lastOp = ops.length ? ops[ops.length-1] : null;
+    let html = '';
+    stepTypes.forEach((node, idx) => {
+        let cls = '';
+        let dateStr = node.date || '';
+        const isDone = ops.some(o => o.type === node.type && o.date === node.date);
+        if (isDone) cls = 'done';
+        if (lastOp && node.type === lastOp.type && node.date === lastOp.date) {
+            cls = 'current';
+        }
+        if (lastOp && lastOp.type === 'checkup' && node.isCheckup && node.date === lastOp.date) {
+            cls = 'current';
+        }
+        let circleText = '';
+        if (node.type === 'trial') circleText = '试';
+        else if (node.type === 'order') circleText = '定';
+        else if (node.type === 'custom') circleText = '验';
+        else if (node.type === 'pickup') circleText = '等';
+        else if (node.type === 'deliver') circleText = '交';
+        else if (node.type === 'checkup') {
+            const idx = checkups.findIndex(c => c.date === node.date);
+            circleText = `复${idx+1}`;
+        } else if (node.type === 'replace') circleText = '换';
+        else if (node.type === 'terminate') circleText = '终';
+
+        html += `<div class="step-item ${cls}"><div class="circle">${circleText}</div><div class="step-label">${node.label}</div>${dateStr ? `<div class="step-date">${dateStr}</div>` : ''}</div>`;
+        if (idx < stepTypes.length-1) {
+            const isDone = ops.some(o => o.type === node.type && o.date === node.date);
+            html += `<div class="step-connector ${isDone?'done':''}"><div class="line"></div><div class="dur">${isDone?'✓':'—'}</div></div>`;
+        }
+    });
+    document.getElementById('stepRow').innerHTML = html;
+}
+
+// ============================================================
+// 操作按钮
+// ============================================================
+function renderActions(lens) {
+    const container = document.getElementById('actionButtons');
+    if (lens.endDate) {
+        container.innerHTML = `<span style="color:#8c9aa8;font-size:13px;">已结束</span>`;
+        return;
+    }
+    const actions = [
+        { key: 'trial', label: '🔬 试戴', cls: 'btn-primary' },
+        { key: 'order', label: '📦 定片', cls: 'btn-outline' },
+        { key: 'custom_done', label: '🔍 验片', cls: 'btn-outline' },
+        { key: 'pickup_notify', label: '📞 通知取片', cls: 'btn-outline' },
+        { key: 'deliver_confirm', label: '📋 交付确认', cls: 'btn-outline' },
+        { key: 'checkup', label: '🔄 复查', cls: 'btn-outline' },
+        { key: 'replace', label: '⏹ 换片', cls: 'btn-warning' },
+        { key: 'terminate', label: '⛔ 终止', cls: 'btn-danger' },
+    ];
+    let html = '';
+    actions.forEach(a => {
+        html += `<button class="btn ${a.cls}" onclick="openModal('${a.key}')">${a.label}</button>`;
+    });
+    container.innerHTML = html;
+}
+
+// ============================================================
+// 操作记录（分页 + 搜索）
+// ============================================================
+function renderOps(lens, page, search) {
+    search = (search || '').trim().toLowerCase();
+    let allOps = lens.operations.filter(op => op.type !== 'payment');
+    allOps.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+    if (search) {
+        allOps = allOps.filter(op => {
+            const keyInfo = buildKeyInfo(op).toLowerCase();
+            const label = (op.label || '').toLowerCase();
+            const operator = (op.operator || '').toLowerCase();
+            return keyInfo.includes(search) || label.includes(search) || operator.includes(search);
+        });
+    }
+
+    const total = allOps.length;
+    document.getElementById('opsCount').textContent = total;
+
+    const totalPages = Math.ceil(total / PAGE_SIZE) || 1;
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    currentPage = page;
+
+    const start = (page - 1) * PAGE_SIZE;
+    const end = Math.min(start + PAGE_SIZE, total);
+    const pageData = allOps.slice(start, end);
+
+    const badgeMap = { trial:'trial', order:'order', custom:'custom', pickup:'pickup', deliver:'deliver', checkup:'checkup', replace:'replace', terminate:'terminate' };
+    let html = '';
+    if (pageData.length === 0) {
+        html = `<tr class="empty-row"><td colspan="6">📭 ${search ? '无匹配记录' : '暂无记录'}</td></tr>`;
+    } else {
+        pageData.forEach((op) => {
+            const originalIndex = lens.operations.indexOf(op);
+            let intervalHtml = '';
+            if (op.type === 'checkup') {
+                const days = getCheckupInterval(lens, op);
+                if (days !== null) intervalHtml = `<span class="interval-tag">交付后 ${days} 天</span>`;
+            } else if (op.type === 'replace' || op.type === 'terminate') {
+                intervalHtml = `<span class="interval-tag">结束</span>`;
+            }
+            const keyInfo = buildKeyInfo(op);
+            const isRecent = (() => {
+                const d = new Date(op.date);
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                return d >= thirtyDaysAgo;
+            })();
+
+            html += `<tr>
+                <td>${op.date}${isRecent ? ' 🆕' : ''}</td>
+                <td><span class="badge-op ${badgeMap[op.type]||''}">${op.label}</span></td>
+                <td>${keyInfo}</td>
+                <td>${intervalHtml}</td>
+                <td>${op.operator}</td>
+                <td><span class="link-detail" onclick="showDetail(${originalIndex})">查看详情</span></td>
+            </tr>`;
+        });
+    }
+    document.getElementById('opsBody').innerHTML = html;
+    renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+    const container = document.getElementById('pagination');
+    const current = currentPage;
+    let html = '';
+    html += `<button onclick="goToPage(${current-1})" ${current<=1?'disabled':''}>上一页</button>`;
+    html += `<span class="page-info">第 ${current} / ${totalPages} 页</span>`;
+    html += `<button onclick="goToPage(${current+1})" ${current>=totalPages?'disabled':''}>下一页</button>`;
+    html += `<span style="margin-left:8px;">跳转：</span>`;
+    html += `<input class="page-input" type="number" min="1" max="${totalPages}" id="pageJumpInput" value="${current}" onkeydown="if(event.key==='Enter') jumpToPage()">`;
+    html += `<button onclick="jumpToPage()">Go</button>`;
+    container.innerHTML = html;
+}
+
+function goToPage(page) {
+    const lens = getLens();
+    let allOps = lens.operations.filter(op => op.type !== 'payment');
+    allOps.sort((a,b) => new Date(b.date) - new Date(a.date));
+    const search = (currentSearch || '').trim().toLowerCase();
+    if (search) {
+        allOps = allOps.filter(op => {
+            const keyInfo = buildKeyInfo(op).toLowerCase();
+            const label = (op.label || '').toLowerCase();
+            const operator = (op.operator || '').toLowerCase();
+            return keyInfo.includes(search) || label.includes(search) || operator.includes(search);
+        });
+    }
+    const totalPages = Math.ceil(allOps.length / PAGE_SIZE) || 1;
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    currentPage = page;
+    renderOps(lens, page, currentSearch);
+}
+
+function jumpToPage() {
+    const input = document.getElementById('pageJumpInput');
+    let page = parseInt(input.value);
+    if (isNaN(page) || page < 1) page = 1;
+    const lens = getLens();
+    let allOps = lens.operations.filter(op => op.type !== 'payment');
+    allOps.sort((a,b) => new Date(b.date) - new Date(a.date));
+    const search = (currentSearch || '').trim().toLowerCase();
+    if (search) {
+        allOps = allOps.filter(op => {
+            const keyInfo = buildKeyInfo(op).toLowerCase();
+            const label = (op.label || '').toLowerCase();
+            const operator = (op.operator || '').toLowerCase();
+            return keyInfo.includes(search) || label.includes(search) || operator.includes(search);
+        });
+    }
+    const totalPages = Math.ceil(allOps.length / PAGE_SIZE) || 1;
+    if (page > totalPages) page = totalPages;
+    input.value = page;
+    goToPage(page);
+}
+
+// ============================================================
+// 搜索控制
+// ============================================================
+function applySearch() {
+    const input = document.getElementById('searchInput');
+    currentSearch = input.value;
+    currentPage = 1;
+    const lens = getLens();
+    renderOps(lens, 1, currentSearch);
+}
+
+function clearSearch() {
+    document.getElementById('searchInput').value = '';
+    currentSearch = '';
+    currentPage = 1;
+    const lens = getLens();
+    renderOps(lens, 1, '');
+}
+
+// ============================================================
+// 查看详情
+// ============================================================
+function showDetail(index) {
+    const lens = getLens();
+    const op = lens.operations[index];
+    if (!op) { alert('记录不存在'); return; }
+    let html = `<div class="detail-item"><span class="dlabel">操作类型：</span><span class="dvalue">${op.label}</span></div>
+        <div class="detail-item"><span class="dlabel">日期：</span><span class="dvalue">${op.date}</span></div>
+        <div class="detail-item"><span class="dlabel">操作人：</span><span class="dvalue">${op.operator}</span></div>
+        <div class="detail-item"><span class="dlabel">详细内容：</span><span class="dvalue">${op.detail}</span></div>`;
+
+    if (op.type === 'pickup' && op.pickupData) {
+        const p = op.pickupData;
+        html += `<div class="divider"></div><h4>📞 通知信息</h4>`;
+        html += `<div>患者电话：${p.patientPhone || ''}</div>`;
+        html += `<div>联系人：${p.contactPerson || ''}</div>`;
+        html += `<div>联系人电话：${p.contactPhone || ''}</div>`;
+        html += `<div>通知方式：${p.method || ''}</div>`;
+        if (p.method === '短信' && p.smsContent) {
+            html += `<div><b>短信内容：</b><br><pre style="background:#f5f7fa;padding:8px;border-radius:4px;">${p.smsContent}</pre></div>`;
+        }
+    }
+
+    if (op.type === 'checkup' && op.checkupData) {
+        const od = op.checkupData.od || {};
+        const os = op.checkupData.os || {};
+        html += `<div class="divider"></div><div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">`;
+        html += `<div><h4>右眼 (OD)</h4><div>裸眼视力：${od.va || '—'}</div><div>眼压：${od.iop || '—'} mmHg</div><div>眼轴：${od.axial || '—'} mm</div><div>角膜健康：${od.cornea || '—'}</div><div>镜片清洁度：${od.cleanliness || '—'}</div><div>划痕：${od.scratches || '—'}</div><div>蛋白沉淀：${od.deposit || '—'}</div><div>完整性：${od.integrity || '—'}</div></div>`;
+        html += `<div><h4>左眼 (OS)</h4><div>裸眼视力：${os.va || '—'}</div><div>眼压：${os.iop || '—'} mmHg</div><div>眼轴：${os.axial || '—'} mm</div><div>角膜健康：${os.cornea || '—'}</div><div>镜片清洁度：${os.cleanliness || '—'}</div><div>划痕：${os.scratches || '—'}</div><div>蛋白沉淀：${os.deposit || '—'}</div><div>完整性：${os.integrity || '—'}</div></div>`;
+        html += `</div>`;
+    }
+
+    if (op.type === 'deliver' && op.deliverData) {
+        const d = op.deliverData;
+        html += `<div class="divider"></div><h4>📦 交付取片详情</h4>`;
+        html += `<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">`;
+        html += `<div><b>右眼 (OD)</b><br>矫正视力：${d.od.correctedVision || '—'}<br>视力：${d.od.vision || '—'}<br>球镜：${d.od.sphere || '—'}<br>柱镜：${d.od.cylinder || '—'}<br>轴向：${d.od.axis || '—'}<br>视力：${d.od.va || '—'}</div>`;
+        html += `<div><b>左眼 (OS)</b><br>矫正视力：${d.os.correctedVision || '—'}<br>视力：${d.os.vision || '—'}<br>球镜：${d.os.sphere || '—'}<br>柱镜：${d.os.cylinder || '—'}<br>轴向：${d.os.axis || '—'}<br>视力：${d.os.va || '—'}</div>`;
+        html += `</div>`;
+        html += `<div style="margin-top:12px;"><b>镜片适配</b><br>`;
+        ['od','os'].forEach(eye => {
+            const label = eye==='od'?'右眼':'左眼';
+            const a = d.adapt[eye] || {};
+            html += `<div style="display:inline-block;width:45%;margin-right:4%;"><b>${label}</b><br>基弧区：${a.baseCurveZone || '—'}<br>中心接触：${a.centerContact || '—'}<br>反转弧：${a.reverseArc || '—'}<br>定点弧：${a.alignmentArc || '—'}<br>眨眼位置：${a.blinkPos || '—'}<br>眨眼后位置：${a.postBlinkPos || '—'}<br>周边弧：${a.peripheralArc || '—'}<br>活动度：${a.mobility || '—'}</div>`;
+        });
+        html += `</div>`;
+        html += `<div style="margin-top:12px;"><b>品牌参数</b><br>品牌：${d.brand || '—'}<br>基弧/曲率：${d.baseCurve || '—'}<br>陡峭曲率：${d.steepK || '—'}<br>降度：${d.reduction || '—'}<br>度数：${d.power || '—'}<br>直径：${d.diameter || '—'}</div>`;
+        html += `<div style="margin-top:8px;">是否需要新处方：${d.needNewPrescription ? '是' : '否'}</div>`;
+        html += `<div style="margin-top:8px;">患者戴镜指南：${d.guide ? Object.keys(d.guide).filter(k=>d.guide[k]).join('、') : '—'}</div>`;
+        html += `<div style="margin-top:8px;">下次随访时间：${d.nextFollowup || '—'}</div>`;
+    }
+
+    if (op.type === 'trial' && op.trialData) {
+        const data = op.trialData;
+        ['left','right'].forEach(eye => {
+            const p = data[eye];
+            if (p) {
+                html += `<div class="divider"></div><div class="eye-block"><div class="eye-title">${eye==='left'?'左眼':'右眼'}</div>`;
+                html += `品牌：${p.brand}<br>基弧：${p.baseCurve || '—'}<br>陡峭曲率：${p.steepK || '—'}<br>降度：${p.reduction || '—'}<br>度数：${p.power || '—'}<br>直径：${p.diameter || '—'}<br>`;
+                if (p.centerThickness) html += `中心厚度：${p.centerThickness}<br>`;
+                html += `中心定位：${p.centerPos || '—'}<br>滑动度：${p.slide || '—'}<br>荧光染色：${p.staining || '—'}<br>试戴结论：${p.conclusion || '—'}`;
+                html += `<div style="margin-top:8px;"><button class="btn btn-success btn-sm" onclick="quickOrderFromTrial('${eye}', '${p.brand}', '${p.baseCurve}', '${p.steepK}', '${p.reduction}', '${p.power}', '${p.diameter}')">📦 基于此眼定片</button></div>`;
+                html += `</div>`;
+            }
+        });
+    }
+
+    document.getElementById('detailTitle').textContent = `📋 ${op.label} 详情`;
+    document.getElementById('detailBody').innerHTML = html;
+    document.getElementById('detailModal').classList.add('show');
+}
+function closeDetailModal() { document.getElementById('detailModal').classList.remove('show'); }
+
+// ============================================================
+// 辅助函数
+// ============================================================
+function quickOrderFromTrial(eye, brand, baseCurve, steepK, reduction, power, diameter) {
+    closeDetailModal();
+    openModal('order');
+    setTimeout(() => {
+        const brandSelect = document.getElementById(eye === 'left' ? 'leftBrand' : 'rightBrand');
+        if (brandSelect) {
+            brandSelect.value = brand || '梦戴维';
+            fillBrandParams(eye === 'left' ? 'left' : 'right');
+        }
+        const prefix = eye === 'left' ? 'left' : 'right';
+        const map = { baseCurve, steepK, reduction, power, diameter };
+        Object.keys(map).forEach(key => {
+            const input = document.getElementById(`${prefix}_${key}`);
+            if (input) input.value = map[key] || '';
+        });
+        const orderInput = document.querySelector('#modalBody input[placeholder*="自动生成"]');
+        if (orderInput) {
+            const today = new Date().toISOString().slice(0,10).replace(/-/g,'');
+            orderInput.value = `OK-${today}-001`;
+        }
+        alert('✅ 已填充该眼品牌及参数，请确认后保存。');
+    }, 150);
+}
+function quickOrderFromLastTrial() {
+    const lens = getLens();
+    const lastTrial = getLastTrialData(lens);
+    if (!lastTrial) { alert('没有找到试戴记录，请先进行试戴。'); return; }
+    setTimeout(() => {
+        ['left','right'].forEach(eye => {
+            const data = lastTrial[eye === 'left' ? 'left' : 'right'];
+            if (data) {
+                const brandSelect = document.getElementById(eye === 'left' ? 'leftBrand' : 'rightBrand');
+                if (brandSelect) {
+                    brandSelect.value = data.brand || '梦戴维';
+                    fillBrandParams(eye);
+                }
+                const prefix = eye;
+                const map = { baseCurve: data.baseCurve, steepK: data.steepK, reduction: data.reduction, power: data.power, diameter: data.diameter };
+                Object.keys(map).forEach(key => {
+                    const input = document.getElementById(`${prefix}_${key}`);
+                    if (input) input.value = map[key] || '';
+                });
+            }
+        });
+        alert('✅ 已从最近试戴填充双眼品牌及参数，请确认后保存。');
+    }, 150);
+}
+function exportParams() {
+    const prefixs = ['left', 'right'];
+    let lines = ['===== 双眼定片参数 ====='];
+    prefixs.forEach(p => {
+        const brand = document.getElementById(`${p}Brand`)?.value || '';
+        const baseCurve = document.getElementById(`${p}_baseCurve`)?.value || '';
+        const steepK = document.getElementById(`${p}_steepK`)?.value || '';
+        const reduction = document.getElementById(`${p}_reduction`)?.value || '';
+        const power = document.getElementById(`${p}_power`)?.value || '';
+        const diameter = document.getElementById(`${p}_diameter`)?.value || '';
+        const ct = document.getElementById(`${p}_centerThickness`)?.value || '';
+        const eyeLabel = p === 'left' ? '左眼 (OS)' : '右眼 (OD)';
+        let line = `${eyeLabel} : 品牌=${brand}`;
+        if (baseCurve) line += `, 基弧=${baseCurve}`;
+        if (steepK) line += `, 陡峭曲率=${steepK}`;
+        if (reduction) line += `, 降度=${reduction}`;
+        if (power) line += `, 度数=${power}`;
+        if (diameter) line += `, 直径=${diameter}`;
+        if (ct) line += `, 中心厚度=${ct}`;
+        lines.push(line);
+    });
+    lines.push('==========================');
+    const text = lines.join('\n');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => alert('✅ 参数已复制到剪贴板。')).catch(() => prompt('复制以下内容保存：', text));
+    } else {
+        prompt('复制以下内容保存：', text);
+    }
+}
+
+function sendSms(phone, content) {
+    alert(`📨 短信已发送至 ${phone}\n\n内容：\n${content}`);
+    return true;
+}
+
+// ============================================================
+// 品牌联动：动态渲染参数项目
+// ============================================================
+function fillBrandParams(eyePrefix) {
+    const brandSelect = document.getElementById(`${eyePrefix}Brand`);
+    if (!brandSelect) return;
+    const brand = brandSelect.value;
+    const config = BRAND_PARAMS[brand];
+    if (!config) return;
+
+    const container = document.getElementById(`${eyePrefix}ParamsContainer`);
+    if (!container) return;
+
+    let html = '';
+    config.params.forEach(paramKey => {
+        const label = config.paramLabels[paramKey] || paramKey;
+        const inputId = `${eyePrefix}_${paramKey}`;
+        html += `
+            <div class="param-group">
+                <div class="param-label">${label}</div>
+                <input id="${inputId}" type="text" placeholder="请输入${label}" />
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+
+    const hintEl = document.getElementById(`${eyePrefix}BrandHint`);
+    if (hintEl) {
+        hintEl.textContent = config.hint || '';
+    }
+}
+
+// ============================================================
+// 模态框（业务操作）
+// ============================================================
+let modalAction = '';
+function openModal(action) {
+    modalAction = action;
+    const overlay = document.getElementById('modalOverlay');
+    const title = document.getElementById('modalTitle');
+    const body = document.getElementById('modalBody');
+    const today = new Date().toISOString().slice(0,10);
+    const lens = getLens();
+
+    let html = '';
+    if (action === 'trial') {
+        title.textContent = '🔬 新试戴（品牌联动参数）';
+        html = `
+            <div class="form-group"><label>试戴日期</label><input type="date" value="${today}"></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                <div>
+                    <h4 style="color:#2469F2;">左眼</h4>
+                    <div class="form-group">
+                        <label>品牌</label>
+                        <select id="leftBrand">
+                            ${BRAND_NAMES.map(b => `<option value="${b}">${BRAND_PARAMS[b].label}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div id="leftBrandHint" class="brand-hint"></div>
+                    <div id="leftParamsContainer"></div>
+                    <div style="margin-top:12px;">
+                        <div class="form-group"><label>中心定位</label>
+                            <select id="left_centerPos"><option>居中</option><option>偏颞</option><option>偏鼻</option><option>偏上</option><option>偏下</option></select>
+                        </div>
+                        <div class="form-group"><label>滑动度</label><input id="left_slide" placeholder="如 0.5mm"></div>
+                        <div class="form-group"><label>荧光染色</label>
+                            <select id="left_staining"><option>0级</option><option>1级</option><option>2级</option><option>3级</option></select>
+                        </div>
+                        <div class="form-group"><label>试戴结论</label>
+                            <select id="left_conclusion"><option>配适良好</option><option>需调整参数</option><option>不通过</option></select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="color:#2469F2;">右眼</h4>
+                    <div class="form-group">
+                        <label>品牌</label>
+                        <select id="rightBrand">
+                            ${BRAND_NAMES.map(b => `<option value="${b}">${BRAND_PARAMS[b].label}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div id="rightBrandHint" class="brand-hint"></div>
+                    <div id="rightParamsContainer"></div>
+                    <div style="margin-top:12px;">
+                        <div class="form-group"><label>中心定位</label>
+                            <select id="right_centerPos"><option>居中</option><option>偏颞</option><option>偏鼻</option><option>偏上</option><option>偏下</option></select>
+                        </div>
+                        <div class="form-group"><label>滑动度</label><input id="right_slide" placeholder="如 0.6mm"></div>
+                        <div class="form-group"><label>荧光染色</label>
+                            <select id="right_staining"><option>0级</option><option>1级</option><option>2级</option><option>3级</option></select>
+                        </div>
+                        <div class="form-group"><label>试戴结论</label>
+                            <select id="right_conclusion"><option>配适良好</option><option>需调整参数</option><option>不通过</option></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:8px;font-size:12px;color:#6b7a8f;">💡 选择品牌后自动加载该品牌对应的参数项目，请填写具体数值。</div>
+        `;
+        setTimeout(() => {
+            ['left', 'right'].forEach(eye => {
+                const sel = document.getElementById(`${eye}Brand`);
+                if (sel) {
+                    sel.value = '梦戴维';
+                    fillBrandParams(eye);
+                    sel.onchange = function() { fillBrandParams(eye); };
+                }
+            });
+        }, 50);
+    } else if (action === 'order') {
+        title.textContent = '📦 定片（品牌联动参数 + 收费）';
+        const lastTrial = getLastTrialData(lens);
+        const leftPrefill = (lastTrial && lastTrial.left) ? lastTrial.left : { brand:'梦戴维' };
+        const rightPrefill = (lastTrial && lastTrial.right) ? lastTrial.right : { brand:'梦戴维' };
+        html = `
+            <div class="form-group"><label>定片日期</label><input type="date" value="${today}"></div>
+            <div class="form-group"><label>订单号</label><input placeholder="自动生成" value="OK-${today.replace(/-/g,'')}-001"></div>
+            <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn btn-success btn-sm" onclick="quickOrderFromLastTrial()">📋 引用最近试戴片</button>
+                <button class="btn btn-outline btn-sm" onclick="exportParams()">📤 导出参数</button>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                <div>
+                    <h4 style="color:#2469F2;">OD</h4>
+                    <div class="form-group">
+                        <label>品牌</label>
+                        <select id="rightBrand">
+                            ${BRAND_NAMES.map(b => `<option value="${b}" ${b===rightPrefill.brand?'selected':''}>${BRAND_PARAMS[b].label}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div id="rightBrandHint" class="brand-hint"></div>
+                    <div id="rightParamsContainer"></div>
+                </div>
+                <div>
+                    <h4 style="color:#2469F2;">OS</h4>
+                    <div class="form-group">
+                        <label>品牌</label>
+                        <select id="leftBrand">
+                            ${BRAND_NAMES.map(b => `<option value="${b}" ${b===leftPrefill.brand?'selected':''}>${BRAND_PARAMS[b].label}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div id="leftBrandHint" class="brand-hint"></div>
+                    <div id="leftParamsContainer"></div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px;">
+                <div class="form-group"><label>收费项目</label><select><option>OK镜定制费-梦戴维</option><option>OK镜定制费-CRT</option><option>OK镜定制费-阿尔法</option></select></div>
+                <div class="form-group"><label>优惠类型</label><select><option>无</option><option>职工优惠</option><option>亲属优惠</option></select></div>
+                <div class="form-group"><label>优惠金额</label><input type="number" value="0"></div>
+            </div>
+            <div class="form-group"><label>应付金额（自动计算）</label><input type="text" value="¥6,800" readonly style="background:#f5f5f5;font-weight:600;"></div>
+            <div style="margin-top:8px;font-size:12px;color:#6b7a8f;">💡 选择品牌后自动加载参数项目，保存时将生成HIS费用单。</div>
+        `;
+        setTimeout(() => {
+            ['left', 'right'].forEach(eye => {
+                const sel = document.getElementById(`${eye}Brand`);
+                if (sel) {
+                    fillBrandParams(eye);
+                    sel.onchange = function() { fillBrandParams(eye); };
+                }
+            });
+            if (lastTrial) {
+                ['left', 'right'].forEach(eye => {
+                    const data = lastTrial[eye];
+                    if (data) {
+                        const prefix = eye;
+                        const map = { baseCurve: data.baseCurve, steepK: data.steepK, reduction: data.reduction, power: data.power, diameter: data.diameter };
+                        Object.keys(map).forEach(key => {
+                            const input = document.getElementById(`${prefix}_${key}`);
+                            if (input) input.value = map[key] || '';
+                        });
+                    }
+                });
+            }
+        }, 50);
+    } else if (action === 'custom_done') {
+        title.textContent = '🔍 验片';
+        html = `<div class="form-group"><label>验片日期</label><input type="date" value="${today}"></div>
+            <div class="form-group"><label>镜片到货确认</label><select><option>✅ 已到货</option><option>未到货</option></select></div>
+            <div class="form-group"><label>验片结果</label><select><option>合格</option><option>需调整</option></select></div>
+            <div class="form-group"><label>备注</label><input placeholder="—"></div>`;
+    } else if (action === 'pickup_notify') {
+        title.textContent = '📞 通知取片';
+        const smsTemplate = `【眼科中心】${PATIENT.name}您好，您的OK镜已定制完成，请于近日来院取片。取片时请携带相关证件。如有疑问请致电0571-12345678。`;
+        html = `
+            <div class="form-group"><label>通知日期</label><input type="date" value="${today}"></div>
+            <div class="form-row">
+                <div class="form-group"><label>患者本人电话</label><input id="patientPhone" value="${PATIENT.phone}" readonly style="background:#f5f5f5;"></div>
+                <div class="form-group"><label>联系人姓名</label><input id="contactPerson" value="${PATIENT.contactPerson}"></div>
+                <div class="form-group"><label>联系人电话</label><input id="contactPhone" value="${PATIENT.contactPhone}"></div>
+            </div>
+            <div class="form-group"><label>通知方式</label>
+                <select id="notifyMethod" onchange="toggleSmsTemplate()">
+                    <option value="电话">电话</option>
+                    <option value="短信">短信</option>
+                    <option value="微信">微信</option>
+                </select>
+            </div>
+            <div id="smsTemplateArea" style="display:none;">
+                <div class="sms-template">
+                    <div class="label">✉️ 短信模板（可编辑）</div>
+                    <div class="form-group" style="margin-bottom:8px;">
+                        <label>发送给：</label>
+                        <select id="smsRecipient" style="width:auto;padding:4px 12px;">
+                            <option value="patient">患者本人（${PATIENT.phone}）</option>
+                            <option value="contact">联系人（${PATIENT.contactPerson} ${PATIENT.contactPhone}）</option>
+                        </select>
+                    </div>
+                    <textarea id="smsContent" rows="4" style="width:100%;border:1px solid #d0d7e2;border-radius:6px;padding:8px;">${smsTemplate}</textarea>
+                    <div style="margin-top:6px;">
+                        <button class="btn-send-sms" onclick="sendSmsFromModal()">📤 发送短信</button>
+                        <span style="font-size:12px;color:#6b7a8f;margin-left:8px;">点击后模拟发送，并保存记录</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group"><label>备注</label><textarea id="pickupRemark" placeholder="如：患者已同意取片时间"></textarea></div>
+        `;
+        setTimeout(() => {
+            const method = document.getElementById('notifyMethod');
+            if (method) toggleSmsTemplate();
+        }, 50);
+    } else if (action === 'deliver_confirm') {
+        title.textContent = '📋 交付确认';
+        html = `<div class="form-group"><label>交付日期</label><input type="date" value="${today}"></div>
+            <div class="deliver-grid">
+                <div><h4 style="color:#2469F2;">右眼 (OD)</h4>
+                    <div class="form-group"><label>矫正视力</label><input value="1.0"></div>
+                    <div class="form-group"><label>视力</label><input value="0.8"></div>
+                    <div class="form-group"><label>球镜</label><input value="-3.00"></div>
+                    <div class="form-group"><label>柱镜</label><input value="-0.75"></div>
+                    <div class="form-group"><label>轴向</label><input value="180"></div>
+                    <div class="form-group"><label>戴镜验光视力</label><input value="1.0"></div>
+                </div>
+                <div><h4 style="color:#2469F2;">左眼 (OS)</h4>
+                    <div class="form-group"><label>矫正视力</label><input value="1.0"></div>
+                    <div class="form-group"><label>视力</label><input value="0.8"></div>
+                    <div class="form-group"><label>球镜</label><input value="-2.75"></div>
+                    <div class="form-group"><label>柱镜</label><input value="-0.50"></div>
+                    <div class="form-group"><label>轴向</label><input value="175"></div>
+                    <div class="form-group"><label>戴镜验光视力</label><input value="1.0"></div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="deliver-subtitle">镜片适配</div>
+            <div class="deliver-grid">
+                <div><h4>右眼</h4>
+                    <div class="form-group"><label>基弧区</label><select><option>小</option><option selected>适中</option><option>大</option></select></div>
+                    <div class="form-group"><label>中心接触</label><select><option>淡</option><option selected>适中</option><option>深</option></select></div>
+                    <div class="form-group"><label>反转弧</label><select><option>陡</option><option selected>好</option><option>平</option></select></div>
+                    <div class="form-group"><label>定点弧</label><select><option>陡</option><option selected>好</option><option>平</option></select></div>
+                    <div class="form-group"><label>眨眼时位置</label><select><option>中心</option><option>高</option><option>低</option><option>偏鼻侧</option><option>偏侧</option></select></div>
+                    <div class="form-group"><label>眨眼后位置</label><select><option>中心</option><option>高</option><option>低</option><option>偏鼻侧</option><option>偏侧</option></select></div>
+                    <div class="form-group"><label>周边弧</label><select><option>窄</option><option selected>好</option><option>宽</option></select></div>
+                    <div class="form-group"><label>活动度</label><select><option>偏大</option><option selected>正常</option><option>偏小</option></select></div>
+                </div>
+                <div><h4>左眼</h4>
+                    <div class="form-group"><label>基弧区</label><select><option>小</option><option selected>适中</option><option>大</option></select></div>
+                    <div class="form-group"><label>中心接触</label><select><option>淡</option><option selected>适中</option><option>深</option></select></div>
+                    <div class="form-group"><label>反转弧</label><select><option>陡</option><option selected>好</option><option>平</option></select></div>
+                    <div class="form-group"><label>定点弧</label><select><option>陡</option><option selected>好</option><option>平</option></select></div>
+                    <div class="form-group"><label>眨眼时位置</label><select><option>中心</option><option>高</option><option>低</option><option>偏鼻侧</option><option>偏侧</option></select></div>
+                    <div class="form-group"><label>眨眼后位置</label><select><option>中心</option><option>高</option><option>低</option><option>偏鼻侧</option><option>偏侧</option></select></div>
+                    <div class="form-group"><label>周边弧</label><select><option>窄</option><option selected>好</option><option>宽</option></select></div>
+                    <div class="form-group"><label>活动度</label><select><option>偏大</option><option selected>正常</option><option>偏小</option></select></div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="deliver-param-grid">
+                <div><div class="form-group"><label>品牌</label><select><option>梦戴维</option><option>CRT</option></select></div></div>
+                <div><div class="form-group"><label>基弧/曲率</label><input value="42.75"></div></div>
+                <div><div class="form-group"><label>陡峭曲率</label><input value="44.50"></div></div>
+                <div><div class="form-group"><label>降度</label><input value="3.00"></div></div>
+                <div><div class="form-group"><label>度数</label><input value="-3.00"></div></div>
+                <div><div class="form-group"><label>直径</label><input value="10.6"></div></div>
+            </div>
+            <div class="form-group"><label>是否需要新处方</label><div class="inline-radio-group"><label><input type="radio" name="needPrescription" value="true" checked> 是</label><label><input type="radio" name="needPrescription" value="false"> 否</label></div></div>
+            <div class="divider"></div>
+            <div class="form-group"><label>患者戴镜指南</label><div class="inline-check-group"><label><input type="checkbox" checked> 戴镜、摘镜操作</label><label><input type="checkbox" checked> 镜片护理方法</label></div></div>
+            <div class="form-group"><label>下次随访时间</label><select><option>1周后</option><option selected>1月后</option><option>3月后</option><option>半年后</option><option>其他</option></select></div>`;
+    } else if (action === 'checkup') {
+        title.textContent = '🔍 复查';
+        html = `<div class="form-group"><label>复查日期</label><input type="date" value="${today}"></div>
+            <div class="checkup-eye-grid">
+                <div><h4>右眼 (OD)</h4>
+                    <div class="form-group"><label>裸眼视力</label><input value="1.0"></div>
+                    <div class="form-group"><label>眼压 (mmHg)</label><input value="16"></div>
+                    <div class="form-group"><label>眼轴 (mm)</label><input value="24.53"></div>
+                    <div class="form-group"><label>角膜健康</label><select><option>透明</option><option>轻度水肿</option></select></div>
+                    <div style="background:#f0f7ff;padding:8px;border-radius:6px;"><div style="font-weight:600;font-size:12px;">镜片状态</div>
+                        <div class="form-row"><div class="form-group"><label>清洁度</label><select><option>清洁</option><option>轻度沉淀</option><option>明显沉淀</option></select></div><div class="form-group"><label>划痕</label><select><option>无</option><option>轻微</option><option>明显</option></select></div></div>
+                        <div class="form-row"><div class="form-group"><label>蛋白沉淀</label><select><option>无</option><option>轻度</option><option>明显</option></select></div><div class="form-group"><label>完整性</label><select><option>完好</option><option>边缘缺损</option><option>破损</option></select></div></div>
+                    </div>
+                </div>
+                <div><h4>左眼 (OS)</h4>
+                    <div class="form-group"><label>裸眼视力</label><input value="1.0"></div>
+                    <div class="form-group"><label>眼压 (mmHg)</label><input value="15"></div>
+                    <div class="form-group"><label>眼轴 (mm)</label><input value="24.38"></div>
+                    <div class="form-group"><label>角膜健康</label><select><option>透明</option><option>轻度水肿</option></select></div>
+                    <div style="background:#f0f7ff;padding:8px;border-radius:6px;"><div style="font-weight:600;font-size:12px;">镜片状态</div>
+                        <div class="form-row"><div class="form-group"><label>清洁度</label><select><option>清洁</option><option>轻度沉淀</option><option>明显沉淀</option></select></div><div class="form-group"><label>划痕</label><select><option>无</option><option>轻微</option><option>明显</option></select></div></div>
+                        <div class="form-row"><div class="form-group"><label>蛋白沉淀</label><select><option>无</option><option>轻度</option><option>明显</option></select></div><div class="form-group"><label>完整性</label><select><option>完好</option><option>边缘缺损</option><option>破损</option></select></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group"><label>处理意见</label><textarea>继续配戴，3月后复查</textarea></div>`;
+    } else if (action === 'replace') {
+        title.textContent = '🔄 换片';
+        html = `<div class="form-group"><label>换片原因</label><select><option>镜片到期（1年）</option><option>度数变化</option><option>镜片损坏</option></select></div>
+            <div class="form-group"><label>换片日期</label><input type="date" value="${today}"></div>
+            <div class="form-group"><label>新镜片</label><input value="自动创建第${lens.number+1}副"></div>
+            <div class="form-group"><label>备注</label><textarea>建议重新评估角膜地形图</textarea></div>
+            <div style="background:#fef3c7;padding:12px;border-radius:8px;font-size:13px;color:#92400e;">⚠ 换片后将结束当前镜片周期，自动记录结束时间</div>`;
+    } else if (action === 'terminate') {
+        title.textContent = '⛔ 终止';
+        html = `<div class="form-group"><label>终止原因</label><select><option>患者主动放弃</option><option>出现并发症</option><option>角膜条件不适合</option><option>其他</option></select></div>
+            <div class="form-group"><label>终止日期</label><input type="date" value="${today}"></div>
+            <div class="form-group"><label>详细说明</label><textarea>患者因个人原因决定停戴</textarea></div>
+            <div style="background:#fee2e2;padding:12px;border-radius:8px;font-size:13px;color:#b91c1c;">⚠ 此操作将结束当前镜片周期，不可撤销</div>`;
+    }
+    body.innerHTML = html;
+    overlay.classList.add('show');
+
+    if (action === 'trial' || action === 'order') {
+        setTimeout(() => {
+            ['left', 'right'].forEach(eye => {
+                const sel = document.getElementById(`${eye}Brand`);
+                if (sel) {
+                    sel.onchange = function() { fillBrandParams(eye); };
+                    fillBrandParams(eye);
+                }
+            });
+        }, 100);
+    }
+}
+
+function toggleSmsTemplate() {
+    const method = document.getElementById('notifyMethod');
+    const area = document.getElementById('smsTemplateArea');
+    if (method && area) {
+        area.style.display = method.value === '短信' ? 'block' : 'none';
+    }
+}
+function sendSmsFromModal() {
+    const recipientSelect = document.getElementById('smsRecipient');
+    let phone = '';
+    if (recipientSelect) {
+        if (recipientSelect.value === 'patient') {
+            phone = document.getElementById('patientPhone')?.value || PATIENT.phone;
+        } else {
+            phone = document.getElementById('contactPhone')?.value || PATIENT.contactPhone;
+        }
+    } else {
+        phone = PATIENT.phone;
+    }
+    const content = document.getElementById('smsContent')?.value || '';
+    if (!content.trim()) { alert('短信内容不能为空'); return; }
+    const success = sendSms(phone, content);
+    if (success) {
+        alert('✅ 短信已发送，记录将保存。');
+    }
+}
+
+// ============================================================
+// 保存操作
+// ============================================================
+function saveModal() {
+    const lens = getLens();
+    const now = new Date();
+    const dateStr = now.toISOString().slice(0,10);
+    const actionMap = {
+        trial: { type: 'trial', label: '试戴', detail: '新试戴 · 左右眼评估完成', operator: '林医生' },
+        order: { type: 'order', label: '定片', detail: '定片完成，费用已生成', operator: '林医生' },
+        custom_done: { type: 'custom', label: '验片', detail: '验片完成 · 已到货', operator: '林医生' },
+        pickup_notify: { type: 'pickup', label: '电话通知取片', detail: '已通知患者取片', operator: '林医生' },
+        deliver_confirm: { type: 'deliver', label: '交付', detail: '交付取片完成', operator: '林医生' },
+        checkup: { type: 'checkup', label: '复查', detail: '复查完成', operator: '林医生' },
+        replace: { type: 'replace', label: '换片', detail: '换片 · 开启新周期', operator: '林医生' },
+        terminate: { type: 'terminate', label: '终止', detail: '终止治疗 · 已归档', operator: '林医生' }
+    };
+    const info = actionMap[modalAction];
+    if (!info) { closeModal(); return; }
+
+    let trialData = null;
+    if (modalAction === 'trial') {
+        const left = collectEyeParams('left');
+        const right = collectEyeParams('right');
+        ['left', 'right'].forEach(eye => {
+            const data = eye === 'left' ? left : right;
+            data.centerPos = document.getElementById(`${eye}_centerPos`)?.value || '';
+            data.slide = document.getElementById(`${eye}_slide`)?.value || '';
+            data.staining = document.getElementById(`${eye}_staining`)?.value || '';
+            data.conclusion = document.getElementById(`${eye}_conclusion`)?.value || '';
+        });
+        trialData = { left, right };
+    }
+
+    let orderData = null;
+    if (modalAction === 'order') {
+        const left = collectEyeParams('left');
+        const right = collectEyeParams('right');
+        orderData = { left, right };
+    }
+
+    let checkupData = null;
+    if (modalAction === 'checkup') {
+        const inputs = document.querySelectorAll('#modalBody input');
+        const selects = document.querySelectorAll('#modalBody select');
+        if (inputs.length >= 6 && selects.length >= 10) {
+            checkupData = {
+                od: {
+                    va: inputs[0].value,
+                    iop: inputs[1].value,
+                    axial: inputs[2].value,
+                    cornea: selects[0].value,
+                    cleanliness: selects[1].value,
+                    scratches: selects[2].value,
+                    deposit: selects[3].value,
+                    integrity: selects[4].value
+                },
+                os: {
+                    va: inputs[3].value,
+                    iop: inputs[4].value,
+                    axial: inputs[5].value,
+                    cornea: selects[5].value,
+                    cleanliness: selects[6].value,
+                    scratches: selects[7].value,
+                    deposit: selects[8].value,
+                    integrity: selects[9].value
+                }
+            };
+        }
+    }
+
+    let deliverData = null;
+    if (modalAction === 'deliver_confirm') {
+        const inputs = document.querySelectorAll('#modalBody input');
+        const selects = document.querySelectorAll('#modalBody select');
+        if (inputs.length >= 18 && selects.length >= 18) {
+            deliverData = {
+                od: {
+                    correctedVision: inputs[1].value,
+                    vision: inputs[2].value,
+                    sphere: inputs[3].value,
+                    cylinder: inputs[4].value,
+                    axis: inputs[5].value,
+                    va: inputs[6].value
+                },
+                os: {
+                    correctedVision: inputs[7].value,
+                    vision: inputs[8].value,
+                    sphere: inputs[9].value,
+                    cylinder: inputs[10].value,
+                    axis: inputs[11].value,
+                    va: inputs[12].value
+                },
+                adapt: {
+                    od: {
+                        baseCurveZone: selects[0].value,
+                        centerContact: selects[1].value,
+                        reverseArc: selects[2].value,
+                        alignmentArc: selects[3].value,
+                        blinkPos: selects[4].value,
+                        postBlinkPos: selects[5].value,
+                        peripheralArc: selects[6].value,
+                        mobility: selects[7].value
+                    },
+                    os: {
+                        baseCurveZone: selects[8].value,
+                        centerContact: selects[9].value,
+                        reverseArc: selects[10].value,
+                        alignmentArc: selects[11].value,
+                        blinkPos: selects[12].value,
+                        postBlinkPos: selects[13].value,
+                        peripheralArc: selects[14].value,
+                        mobility: selects[15].value
+                    }
+                },
+                brand: selects[16].value,
+                baseCurve: inputs[13].value,
+                steepK: inputs[14].value,
+                reduction: inputs[15].value,
+                power: inputs[16].value,
+                diameter: inputs[17].value,
+                needNewPrescription: document.querySelector('input[name="needPrescription"]:checked')?.value === 'true',
+                guide: {
+                    戴镜摘镜: document.querySelector('input[type="checkbox"]:nth-of-type(1)')?.checked || false,
+                    镜片护理: document.querySelector('input[type="checkbox"]:nth-of-type(2)')?.checked || false
+                },
+                nextFollowup: selects[17].value
+            };
+        }
+    }
+
+    let pickupData = null;
+    if (modalAction === 'pickup_notify') {
+        const method = document.getElementById('notifyMethod')?.value || '电话';
+        const contactPerson = document.getElementById('contactPerson')?.value || '';
+        const contactPhone = document.getElementById('contactPhone')?.value || '';
+        const smsContent = document.getElementById('smsContent')?.value || '';
+        const recipientSelect = document.getElementById('smsRecipient');
+        let recipient = '患者本人';
+        if (recipientSelect) {
+            recipient = recipientSelect.value === 'patient' ? '患者本人' : '联系人';
+        }
+        pickupData = {
+            patientPhone: PATIENT.phone,
+            contactPerson: contactPerson,
+            contactPhone: contactPhone,
+            method: method,
+            smsContent: smsContent,
+            recipient: recipient,
+            remark: document.getElementById('pickupRemark')?.value || ''
+        };
+        if (method === '短信' && smsContent) {
+            info.detail += ` (短信已发送给${recipient})`;
+        }
+    }
+
+    if (modalAction === 'replace' || modalAction === 'terminate') {
+        lens.endDate = dateStr;
+        lens.endReason = modalAction === 'replace' ? '换片' : '终止治疗';
+    }
+
+    const newOp = { date: dateStr, type: info.type, label: info.label, detail: info.detail, operator: '林医生' };
+    if (trialData) newOp.trialData = trialData;
+    if (orderData) newOp.orderData = orderData;
+    if (checkupData) newOp.checkupData = checkupData;
+    if (deliverData) newOp.deliverData = deliverData;
+    if (pickupData) newOp.pickupData = pickupData;
+    lens.operations.push(newOp);
+
+    closeModal();
+    renderAll();
+}
+
+function collectEyeParams(prefix) {
+    const brand = document.getElementById(`${prefix}Brand`)?.value || '';
+    const config = BRAND_PARAMS[brand];
+    const params = {};
+    if (config) {
+        config.params.forEach(key => {
+            const input = document.getElementById(`${prefix}_${key}`);
+            params[key] = input ? input.value : '';
+        });
+    }
+    params.brand = brand;
+    return params;
+}
+
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+
+// ============================================================
+// 需求说明弹窗
+// ============================================================
+function openDocModal() {
+    const overlay = document.getElementById('docModal');
+    const body = document.getElementById('docBody');
+    body.innerHTML = `
+        <div class="doc-content">
+            <div style="text-align:center;margin-bottom:16px;color:#2469F2;font-weight:600;">版本 V4.1 ｜ 2026-07-21</div>
+
+            <div class="doc-section">
+                <h3>1. 系统目标</h3>
+                <ul>
+                    <li>实现OK镜验配全流程（试戴→定片→交付→复查→换片/终止）的数字化追踪。</li>
+                    <li>提供可自定义的治疗节点工作流，适应不同医院流程差异。</li>
+                    <li>集成HIS系统，自动同步缴费状态，实现业务财务一体化。</li>
+                    <li>支持品牌联动参数加载、操作记录搜索分页、短信通知等精细操作体验。</li>
+                    <li>支持独立使用与嵌入医生工作站两种部署形态，灵活适配不同业务场景。</li>
+                </ul>
+            </div>
+
+            <div class="doc-section">
+                <h3>2. 功能模块与交互</h3>
+                <h4>2.1. 工作流配置中心（管理员）</h4>
+                <ul>
+                    <li><strong>功能目标</strong>：自定义治疗阶段节点及其执行规则。</li>
+                    <li><strong>界面布局</strong>：左侧节点列表（可拖拽排序），右侧属性编辑面板。</li>
+                    <li><strong>节点属性</strong>：编码、名称、类型（普通/终态）、是否可重复、前置节点、关联参数模板、是否触发收费。</li>
+                    <li><strong>交互</strong>：新增/删除/保存；校验循环依赖；保存后立即生效。</li>
+                </ul>
+
+                <h4>2.2. 主界面（业务操作员）</h4>
+                <p><strong>全局信息头</strong></p>
+                <ul>
+                    <li><strong>独立模式</strong>：展示患者信息（姓名、性别、年龄、电话），提供患者列表入口。</li>
+                    <li><strong>嵌入模式</strong>：患者信息由外部传入，系统不展示。</li>
+                    <li><strong>镜片选择器</strong>：格式“第X副 - 品牌 (交付:日期, 结束:日期/进行中)”。</li>
+                    <li><strong>操作按钮栏</strong>：根据配置动态生成，不可重复且已完成则禁用。</li>
+                </ul>
+
+                <p><strong>状态卡片</strong></p>
+                <ul>
+                    <li>展示品牌、参数、订单号、当前阶段、交付日期、佩戴天数、结束日期。</li>
+                    <li><strong>缴费浮标</strong>：右上角显示“已缴费/未缴费/已退费”，颜色绿/红/灰，实时从HIS同步。</li>
+                </ul>
+
+                <p><strong>时间轴（方案B）</strong></p>
+                <ul>
+                    <li>根据配置顺序和实际操作动态生成，复查节点自动展开为多个子项（复1、复2…）。</li>
+                    <li>标注相对交付日期的间隔（如“1天”、“1周”、“3月”）。</li>
+                    <li>已完成节点绿色，当前节点蓝色高亮。</li>
+                </ul>
+
+                <p><strong>操作记录表格</strong></p>
+                <ul>
+                    <li>展示列：日期、操作（标签）、关键信息、间隔、操作人、操作。</li>
+                    <li>按日期倒序排列，每页10条，支持分页跳转。</li>
+                    <li><strong>搜索</strong>：对“操作标签”、“关键信息”、“操作人”模糊搜索，实时过滤。</li>
+                    <li><strong>关键信息生成规则</strong>：
+                        <ul>
+                            <li>复查：提取OD/OS清洁度、划痕状态（如“镜片: OD:轻度沉淀; OS划痕:轻微”）。</li>
+                            <li>交付：显示“品牌:xxx 下次:xxx”。</li>
+                            <li>通知取片：显示“联系人:xxx 方式:xxx”。</li>
+                            <li>其他操作：仅显示detail。</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>2.3. 操作表单（模态框）</h4>
+                <p><strong>试戴</strong>：日期、左右眼品牌联动参数（动态加载6种品牌的参数项）、评估项。</p>
+                <p><strong>定片</strong>：日期、订单号、品牌联动参数、收费项目（HIS）、优惠类型/金额、引用试戴、导出参数。</p>
+                <p><strong>验片</strong>：日期、到货确认、结果、备注。</p>
+                <p><strong>通知取片</strong>：日期、患者电话（只读）、联系人、通知方式、短信模板（可编辑）、发送给（患者/联系人）、发送短信。</p>
+                <p><strong>交付确认</strong>：日期、双眼视力数据、适配评估（8项）、品牌参数、处方、戴镜指南、随访时间。</p>
+                <p><strong>复查</strong>：日期、双眼视力/眼压/眼轴/角膜健康、镜片状态（清洁度/划痕/沉淀/完整性）、处理意见。</p>
+                <p><strong>换片</strong>：原因、日期、新镜片、备注，自动结束当前周期。</p>
+                <p><strong>终止</strong>：原因、日期、说明，自动结束当前周期。</p>
+
+                <h4>2.4. HIS缴费状态集成</h4>
+                <ul>
+                    <li>定片保存时调用HIS生成费用单，返回bill_id存入订单。</li>
+                    <li>页面加载、定时轮询（30秒）、Webhook回调更新状态。</li>
+                    <li>浮标显示“已缴费/未缴费/已退费”，颜色对应绿/红/灰。</li>
+                    <li>异常时显示“查询失败，点击重试”。</li>
+                </ul>
+            </div>
+
+            <div class="doc-section">
+                <h3>3. 附录：品牌参数项目对照表</h3>
+                <table>
+                    <thead><tr><th>品牌</th><th>基弧</th><th>陡峭曲率</th><th>降度</th><th>度数</th><th>直径</th><th>中心厚度</th></tr></thead>
+                    <tbody>
+                        <tr><td>梦戴维</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>❌</td></tr>
+                        <tr><td>CRT</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+                        <tr><td>阿尔法</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+                        <tr><td>Dreamlite</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+                        <tr><td>欧几里得</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+                        <tr><td>普诺瞳</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size:13px;color:#6b7a8f;margin-top:4px;">注：各品牌参数单位不同，标签中会显示单位（如CRT基弧为mm，其他多为D）。</p>
+            </div>
+
+            <div class="doc-section">
+                <h3>4. 数据接口依赖</h3>
+                <ul>
+                    <li>收费项目列表（HIS）</li>
+                    <li>生成费用单（HIS）</li>
+                    <li>查询缴费状态（HIS）</li>
+                    <li>发送短信（短信网关）</li>
+                    <li>流程配置的增删改查（内部API）</li>
+                </ul>
+            </div>
+
+            <div class="doc-section">
+                <h3>5. 系统部署形态</h3>
+                <h4>5.1. 独立使用模式</h4>
+                <ul>
+                    <li>独立应用，拥有完整患者管理、镜片跟踪、流程配置、收费查询等功能。</li>
+                    <li>登录后从患者列表选择患者，完整展示患者信息。</li>
+                </ul>
+                <h4>5.2. 嵌入医生工作站模式</h4>
+                <ul>
+                    <li>以页面嵌入方式集成到EMR/CIS，患者信息由外部传入。</li>
+                    <li>不包含患者列表和患者信息展示模块，直接进入治疗跟踪界面。</li>
+                    <li>其他功能与独立模式完全一致。</li>
+                </ul>
+                <h4>5.3. 两种模式差异对比</h4>
+                <table>
+                    <thead><tr><th>维度</th><th>独立模式</th><th>嵌入模式</th></tr></thead>
+                    <tbody>
+                        <tr><td>患者信息来源</td><td>系统内置列表，手动选择</td><td>医生工作站传入</td></tr>
+                        <tr><td>患者信息展示</td><td>完整展示</td><td>不展示</td></tr>
+                        <tr><td>操作入口</td><td>登录→列表→选择</td><td>直接进入跟踪界面</td></tr>
+                        <tr><td>其他功能</td><td>完整</td><td>与独立模式一致</td></tr>
+                        <tr><td>权限控制</td><td>系统RBAC</td><td>复用医生工作站登录态</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+    overlay.classList.add('show');
+}
+
+function closeDocModal() {
+    document.getElementById('docModal').classList.remove('show');
+}
+
+// ============================================================
+// 切换镜片
+// ============================================================
+function switchLens() {
+    currentIndex = parseInt(document.getElementById('lensSelect').value);
+    currentPage = 1;
+    currentSearch = '';
+    document.getElementById('searchInput').value = '';
+    renderAll();
+}
+
+// 初始化
+renderAll();
+
+// 点击遮罩关闭
+document.getElementById('detailModal').addEventListener('click', function(e) { if (e.target === this) closeDetailModal(); });
+document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+document.getElementById('docModal').addEventListener('click', function(e) { if (e.target === this) closeDocModal(); });
+</script>
+</body>
+</html>

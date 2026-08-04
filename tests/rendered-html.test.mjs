@@ -33,6 +33,19 @@ test("the Vite entry and app sources expose the ophthalmology prototype shell", 
   assert.doesNotMatch(source, /Your site is taking shape|codex-preview|react-loading-skeleton/);
 });
 
+test("legacy treatment and population prototypes are embedded in their approved entries", async () => {
+  const shell = await readFile(new URL("../app/OphthalmologyPrototype.tsx", import.meta.url), "utf8");
+  const archive = await readFile(new URL("../app/modules/contact-lens-archive/ContactLensArchiveModule.tsx", import.meta.url), "utf8");
+  const okTreatment = await readFile(new URL("../public/legacy/ok-lens-treatment.html", import.meta.url), "utf8");
+  const population = await readFile(new URL("../public/legacy/population-treatment-config.html", import.meta.url), "utf8");
+  assert.match(shell, /population-treatment-config\.html/);
+  assert.match(shell, /专科人群管理与治疗方案配置/);
+  assert.match(archive, /ok-lens-treatment\.html/);
+  assert.match(archive, /OK镜治疗管理/);
+  assert.match(okTreatment, /OK镜全生命周期管理/);
+  assert.match(population, /患者专科管理/);
+});
+
 test("exam reports are embedded in the doctor workspace instead of a standalone menu", async () => {
   const shell = await readFile(new URL("../app/OphthalmologyPrototype.tsx", import.meta.url), "utf8");
   const report = await readFile(new URL("../app/modules/exam-report/ExamReportModule.tsx", import.meta.url), "utf8");
