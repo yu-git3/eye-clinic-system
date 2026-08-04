@@ -98,6 +98,17 @@ test("product documents expose the latest PRDs as online-only reading pages", as
   assert.match(readerCss, /td p\{font-size:14px/);
 });
 
+test("the prototype uses the shared Ant Design 4.x visual baseline", async () => {
+  const entry = await readFile(new URL("../src/main.tsx", import.meta.url), "utf8");
+  const baseline = await readFile(new URL("../app/antd4-baseline.css", import.meta.url), "utf8");
+  assert.match(entry, /antd4-baseline\.css/);
+  assert.match(baseline, /--ant-primary:#1890ff/);
+  assert.match(baseline, /--ant-page:#f0f2f5/);
+  assert.match(baseline, /--ant-radius:2px/);
+  assert.match(baseline, /font:14px\/1\.5715/);
+  assert.match(baseline, /min-height:32px/);
+});
+
 test("baseline supports report-assisted manual editing", async () => {
   const source = await readFile(
     new URL("../app/modules/contact-lens-archive/ContactLensArchiveModule.tsx", import.meta.url),
