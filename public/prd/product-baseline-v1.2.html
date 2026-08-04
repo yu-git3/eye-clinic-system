@@ -1,0 +1,765 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Author" content="Un-named">
+  <meta name="LastAuthor" content="Un-named">
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 6.0px 0.0px; font: 20.0px Times; color: #17365d}
+    p.p2 {margin: 0.0px 0.0px 1.5px 0.0px; font: 9.5px Times; color: #667085}
+    p.p3 {margin: 0.0px 0.0px 6.0px 0.0px; font: 10.5px Times; color: #23374d}
+    p.p4 {margin: 14.0px 0.0px 5.0px 0.0px; font: 15.5px Times; color: #2e74b5}
+    p.p5 {margin: 9.0px 0.0px 5.0px 0.0px; font: 13.0px Times; color: #2e74b5}
+    p.p6 {margin: 0.0px 0.0px 6.0px 18.0px; font: 10.5px Times; color: #23374d}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Times; color: #17365d}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Times; color: #23374d}
+    p.p10 {margin: 0.0px 0.0px 6.0px 0.0px; font: 9.0px Times; color: #23374d; min-height: 11.0px}
+    p.p11 {margin: 5.0px 0.0px 5.0px 0.0px; text-align: center; font: 10.5px Times; color: #17365d}
+    li.li7 {margin: 0.0px 0.0px 4.0px 0.0px; font: 10.5px Times; color: #23374d}
+    table.t1 {border-collapse: collapse}
+    td.td1 {border-style: solid; border-width: 1.0px 1.0px 1.0px 1.0px; border-color: #bfbfbf #bfbfbf #bfbfbf #bfbfbf; padding: 0.0px 5.0px 0.0px 5.0px}
+    ul.ul1 {list-style-type: disc}
+  </style>
+  <link rel="stylesheet" href="/prd/reader.css">
+</head>
+<body class="product-baseline">
+<p class="p1"><b>眼科专科系统产品基线与模块合并台账</b></p>
+<p class="p2"><b>版本：V1.2</b></p>
+<p class="p2"><b>基线日期：2026-08-03</b></p>
+<p class="p2"><b>适用范围：眼科专科系统一期及其后续模块建设</b></p>
+<p class="p3">基线状态：已确认，可作为后续原型、PRD、研发拆分和验收的共同依据</p>
+<p class="p4"><b>1. 文档定位与变更规则</b></p>
+<p class="p3">本文件不是单一模块的需求说明，而是眼科专科系统的“产品总账”。它统一约束各模块的产品边界、公共对象、数据关系、角色权限、接口依赖、一期范围及后续演进方式。</p>
+<p class="p5"><b>1.1 决策优先级</b></p>
+<p class="p3">当资料出现不一致时，按以下优先级执行：</p>
+<p class="p6">1. 已确认的业务结论与后续补充确认；</p>
+<p class="p6">2. 与确认结论一致的高保真原型及对应 PRD；</p>
+<p class="p6">3. 临床指标标准、检查模板及数据映射规则；</p>
+<p class="p6">4. 早期系统架构、调研资料和历史样例。</p>
+<p class="p3">后续新增或调整需求时，应先评估对本基线的影响；影响公共模型、接口、权限或模块边界的，应更新本文件版本并同步受影响的 PRD、原型和验收项。不得以修改单一模块 PRD 的方式隐性改变公共规则。</p>
+<p class="p5"><b>1.2 依据资料</b></p>
+<ul class="ul1">
+  <li class="li7">《眼科专科功能系统架构_完整版_v2.3》；</li>
+  <li class="li7">临床指标定义、检查模板配置、角膜接触镜基础档案、角膜接触镜专科病历的 PRD；</li>
+  <li class="li7">《眼科临床指标标准》；</li>
+  <li class="li7">已确认的高保真原型与其交互调整；</li>
+  <li class="li7">南医眼科的接触镜档案、门诊病历、检查报告及历史随访样例。</li>
+</ul>
+<p class="p4"><b>2. 系统定位与范围</b></p>
+<p class="p3">眼科专科系统是既有 HIHIS 门诊医生站的眼科专科能力扩展，用于形成“检查—评估—档案—治疗—复诊—随访”的连续诊疗闭环。</p>
+<p class="p3">它不替代通用门诊病历、患者主索引、就诊、医嘱、诊断、收费或组织权限体系；这些仍由 HIHIS 提供。系统以可复用的眼科检查组件为公共底座，先覆盖角膜接触镜业务，并为视功能等后续治疗方案扩展留出一致的数据与交互边界。</p>
+<p class="p5"><b>2.1 当前产品目标</b></p>
+<ul class="ul1">
+  <li class="li7">统一定义临床指标和检查模板，消除指标在不同档案、病历、报告中重复维护；</li>
+  <li class="li7">将模板运行时实例化为可录入、可引用报告、可打印和可回写的眼科检查组件；</li>
+  <li class="li7">为患者建立与治疗方案对应的基础档案和档案快照；</li>
+  <li class="li7">在每次门诊形成一份专科病历，直观看到既往就诊并复用检查结果；</li>
+  <li class="li7">为后续试戴、定片、下单、交付、复查和人群运营建立同一患者、档案、治疗方案主线。</li>
+</ul>
+<p class="p5"><b>2.2 非目标</b></p>
+<ul class="ul1">
+  <li class="li7">不重建 HIHIS 的患者、挂号、通用病历、诊断、医嘱和收费功能；</li>
+  <li class="li7">一期不开放通用的档案模板、专科病历模板配置；</li>
+  <li class="li7">一期纳入品牌参数模板、镜片定制下单、验片、交付、复查/随访等完整治疗过程管理；</li>
+  <li class="li7">不要求 PACS 必须返回结构化数据：可引用原始报告并允许医生补录结构化结果。</li>
+</ul>
+<p class="p4"><b>3. 产品结构、入口与角色</b></p>
+<p class="p5"><b>3.1 导航原则</b></p>
+<p class="p3">系统沿用 HIHIS“左侧功能菜单 + 顶部多标签页”的工作方式。以下为独立功能菜单，不从属于门诊医生工作台：</p>
+<ul class="ul1">
+  <li class="li7">临床指标定义；</li>
+  <li class="li7">检查模板定义；</li>
+  <li class="li7">人群管理。</li>
+</ul>
+<p class="p3">门诊医生工作台是独立业务入口，承载患者接诊后的治疗方案基础档案、专科病历与治疗跟踪视图。</p>
+<p class="p5"><b>3.2 角色边界</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>角色</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>主要入口</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>核心职责</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>数据边界</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>租户/系统管理员</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>指标定义、检查模板定义</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>维护租户级标准、模板和科室可用范围</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>不替代临床录入</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>门诊医生</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>门诊医生工作台</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>建档、治疗方案基础档案、专科病历、医生查体录入、报告引用与补录</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>仅可访问本部门有权限的档案/方案</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>护士</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>HIHIS 护士采集</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>采集既有体征数据</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>通过既有体征字典被引用，不在本系统重复维护</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医技人员/PACS</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医技系统</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>产生检查报告及结构化/非结构化结果</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>报告人、报告时间、原始报告可追溯</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>配镜师/视光人员</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>人群管理</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>查看患者档案与治疗全景；后续执行治疗节点</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>基础档案以查看为主，治疗操作按后续权限开放</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p4"><b>4. 公共组织、权限与主数据规则</b></p>
+<p class="p5"><b>4.1 组织层级</b></p>
+<p class="p3">HIHIS 组织结构为：租户 → 机构 → 科室。科室隶属于机构。</p>
+<ul class="ul1">
+  <li class="li7">临床指标与检查模板的维护数据为租户级数据；</li>
+  <li class="li7">模板的科室关联用于控制“哪些科室可用”；</li>
+  <li class="li7">模板未维护科室时，默认该租户内所有机构下的科室均可使用；</li>
+  <li class="li7">患者档案的唯一性不以科室区分，科室只负责访问权限控制。</li>
+</ul>
+<p class="p5"><b>4.2 公共业务对象</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>对象</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>核心含义</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>关键关系</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>临床指标</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>最小可采集/展示的临床数据项</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>被检查模板引用</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>检查模板</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>一组有顺序、类型和权限的指标定义</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>运行时成为眼科检查组件</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>眼科检查组件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>某患者某次就诊中某模板的可录入/可引用检查实例</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>可被治疗方案基础档案和专科病历复用</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医技报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>PACS/医技系统返回的报告及原始附件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>可被组件引用，保留报告人/时间/编号</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>治疗方案</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>患者接受的治疗路径，如 OK 镜、RGP、软性离焦镜</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>由本系统治疗方案配置维护，并被档案、病历和治疗管理引用</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>治疗方案档案</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>患者接受某一治疗方案的纵向档案</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>唯一维度为患者 + 治疗方案</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>治疗方案基础档案快照</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>档案建立节点的固定内容与结果</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>引用组件结果并保存快照</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>专科病历</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>一次门诊对应的一份眼科专科病历</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>回传通用门诊病历指定段落</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>治疗过程记录</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>试戴、定片、下单、交付、复查等后续节点</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>后续模块建设</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p4"><b>5. 指标、模板与眼科检查组件底座</b></p>
+<p class="p5"><b>5.1 临床指标定义</b></p>
+<p class="p6">1. 不设置“指标分类”；查询条件不包含数据类型和指标分类。</p>
+<p class="p6">2. 数据来源固定为：**护士采集、医生查体、医技检查**。</p>
+<p class="p6">3. 单位为文本维护，不使用下拉字典。</p>
+<p class="p6">4. 枚举值在页面维护并存储于业务表；不再单独维护枚举字典。</p>
+<p class="p6">5. 眼别支持 OD、OS、OU 多选；“无眼别”和“其他”与上述选项互斥。</p>
+<p class="p6">6. 每个已选择的眼别均可维护外部映射字段，用于医技接口结果转换。</p>
+<p class="p6">7. 护士采集引用既有 HIHIS 体征字典 `hi.his.indnurtp`，并按眼别关联；医生查体由医生录入；医技检查通过报告/接口映射带入。</p>
+<p class="p5"><b>5.2 检查模板定义</b></p>
+<p class="p6">1. 模板类型只有：**医技检查、医生查体**；不再单独维护“检查类型”和“数据来源”。</p>
+<p class="p6">2. 医技检查模板必须可关联服务项目，这是医生开立检查医嘱与 PACS 报告回传的核心关联；服务项目支持按编码、名称模糊检索。</p>
+<p class="p6">3. 选择指标支持按指标编码、名称模糊检索，显示指标信息，支持多选确认和已选指标排序。</p>
+<p class="p6">4. 科室权限选择支持搜索；不维护科室时按第 4.1 节的默认规则处理。</p>
+<p class="p5"><b>5.3 眼科检查组件运行规则</b></p>
+<p class="p3">所有检查模板均可作为眼科检查组件使用，而非仅“眼健康检查”。组件可用于治疗方案基础档案、专科病历及后续治疗复查。</p>
+<ul class="ul1">
+  <li class="li7">同一次就诊、同一模板原则上复用同一个检查实例，避免重复录入和结果冲突；</li>
+  <li class="li7">医生查体组件提供“默认正常、异常时选择异常内容”的快速录入方式，自动生成病历描述；</li>
+  <li class="li7">医技检查优先引用接口结构化结果；无结构化结果时，保留原始 PDF/图片/报告入口，由医生手工补录；</li>
+  <li class="li7">多次报告可由医生选择引用哪一份报告；</li>
+  <li class="li7">组件保留来源、报告编号、录入人/报告人、录入时间/报告时间及人工修订痕迹；</li>
+  <li class="li7">报告内容或模板后续变化不得覆盖已完成治疗方案基础档案快照中的历史结果。</li>
+</ul>
+<p class="p5"><b>5.4 治疗方案配置</b></p>
+<p class="p3">治疗方案配置是治疗闭环的编排中心，用于定义每一种治疗方案在何处可用、建立何种基础档案、应走哪些治疗节点、如何复查以及使用何种病历模板。</p>
+<p class="p6">1. **方案基本信息**：维护方案名称、编码、适用治疗方式、启停状态及版本；如“角膜接触镜标准治疗方案—OK 镜”。</p>
+<p class="p6">2. **应用科室**：维护方案可应用的机构/科室；未维护科室时，默认租户内所有机构下的科室可用。科室权限仅决定可用与可见，不改变患者 + 治疗方案的档案唯一性。</p>
+<p class="p6">3. **基础档案模板**：每个治疗方案关联一套治疗方案基础档案模板。当前一期角膜接触镜使用固定的基础档案内容与版式；配置关系必须保留，以支持后续多方案、多模板扩展。</p>
+<p class="p6">4. **治疗节点与节点模板**：按顺序配置试戴、定片/定制下单、验片、交付、复查/随访等节点；每一节点关联对应的业务模板或品牌参数模板，并支持启停、排序和必经/可选标记。</p>
+<p class="p6">5. **复查周期**：可按治疗阶段/节点维护推荐复查周期；完成节点或保存病历时，根据当前方案和节点自动推荐下次复查日期，医生可在病历中调整。</p>
+<p class="p6">6. **病历模板**：治疗方案关联专科病历模板；一期角膜接触镜采用南医眼科固定专科病历版式，配置关系保留，后续可启用按方案选择的正式模板。</p>
+<p class="p6">7. **版本与生效**：方案调整不得回写已建档患者的基础档案快照、既往病历、已完成节点或已下达订单。新版本仅作用于新建档案或按明确规则升级的进行中档案，并须记录配置人、时间与变更内容。</p>
+<p class="p4"><b>6. 角膜接触镜治疗方案基础档案（一期开通）</b></p>
+<p class="p5"><b>6.1 档案规则</b></p>
+<ul class="ul1">
+  <li class="li7">一期范围为角膜接触镜，覆盖 OK 镜、RGP、软性离焦镜等治疗方式；</li>
+  <li class="li7">一个患者同一治疗方案仅存在一份档案；档案唯一维度为**患者 + 治疗方案**；</li>
+  <li class="li7">一个患者可因不同治疗并存多份档案，例如同时进行 OK 镜与视功能治疗；与眼别无关；</li>
+  <li class="li7">科室仅决定访问权限，不参与档案唯一性；</li>
+  <li class="li7">档案应记录治疗方式变更历史，例如 OK 镜变更为 RGP，保留原治疗阶段和原始档案快照；</li>
+  <li class="li7">档案状态至少包括：进行中、已结束、已终止；终止、恢复、变更均需留痕；</li>
+  <li class="li7">治疗方案由本系统治疗方案配置维护，并在方案中关联“档案基础模板”。一期角膜接触镜治疗方案基础档案内容按固定版式落地，同时保留配置关系。</li>
+</ul>
+<p class="p5"><b>6.2 建档与已有档案交互</b></p>
+<ul class="ul1">
+  <li class="li7">初诊或无匹配档案时，医生在门诊医生工作台创建档案，选择治疗方案与初始治疗方式，完成基础信息和治疗方案基础档案；</li>
+  <li class="li7">已有档案时，工作台展示当前科室有权限访问的方案档案；可查看档案状态、基础档案完成状态、当前治疗方式、责任医生和最近更新时间；</li>
+  <li class="li7">医生可编辑基础档案、变更治疗方式、终止档案或新建另一治疗方案档案；</li>
+  <li class="li7">不能因科室切换重复创建同一患者同一治疗方案档案。</li>
+</ul>
+<p class="p5"><b>6.3 OK 镜固定治疗方案基础档案内容与排序</b></p>
+<p class="p3">以下顺序应同时约束基础档案录入、打印预览及快照展示。各检查均显示录入人和录入时间；医技报告结果显示报告人和报告时间，并在打印预览中体现。</p>
+<p class="p6">1. 视力与眼压；</p>
+<p class="p6">2. 角膜地形图：睑裂高度、眼睑张力（从地形图报告提取）；</p>
+<p class="p6">3. 眼健康检查；</p>
+<p class="p6">4. 眼前节与瞳孔；</p>
+<p class="p6">5. 角膜地形图：Ks 曲率/轴位、MinK 曲率/轴位；OD、OS 的成对指标同一行录入并按 `Ks 曲率D@轴位°；MinK 曲率D@轴位°` 方式汇总；</p>
+<p class="p6">6. 眼生物测量；</p>
+<p class="p6">7. 角膜内皮；</p>
+<p class="p6">8. 眼表综合报告；</p>
+<p class="p6">9. 散瞳医学验光；</p>
+<p class="p6">10. 小瞳医学验光。</p>
+<p class="p3">治疗方案基础档案还包括与治疗相关的初始信息：戴镜目的、既往戴镜史、全身疾病史、眼部疾病/手术/用药史、药物过敏史、原视力矫正方式、工作/生活及电子产品使用情况。完成后保存快照，并按已确认的角膜接触镜档案打印版式提供打印预览。</p>
+<p class="p4"><b>7. 角膜接触镜专科病历（一期开通）</b></p>
+<p class="p5"><b>7.1 基本规则</b></p>
+<ul class="ul1">
+  <li class="li7">一期采用南医眼科的固定专科病历版式，不开放病历模板配置；</li>
+  <li class="li7">每次门诊一份专科病历；</li>
+  <li class="li7">接诊后默认展示既往就诊记录表格，按就诊时间倒序；点击“新建专科病历”后以右侧抽屉录入；</li>
+  <li class="li7">有档案时自动展示治疗方案、当前治疗方式和当前镜片基本信息；镜片类型与参数来源于后续治疗管理/定制下单，不在病历中单独录入；</li>
+  <li class="li7">无档案时仍可建立专科病历，治疗方案及镜片信息留空，待后续关联；</li>
+  <li class="li7">复诊安排根据随访规则自动推荐下次时间，医生可调整；</li>
+  <li class="li7">保存后向通用门诊病历受控回传主诉、现病史、专科查体/检查结论、处置及复诊建议等段落。</li>
+</ul>
+<p class="p5"><b>7.2 历史就诊记录</b></p>
+<p class="p3">历史记录以列表展示，至少包含：就诊日期/时间、就诊类型、科室、接诊医生、主诉/病程摘要、专科检查摘要、诊断/处置/医嘱摘要、治疗方式及复诊安排。支持查看详情和引用上一份病历。</p>
+<p class="p3">引用上一份病历仅带入主诉/现病史/计划等叙述性内容；不得复制历史检查结果、报告引用、报告人/时间、诊断和医嘱。</p>
+<p class="p5"><b>7.3 检查组件在病历中的使用</b></p>
+<ul class="ul1">
+  <li class="li7">医生已开立的检查医嘱，检查组件可自动加载并直接展示可录入的指标；</li>
+  <li class="li7">医生可通过搜索（名称/编码）多选其他检查组件，确认后直接展开到病历中录入；</li>
+  <li class="li7">手工新增但未保存的组件可删除；医嘱加载且已保存的组件不可直接删除；</li>
+  <li class="li7">组件结果与治疗方案基础档案遵循同一复用、引用报告、人工补录和审计规则。</li>
+</ul>
+<p class="p4"><b>8. 检查报告查询（一期开通）</b></p>
+<p class="p3">检查报告查询基于已结构化的医技检查报告结果，为医生提供本次就诊结果查看、历次检查结果纵向比较和趋势研判能力。</p>
+<p class="p5"><b>8.1 查询维度与结果范围</b></p>
+<ul class="ul1">
+  <li class="li7">支持按**本次就诊**查询：展示该患者本次就诊已引用或已回传的结构化检查报告及其指标；</li>
+  <li class="li7">支持按**检查项目**查询：按患者、检查项目检索历次结构化检查结果；检查项目由检查模板与服务项目关联确定；</li>
+  <li class="li7">支持按报告时间倒序查看历次结果，并可选择若干次结果进行横向比较；</li>
+  <li class="li7">指标展示须保留眼别、单位、参考范围、报告人、报告时间、原始报告入口及结果来源；</li>
+  <li class="li7">非结构化报告可在列表中查看原始报告，但不强制纳入指标对比与趋势图。</li>
+</ul>
+<p class="p5"><b>8.2 历次指标对比与趋势图</b></p>
+<ul class="ul1">
+  <li class="li7">对同一检查项目下的同一结构化指标，按 OD、OS、OU 或无眼别独立形成对比序列；</li>
+  <li class="li7">支持表格化历次值对比；数值型指标支持按报告时间生成趋势图；</li>
+  <li class="li7">枚举、布尔和文本型指标以历次结果对比展示，不绘制数值趋势；</li>
+  <li class="li7">趋势图必须明确指标名称、单位、眼别、时间轴和引用报告，不能混合不同单位或不同眼别数据；</li>
+  <li class="li7">当同一就诊有多份同项目报告时，默认以医生已引用的报告为准；未引用时提示用户选择报告。</li>
+</ul>
+<p class="p4"><b>9. 人群管理与治疗管理（一期开通）</b></p>
+<p class="p5"><b>9.1 人群管理</b></p>
+<p class="p3">人群管理作为独立菜单，面向配镜师/视光人员查看患者档案与治疗全景。一期重点保证档案可查看；后续扩展患者筛选、分层、到期提醒、随访清单、治疗时间轴和统计能力。</p>
+<p class="p5"><b>9.2 治疗管理</b></p>
+<p class="p3">治疗管理在治疗方案基础档案建立后展开，主流程为：试戴 → 定片/定制下单 → 验片 → 交付 → 复查/随访。镜片品牌、类型和参数由品牌参数模板与定制下单信息沉淀，并在档案、专科病历中以只读基本信息展示。</p>
+<p class="p3">品牌参数模板、定制下单、验片、交付、复查/随访均纳入一期；不同品牌参数的字段、规则和订单格式由品牌参数模板统一承载，并与当前治疗方式及治疗方案关联。</p>
+<p class="p4"><b>10. 状态、快照与审计</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>对象</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>状态/规则</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>关键审计信息</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>治疗方案档案</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>进行中、已结束、已终止；支持治疗方式变更与恢复</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>创建/变更/终止人、时间、原因、前后值</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>治疗方案基础档案</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>未完成、进行中、已完成</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>完成时形成快照；后续模板变化不回写历史</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>检查组件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>草稿、已完成；可引用报告或医生补录</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>数据来源、录入人/时间、报告人/时间、报告编号、修订记录</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>专科病历</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>草稿、已保存、回传成功/失败</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>保存人/时间、引用来源、回传记录</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>医技报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>可被多次选择引用，不改写原始报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>原始报告标识、报告人、报告时间、附件入口</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p4"><b>11. 集成边界与接口责任</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>集成对象</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>本系统使用方式</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>责任边界</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>HIHIS 患者/就诊</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>获取患者、挂号、科室、就诊上下文</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>HIHIS 为主数据来源</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>HIHIS 组织权限</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>获取租户、机构、科室及人员权限</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>本系统按科室可用范围控制访问</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>HIHIS 护士采集</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>读取既有体征字典及采集结果</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>本系统不重复维护护士体征字典</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>HIS 医嘱/服务项目</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>关联医技模板服务项目、识别已开立检查</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>服务项目和医嘱仍由 HIS 管理</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>PACS/医技系统</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>接收结构化结果或引用原始报告</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>映射、报告引用、人工补录与审计在本系统完成</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>通用门诊病历</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>接收专科病历受控回传段落</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>通用病历仍是法定/通用记录载体</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>治疗方案配置</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>维护方案应用科室、基础档案模板、治疗节点/节点模板、复查周期及病历模板</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>本系统一期建设，为档案、病历、治疗管理提供统一编排规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>治疗管理</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>输出镜片/订单/验片/交付/复查节点信息</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>一期建设并向档案、专科病历提供只读基本信息</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>检查报告查询</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>使用结构化医技报告形成查询、对比和趋势</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>一期建设；原始报告仍由 PACS/医技系统提供</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p4"><b>12. 一期与后续的交付边界</b></p>
+<p class="p5"><b>12.1 一期确认交付</b></p>
+<ul class="ul1">
+  <li class="li7">临床指标定义；</li>
+  <li class="li7">检查模板定义；</li>
+  <li class="li7">眼科检查组件运行能力；</li>
+  <li class="li7">治疗方案配置：应用科室、基础档案模板、治疗节点与模板、复查周期、病历模板；</li>
+  <li class="li7">角膜接触镜治疗方案基础档案、固定 OK 镜基础档案内容、快照和打印预览；</li>
+  <li class="li7">角膜接触镜固定版式专科病历、历史病历列表、检查组件引用、通用门诊病历回传；</li>
+  <li class="li7">结构化检查报告查询：本次就诊、检查项目、历次指标对比与数值趋势图；</li>
+  <li class="li7">品牌参数模板、定制下单、验片、交付、复查/随访等治疗管理闭环；</li>
+  <li class="li7">与治疗方案、医嘱服务项目、护士字典、医技报告的必要关联；</li>
+  <li class="li7">独立菜单及医生站入口的集成方式。</li>
+</ul>
+<p class="p5"><b>12.2 后续规划</b></p>
+<ul class="ul1">
+  <li class="li7">通用档案基础模板配置与专科病历模板配置正式启用；</li>
+  <li class="li7">完整的人群管理、运营筛选与随访提醒；</li>
+  <li class="li7">更丰富的报告结构化解析与接口映射覆盖；</li>
+  <li class="li7">扩展视功能等其他治疗方案及对应档案。</li>
+</ul>
+<p class="p4"><b>13. 已替代的早期规则登记</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>早期表述/做法</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>当前产品基线</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>档案按“患者 + 科室 + 治疗方案”识别</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>改为“患者 + 治疗方案”唯一；科室仅控制权限</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>PACS、生命体征作为独立数据来源表述</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>指标数据来源统一为护士采集、医生查体、医技检查；PACS 是医技报告集成路径</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>指标有分类，查询可按数据类型/分类</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>不维护指标分类；查询不使用数据类型、指标分类</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>护士采集自建字典</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>直接关联 HIHIS `hi.his.indnurtp` 既有体征字典，按眼别选择</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>枚举依赖字典</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>枚举值由页面配置，业务表存储，并维护外部映射编码</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>眼健康是单独共享组件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>所有检查模板都是眼科检查组件，可被档案、病历和治疗复查复用</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>基础档案/病历均先做通用模板配置</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>治疗方案配置一期建设并保留模板关联；角膜接触镜治疗方案基础档案和专科病历一期按固定版式落地</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>专科病历直接默认打开录入页</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>接诊后默认显示历史就诊记录列表；新建时以抽屉录入</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+<p class="p4"><b>14. 实施依赖与验收基线</b></p>
+<p class="p5"><b>13.1 建设顺序</b></p>
+<p class="p11"><b>临床指标定义 → 检查模板定义 → 眼科检查组件 → 治疗方案配置 → 治疗方案基础档案 → 专科病历/检查报告查询 → 治疗管理与人群管理</b></p>
+<p class="p3">治疗方案配置为本系统的公共配置模块，应向档案、专科病历、治疗管理和人群管理提供统一的方案标识、科室可用范围、模板、节点和复查规则。</p>
+<p class="p5"><b>13.2 跨模块验收要点</b></p>
+<p class="p6">1. 指标一处定义后，可被模板选择并在组件、治疗方案基础档案、病历和报告查询中一致展示；</p>
+<p class="p6">2. 医技模板可通过服务项目/医嘱关联到报告，结果能按眼别映射并保留报告来源；</p>
+<p class="p6">3. 同就诊同模板结果在治疗方案基础档案与病历之间可复用，不产生冲突副本；</p>
+<p class="p6">4. 患者可并存不同治疗方案档案，但不得重复建立同一治疗方案档案；</p>
+<p class="p6">5. 治疗方案基础档案完成形成稳定快照，打印版式、顺序、录入/报告信息与界面一致；</p>
+<p class="p6">6. 专科病历每就诊一份，历史列表倒序，检查组件可直接录入并受控回传通用门诊病历；</p>
+<p class="p6">7. 科室权限只控制可见/可用范围，不改变档案身份和历史归属；</p>
+<p class="p6">8. 检查报告查询可按本次就诊、检查项目定位结构化报告；同一指标的历次结果可比较，数值型指标按眼别和单位绘制趋势图；</p>
+<p class="p6">9. 品牌参数模板、定制下单、验片、交付、复查/随访可串联同一治疗方案档案，并向病历回显当前镜片基本信息。</p>
+<p class="p6">10. 治疗方案配置修改后，历史档案、已完成节点、历史病历和订单保持原版本快照；新配置按版本生效规则应用。</p>
+<p class="p4"><b>15. 待后续明确的事项</b></p>
+<ul class="ul1">
+  <li class="li7">各 PACS/医技厂商的实际字段、眼别编码、枚举映射和回传触发机制；</li>
+  <li class="li7">通用门诊病历回传后的签名、锁定、失败重试和人工更正规则；</li>
+  <li class="li7">各品牌参数模板的具体字段、计算/校验规则、订单格式及外部厂商对接方式；</li>
+  <li class="li7">治疗方案配置的正式发布、回滚、在途档案升级与版本迁移规则；</li>
+  <li class="li7">通用档案/病历模板配置正式启用后的版本、发布、停用和历史渲染策略；</li>
+  <li class="li7">人群管理的正式角色权限、统计口径和患者分层规则。</li>
+</ul>
+<p class="p4"><b>版本记录</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>版本</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>日期</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p8"><b>说明</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>V1.0</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>2026-08-03</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>汇总已确认的指标、模板、检查组件、接触镜档案、专科病历及后续模块边界，作为产品主基线。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>V1.1</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>2026-08-03</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>一期纳入品牌参数模板和完整治疗管理；将“基线评估”统一更名为“治疗方案基础档案”；新增检查报告查询、历次指标对比和趋势图。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>V1.2</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>2026-08-03</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p9"><b>新增治疗方案配置一期能力：应用科室、基础档案模板、治疗节点与模板、复查周期、病历模板及版本生效规则。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p10"><b></b><br></p>
+</body>
+</html>

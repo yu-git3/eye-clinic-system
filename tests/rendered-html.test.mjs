@@ -95,7 +95,12 @@ test("exam reports are embedded in the doctor workspace instead of a standalone 
 test("product documents expose the latest PRDs as online-only reading pages", async () => {
   const shell = await readFile(new URL("../app/OphthalmologyPrototype.tsx", import.meta.url), "utf8");
   const docs = await readFile(new URL("../app/modules/product-docs/ProductDocsModule.tsx", import.meta.url), "utf8");
+  const baseline = await readFile(new URL("../public/prd/product-baseline-v1.2.html", import.meta.url), "utf8");
   assert.match(shell, /产品文档/);
+  assert.match(docs, /id: "baseline"/);
+  assert.match(docs, /title: "眼科专科系统产品基线"/);
+  assert.match(docs, /product-baseline-v1\.2\.html/);
+  assert.match(baseline, /眼科专科系统产品基线与模块合并台账/);
   assert.match(docs, /临床指标定义.*V1\.3/s);
   assert.match(docs, /检查模板配置.*V1\.2/s);
   assert.match(docs, /检查报告查询.*V1\.3/s);

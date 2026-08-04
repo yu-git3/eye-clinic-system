@@ -5,6 +5,7 @@ import { useState } from "react";
 type PrototypeTarget = "indicator" | "template" | "doctor" | "report";
 
 const documents = [
+  { id: "baseline", title: "眼科专科系统产品基线", version: "V1.2", updatedAt: "2026-08-03", path: "/prd/product-baseline-v1.2.html", target: "doctor" as PrototypeTarget },
   { id: "indicator", title: "临床指标定义", version: "V1.3", updatedAt: "2026-08-04", path: "/prd/clinical-indicator-v1.3.html", target: "indicator" as PrototypeTarget },
   { id: "template", title: "检查模板配置", version: "V1.2", updatedAt: "2026-08-04", path: "/prd/check-template-v1.2.html", target: "template" as PrototypeTarget },
   { id: "report", title: "检查报告查询", version: "V1.3", updatedAt: "2026-08-04", path: "/prd/exam-report-v1.3.html", target: "report" as PrototypeTarget },
@@ -20,7 +21,7 @@ export function ProductDocsModule({ onOpenPrototype }: { onOpenPrototype: (targe
 
   return <div className="product-docs-page">
     <header className="product-docs-header">
-      <div><span>产品资料</span><h1>产品文档</h1><p>集中查看眼科专科系统各功能模块的最新需求说明。</p></div>
+      <div><span>产品资料</span><h1>产品文档</h1><p>先了解产品基线，再查看各功能模块的最新需求说明。</p></div>
       <button onClick={() => onOpenPrototype(active.target)}>查看对应原型</button>
     </header>
     <div className="product-docs-layout">
