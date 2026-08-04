@@ -9,6 +9,8 @@ import "../app/baseline-ordered.css";
 import "../app/print-override.css";
 import "../app/archive-lifecycle.css";
 import "../app/specialty-record.css";
+import "../app/exam-report.css";
+import "../app/exam-report-iteration.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

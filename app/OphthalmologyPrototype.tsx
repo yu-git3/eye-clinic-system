@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ClinicalIndicatorModule } from "./modules/clinical-indicator/ClinicalIndicatorModule";
 import { CheckTemplateModule } from "./modules/check-template/CheckTemplateModule";
 import { ContactLensArchiveModule } from "./modules/contact-lens-archive/ContactLensArchiveModule";
+import { ExamReportModule } from "./modules/exam-report/ExamReportModule";
 
 type ModuleKey = "doctor" | "population" | "indicator" | "template";
 const modules: Record<ModuleKey, { label: string; group: string; icon: string }> = {
@@ -16,6 +17,7 @@ const modules: Record<ModuleKey, { label: string; group: string; icon: string }>
 export function OphthalmologyPrototype() {
   const [activeModule, setActiveModule] = useState<ModuleKey>("doctor");
   const [openModules, setOpenModules] = useState<ModuleKey[]>(["doctor"]);
+  const [reportOpen, setReportOpen] = useState(false);
 
   function openModule(module: ModuleKey) {
     setOpenModules((current) => current.includes(module) ? current : [...current, module]);
@@ -53,7 +55,7 @@ export function OphthalmologyPrototype() {
         {(["population", "indicator", "template"] as ModuleKey[]).map((item) => <button key={item} className={activeModule === item ? "active" : ""} onClick={() => openModule(item)}><span>{modules[item].icon}</span>{modules[item].label}</button>)}
       </aside>
       <section className="his-workspace">
-        {activeModule === "doctor" && <ContactLensArchiveModule entryMode="doctor" />}
+        {activeModule === "doctor" && <><ContactLensArchiveModule entryMode="doctor" /><button className="doctor-report-float" onClick={() => setReportOpen(true)}><span>▤</span><b>检查报告</b><em>3</em></button>{reportOpen&&<><div className="doctor-report-mask" onClick={()=>setReportOpen(false)}/><section className="doctor-report-panel"><header><div><span>当前患者报告</span><h2>吴四 · 检查报告</h2></div><button onClick={()=>setReportOpen(false)}>×</button></header><ExamReportModule embedded onClose={()=>setReportOpen(false)}/></section></>}</>}
         {activeModule === "population" && <ContactLensArchiveModule entryMode="population" />}
         {activeModule === "indicator" && <ClinicalIndicatorModule onNavigateTemplate={() => openModule("template")} />}
         {activeModule === "template" && <CheckTemplateModule onNavigateIndicator={() => openModule("indicator")} />}

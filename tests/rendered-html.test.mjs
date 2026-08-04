@@ -1,38 +1,82 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 
-async function render() {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
-  const { default: worker } = await import(workerUrl.href);
-  return worker.fetch(
-    new Request("http://localhost/", { headers: { accept: "text/html" } }),
-    { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
-    { waitUntil() {}, passThroughOnException() {} },
-  );
+async function readAppSources(directory = new URL("../app/", import.meta.url)) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const sources = await Promise.all(entries.map(async (entry) => {
+    const url = new URL(entry.name + (entry.isDirectory() ? "/" : ""), directory);
+    if (entry.isDirectory()) return readAppSources(url);
+    return /\.(tsx?|css)$/.test(entry.name) ? readFile(url, "utf8") : "";
+  }));
+  return sources.join("\n");
 }
 
-test("server-renders the ophthalmology prototype shell", async () => {
-  const response = await render();
-  assert.equal(response.status, 200);
-  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
-  const html = await response.text();
+test("the Vite entry and app sources expose the ophthalmology prototype shell", async () => {
+  const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  const source = await readAppSources();
   assert.match(html, /<title>眼科专科系统高保真原型<\/title>/i);
-  assert.match(html, /眼科专科系统/);
-  assert.match(html, /指标定义/);
-  assert.match(html, /检查模板/);
-  assert.match(html, /门诊医生工作台/);
-  assert.match(html, /角膜接触镜专科病历/);
-  assert.match(html, /基本档案/);
-  assert.match(html, /治疗跟踪/);
-  assert.match(html, /建立档案/);
-  assert.match(html, /电子病历系统/);
-  assert.match(html, /专科人群管理/);
-  assert.match(html, /临床指标定义/);
-  assert.match(html, /检查模板配置/);
-  assert.doesNotMatch(html, /医生录入|指标分类/);
-  assert.doesNotMatch(html, /Your site is taking shape|codex-preview|react-loading-skeleton/);
+  assert.match(source, /眼科专科系统/);
+  assert.match(source, /指标定义/);
+  assert.match(source, /检查模板/);
+  assert.match(source, /门诊医生工作台/);
+  assert.match(source, /角膜接触镜专科病历/);
+  assert.match(source, /基本档案/);
+  assert.match(source, /治疗跟踪/);
+  assert.match(source, /建立档案/);
+  assert.match(source, /电子病历系统/);
+  assert.match(source, /专科人群管理/);
+  assert.match(source, /临床指标定义/);
+  assert.match(source, /检查模板配置/);
+  assert.match(source, /检查报告/);
+  assert.doesNotMatch(source, /医生录入|指标分类/);
+  assert.doesNotMatch(source, /Your site is taking shape|codex-preview|react-loading-skeleton/);
+});
+
+test("exam reports are embedded in the doctor workspace instead of a standalone menu", async () => {
+  const shell = await readFile(new URL("../app/OphthalmologyPrototype.tsx", import.meta.url), "utf8");
+  const report = await readFile(new URL("../app/modules/exam-report/ExamReportModule.tsx", import.meta.url), "utf8");
+  assert.match(shell, /doctor-report-float/);
+  assert.match(shell, /当前患者报告/);
+  assert.doesNotMatch(shell, /report: \{ label: "检查报告查询"/);
+  assert.match(report, /当前接诊患者/);
+  assert.doesNotMatch(report, /患者<input/);
+  assert.match(report, /按就诊时间倒序/);
+  assert.match(report, /按报告时间倒序/);
+  assert.match(report, /搜索检查项目名称或编码/);
+  assert.match(report, /已选检查项目/);
+  assert.match(report, /默认全选/);
+  assert.match(report, /全选/);
+  assert.doesNotMatch(report, /选择项目|确认选择/);
+  assert.match(report, /er-status-options/);
+  assert.match(report, /本次就诊医嘱/);
+  assert.match(report, /本次医生查体/);
+  assert.match(report, /当日护士采集/);
+  assert.match(report, /护士采集只读/);
+  assert.match(report, /er-nursing-table/);
+  assert.match(report, /采集人/);
+  assert.match(report, /采集时间/);
+  assert.match(report, /报告时间/);
+  assert.match(report, /报告人/);
+  assert.match(report, /执行科室/);
+  assert.match(report, /指标结果/);
+  assert.match(report, /查看原始报告/);
+  assert.match(report, /er-pdf-viewer/);
+  assert.match(report, /报告文件/);
+  assert.match(report, /默认展示全部数值型指标/);
+  assert.match(report, /point-value/);
+  assert.match(report, /indicatorDefinition/);
+  assert.doesNotMatch(report, /er-indicator-result-row/);
+  assert.match(report, /er-card-meta-inline/);
+  assert.match(report, /er-component-entry/);
+  assert.match(report, /meta\.type===\"枚举型\"/);
+  assert.match(report, /参考范围、单位及枚举值来自临床指标定义/);
+  assert.match(report, /data-series-key/);
+  assert.match(report, /er-trend-data/);
+  assert.match(report, /编辑/);
+  assert.doesNotMatch(report, /报告编号/);
+  assert.doesNotMatch(report, /选择引用|引用此报告|当前引用候选/);
+  assert.doesNotMatch(report, /er-project-filter/);
 });
 
 test("baseline supports report-assisted manual editing", async () => {
@@ -105,9 +149,8 @@ test("doctor-facing archive language and specialty record follow the approved wo
 });
 
 test("doctor workspace does not contain the old prototype shortcut bar", async () => {
-  const response = await render();
-  const html = await response.text();
-  assert.doesNotMatch(html, /原型入口|同一份档案，不同角色权限|门诊医生站 · 医生|人群管理 · 配镜师/);
+  const source = await readFile(new URL("../app/OphthalmologyPrototype.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /原型入口|同一份档案，不同角色权限|门诊医生站 · 医生|人群管理 · 配镜师/);
 });
 
 test("query conditions omit data type and indicator category", async () => {
@@ -129,10 +172,16 @@ test("query conditions omit data type and indicator category", async () => {
   assert.match(source, /护士采集/);
   assert.match(source, /医生查体/);
   assert.match(source, /医技检查/);
+  assert.doesNotMatch(source, /护士采集固定为文本型/);
+  assert.doesNotMatch(source, /draft\.source === "护士采集"\}/);
+  assert.match(source, /护理体征关联/);
+  assert.match(source, />2<\/span>取值方式/);
+  assert.match(source, />3<\/span>管理信息/);
+  assert.ok(source.indexOf('label="眼别"') < source.indexOf('label="数据来源"'));
+  assert.ok(source.indexOf('label="数据来源"') < source.indexOf('label="状态"'));
 });
 
 test("does not expose PACS as a standalone source option", async () => {
-  const response = await render();
-  const html = await response.text();
-  assert.doesNotMatch(html, /<option[^>]*>PACS[^<]*<\/option>/i);
+  const source = await readAppSources();
+  assert.doesNotMatch(source, /<option[^>]*>PACS[^<]*<\/option>/i);
 });

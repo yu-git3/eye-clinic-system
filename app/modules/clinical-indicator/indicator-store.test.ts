@@ -140,6 +140,19 @@ test("requires nurse dictionary mappings for each selected eye", () => {
   assert.equal(Boolean(errors.nursingMapping), true);
 });
 
+test("switching to nurse collection preserves the selected data type", () => {
+  const transitionSource = (store as unknown as {
+    transitionIndicatorSource?: (draft: IndicatorDraft, source: IndicatorDraft["source"]) => IndicatorDraft;
+  }).transitionIndicatorSource;
+  assert.equal(typeof transitionSource, "function");
+  const numeric = createSeedIndicators()[0];
+  const changed = transitionSource?.(numeric, "护士采集");
+  assert.equal(changed?.type, "数值型");
+  assert.deepEqual(changed?.numeric, numeric.numeric);
+  assert.deepEqual(changed?.nursingMapping, {});
+  assert.equal(changed?.externalMapping, undefined);
+});
+
 test("rejects duplicate medical fields for OD and OS", () => {
   const errors = validateIndicator({
     name: "眼压2",

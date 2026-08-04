@@ -23,7 +23,7 @@ export type EnumItem = {
 export type IndicatorDraft = {
   name: string;
   code: string;
-  type: IndicatorType;
+  type: IndicatorType | "";
   unit: string;
   eyeRule: EyeRule;
   source: IndicatorSource;
@@ -75,6 +75,18 @@ const APPROVED_SOURCES = new Set<IndicatorSource>([
 export function requiredMappingKeys(source: IndicatorSource, eyeRule: EyeRule): EyeOption[] {
   if (source === "医生查体") return [];
   return eyeRule;
+}
+
+export function transitionIndicatorSource(
+  draft: IndicatorDraft,
+  source: IndicatorSource,
+): IndicatorDraft {
+  return {
+    ...draft,
+    source,
+    nursingMapping: source === "护士采集" ? {} : undefined,
+    externalMapping: source === "医技检查" ? {} : undefined,
+  };
 }
 
 export function createSeedIndicators(): Indicator[] {
@@ -240,6 +252,7 @@ export function validateIndicator(
   if (!APPROVED_SOURCES.has(draft.source)) {
     errors.source = "请选择护士采集、医生查体或医技检查";
   }
+  if (!draft.type) errors.type = "请选择数据类型";
   if (!draft.eyeRule.length) errors.eyeRule = "请至少选择一个眼别";
   if (draft.eyeRule.includes("无眼别") && draft.eyeRule.length > 1) {
     errors.eyeRule = "无眼别不能与其他眼别同时选择";

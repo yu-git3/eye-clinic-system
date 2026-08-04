@@ -8,6 +8,7 @@ import {
   toggleIndicatorStatus,
   validateIndicator,
   nursingSigns,
+  transitionIndicatorSource,
   type EnumItem,
   type Indicator,
   type IndicatorDraft,
@@ -20,7 +21,7 @@ import {
 const emptyFilters: IndicatorFilters = { name: "", code: "", source: "", status: "" };
 function blankDraft(): IndicatorDraft {
   return {
-    name: "", code: "", type: "数值型", unit: "", eyeRule: ["OD", "OS"],
+    name: "", code: "", type: "", unit: "", eyeRule: ["OD", "OS"],
     source: "医技检查", status: "启用", description: "", referenceRange: "", referenced: false,
     numeric: { decimals: 2, min: undefined, max: undefined },
     externalMapping: { OD: "", OS: "" },
@@ -83,18 +84,7 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
   }
 
   function changeSource(source: IndicatorDraft["source"]) {
-    setDraft((current) => ({
-      ...current,
-      source,
-      type: source === "护士采集" ? "文本型" : current.type,
-      unit: source === "护士采集" ? "" : current.unit,
-      numeric: source === "护士采集" ? undefined : current.numeric,
-      text: source === "护士采集" ? { maxLength: 50 } : current.text,
-      enumItems: source === "护士采集" ? undefined : current.enumItems,
-      boolean: source === "护士采集" ? undefined : current.boolean,
-      nursingMapping: source === "护士采集" ? {} : undefined,
-      externalMapping: source === "医技检查" ? {} : undefined,
-    }));
+    setDraft((current) => transitionIndicatorSource(current, source));
     setErrors({});
   }
 
@@ -205,13 +195,19 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
           <section className="form-section"><h3><span>1</span>基础信息</h3><div className="form-grid">
             <Field label="指标名称" required error={errors.name}><input disabled={drawer.mode === "view"} value={draft.name} placeholder="如：眼压" onChange={(e) => setField("name", e.target.value)} /></Field>
             <Field label="指标编码" required error={errors.code} hint={drawer.mode === "add" ? "大写字母、数字或下划线" : "创建后不可修改"}><input disabled={drawer.mode !== "add"} value={draft.code} placeholder="如：IOP" onChange={(e) => setField("code", e.target.value.toUpperCase())} /></Field>
-            <Field label="数据来源" required error={errors.source} hint="不同来源对应不同的数据关联方式"><select disabled={drawer.mode === "view"} value={draft.source} onChange={(e) => changeSource(e.target.value as IndicatorDraft["source"])}><option>护士采集</option><option>医生查体</option><option>医技检查</option></select></Field>
-            <Field label="数据类型" required hint={draft.source === "护士采集" ? "护士采集固定为文本型" : drawer.mode === "edit" ? "创建后不可修改" : "决定指标的录入与校验方式"}><select disabled={drawer.mode === "view" || drawer.mode === "edit" || draft.source === "护士采集"} value={draft.type} onChange={(e) => changeType(e.target.value as IndicatorType)}><option>数值型</option><option>文本型</option><option>枚举型</option><option>多选枚举</option><option>布尔型</option></select></Field>
+            <Field label="数据类型" required error={errors.type} hint={drawer.mode === "edit" ? "创建后不可修改" : "按指标临床含义选择，决定展示和校验方式"}><select disabled={drawer.mode === "view" || drawer.mode === "edit"} value={draft.type} onChange={(e) => changeType(e.target.value as IndicatorType)}><option value="" disabled>请选择数据类型</option><option>数值型</option><option>文本型</option><option>枚举型</option><option>多选枚举</option><option>布尔型</option></select></Field>
             <div className="wide inline-config"><DataTypeConfig draft={draft} mode={drawer.mode} errors={errors} setField={setField} addEnumItem={addEnumItem} updateEnum={updateEnum} moveEnum={moveEnum} /></div>
             {draft.type === "数值型" && <Field label="单位"><input disabled={drawer.mode === "view"} value={draft.unit} placeholder="请输入单位，如 mmHg" onChange={(e) => setField("unit", e.target.value)} /></Field>}
             <Field label="参考范围"><input disabled={drawer.mode === "view"} value={draft.referenceRange} placeholder="如：10～21 mmHg" onChange={(e) => setField("referenceRange", e.target.value)} /></Field>
             <Field wide label="眼别" required error={errors.eyeRule} hint="OD、OS、OU 可多选；无眼别与其他选项互斥"><div className="eye-options">{(["OD", "OS", "OU", "无眼别"] as EyeOption[]).map((eye) => <label key={eye} className={draft.eyeRule.includes(eye) ? "checked" : ""}><input type="checkbox" disabled={drawer.mode === "view"} checked={draft.eyeRule.includes(eye)} onChange={() => toggleEye(eye)} />{eye}</label>)}</div></Field>
+          </div></section>
+
+          <section className="form-section"><h3><span>2</span>取值方式</h3><div className="form-grid">
+            <Field wide label="数据来源" required error={errors.source} hint="选择后立即展示对应的取值关联配置"><select disabled={drawer.mode === "view"} value={draft.source} onChange={(e) => changeSource(e.target.value as IndicatorDraft["source"])}><option>护士采集</option><option>医生查体</option><option>医技检查</option></select></Field>
             <div className="wide inline-config"><EyeMappingFields draft={draft} mode={drawer.mode} errors={errors} setField={setField} /></div>
+          </div></section>
+
+          <section className="form-section"><h3><span>3</span>管理信息</h3><div className="form-grid">
             <Field label="状态" required><div className="segmented"><button type="button" disabled={drawer.mode === "view"} className={draft.status === "启用" ? "active" : ""} onClick={() => setField("status", "启用")}>启用</button><button type="button" disabled={drawer.mode === "view"} className={draft.status === "停用" ? "active off" : ""} onClick={() => setField("status", "停用")}>停用</button></div></Field>
             <Field wide label="指标说明"><textarea disabled={drawer.mode === "view"} value={draft.description} placeholder="说明指标的临床含义和使用场景" onChange={(e) => setField("description", e.target.value)} /></Field>
           </div></section>
