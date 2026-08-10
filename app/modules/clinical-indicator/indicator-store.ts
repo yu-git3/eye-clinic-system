@@ -58,8 +58,7 @@ export type Indicator = IndicatorDraft & {
 };
 
 export type IndicatorFilters = {
-  name: string;
-  code: string;
+  keyword: string;
   source: string;
   status: string;
 };
@@ -212,11 +211,9 @@ export function filterIndicators(
   items: Indicator[],
   filters: IndicatorFilters,
 ): Indicator[] {
-  const name = filters.name.trim().toLowerCase();
-  const code = filters.code.trim().toLowerCase();
+  const keyword = filters.keyword.trim().toLowerCase();
   return items.filter((item) =>
-    (!name || item.name.toLowerCase().includes(name)) &&
-    (!code || item.code.toLowerCase().includes(code)) &&
+    (!keyword || item.name.toLowerCase().includes(keyword) || item.code.toLowerCase().includes(keyword)) &&
     (!filters.source || item.source === filters.source) &&
     (!filters.status || item.status === filters.status),
   );

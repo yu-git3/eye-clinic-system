@@ -211,6 +211,11 @@ test("query conditions omit data type and indicator category", async () => {
     "utf8",
   );
   assert.doesNotMatch(source, /filters\.type|指标分类/);
+  assert.match(source, /指标名称 \/ 编码/);
+  assert.match(source, /请输入指标名称或编码/);
+  assert.doesNotMatch(source, />指标名称<input|>指标编码<input/);
+  assert.doesNotMatch(source, />查询<\/button>|>重置<\/button>|重置查询/);
+  assert.match(source, /请修改或清空上方筛选条件/);
   assert.match(source, /placeholder="请输入单位，如 mmHg"/);
   assert.match(source, /\["OD", "OS", "OU", "无眼别"\]/);
   assert.doesNotMatch(source, /hi\.his\.exam\.ind|ctr1/);

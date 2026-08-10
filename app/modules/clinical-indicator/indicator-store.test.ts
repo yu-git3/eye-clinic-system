@@ -11,8 +11,7 @@ import {
 import * as store from "./indicator-store.ts";
 
 const emptyFilters = {
-  name: "",
-  code: "",
+  keyword: "",
   source: "",
   status: "",
 };
@@ -23,15 +22,11 @@ test("seed data uses the approved sources and has no category field", () => {
   assert.equal(createSeedIndicators().every((item) => !("category" in item)), true);
 });
 
-test("filters by name, code, source and status", () => {
-  const result = filterIndicators(createSeedIndicators(), {
-    ...emptyFilters,
-    name: "眼压",
-    code: "iop",
-    source: "医技检查",
-    status: "启用",
-  });
-  assert.deepEqual(result.map((item) => item.code), ["IOP"]);
+test("filters indicators by a combined name or code keyword", () => {
+  const items = createSeedIndicators();
+  assert.deepEqual(filterIndicators(items, { ...emptyFilters, keyword: "眼压" }).map((item) => item.code), ["IOP"]);
+  assert.deepEqual(filterIndicators(items, { ...emptyFilters, keyword: "iop" }).map((item) => item.code), ["IOP"]);
+  assert.deepEqual(filterIndicators(items, { ...emptyFilters, keyword: "眼", source: "医技检查", status: "启用" }).map((item) => item.code), ["IOP", "AL"]);
 });
 
 test("derives required source mappings from source and eye rule", () => {

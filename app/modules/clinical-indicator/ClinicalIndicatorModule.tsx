@@ -18,7 +18,7 @@ import {
   type ValidationErrors,
 } from "./indicator-store";
 
-const emptyFilters: IndicatorFilters = { name: "", code: "", source: "", status: "" };
+const emptyFilters: IndicatorFilters = { keyword: "", source: "", status: "" };
 function blankDraft(): IndicatorDraft {
   return {
     name: "", code: "", type: "", unit: "", eyeRule: ["OD", "OS"],
@@ -35,7 +35,6 @@ function Icon({ children }: { children: React.ReactNode }) {
 export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemplate?: () => void }) {
   const [items, setItems] = useState<Indicator[]>(createSeedIndicators);
   const [filters, setFilters] = useState<IndicatorFilters>(emptyFilters);
-  const [appliedFilters, setAppliedFilters] = useState<IndicatorFilters>(emptyFilters);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [drawer, setDrawer] = useState<{ mode: "add" | "edit" | "view"; code?: string } | null>(null);
@@ -46,13 +45,18 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
   const [discardOpen, setDiscardOpen] = useState(false);
   const [toast, setToast] = useState("");
 
-  const filtered = useMemo(() => filterIndicators(items, appliedFilters), [items, appliedFilters]);
+  const filtered = useMemo(() => filterIndicators(items, filters), [items, filters]);
   const paged = useMemo(() => paginateIndicators(filtered, page, pageSize), [filtered, page, pageSize]);
   const dirty = drawer?.mode !== "view" && initialDraft && JSON.stringify(draft) !== initialDraft;
 
   function notify(message: string) {
     setToast(message);
     window.setTimeout(() => setToast(""), 2400);
+  }
+
+  function updateFilters(next: Partial<IndicatorFilters>) {
+    setFilters((current) => ({ ...current, ...next }));
+    setPage(1);
   }
 
   function openDrawer(mode: "add" | "edit" | "view", code?: string) {
@@ -168,12 +172,10 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
           </section>
 
           <section className="card filter-card">
-            <div className="filter-grid">
-              <label>指标名称<input value={filters.name} placeholder="请输入指标名称" onChange={(e) => setFilters({ ...filters, name: e.target.value })} /></label>
-              <label>指标编码<input value={filters.code} placeholder="请输入指标编码" onChange={(e) => setFilters({ ...filters, code: e.target.value })} /></label>
-              <label>数据来源<select value={filters.source} onChange={(e) => setFilters({ ...filters, source: e.target.value })}><option value="">全部</option><option>护士采集</option><option>医生查体</option><option>医技检查</option></select></label>
-              <label>状态<select value={filters.status} onChange={(e) => setFilters({ ...filters, status: e.target.value })}><option value="">全部</option><option>启用</option><option>停用</option></select></label>
-              <div className="filter-actions"><button className="button primary" onClick={() => { setAppliedFilters(filters); setPage(1); }}>查询</button><button className="button" onClick={() => { setFilters(emptyFilters); setAppliedFilters(emptyFilters); setPage(1); }}>重置</button></div>
+            <div className="filter-grid indicator-filters">
+              <label>指标名称 / 编码<input value={filters.keyword} placeholder="请输入指标名称或编码" onChange={(e) => updateFilters({ keyword: e.target.value })} /></label>
+              <label>数据来源<select value={filters.source} onChange={(e) => updateFilters({ source: e.target.value })}><option value="">全部</option><option>护士采集</option><option>医生查体</option><option>医技检查</option></select></label>
+              <label>状态<select value={filters.status} onChange={(e) => updateFilters({ status: e.target.value })}><option value="">全部</option><option>启用</option><option>停用</option></select></label>
             </div>
           </section>
 
@@ -182,7 +184,7 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
             <div className="table-wrap">
               {paged.total ? <table><thead><tr><th>指标编码</th><th>指标名称</th><th>数据类型</th><th>单位</th><th>眼别</th><th>参考范围</th><th>数据来源</th><th>状态</th><th>更新时间</th><th>操作</th></tr></thead>
                 <tbody>{paged.items.map((item) => <tr key={item.code}><td><code>{item.code}</code></td><td><strong>{item.name}</strong>{item.referenced && <span className="reference-dot" title="已被模板引用" />}</td><td><span className={`tag type ${item.type}`}>{item.type}</span></td><td>{item.unit || "—"}</td><td>{item.eyeRule.join("、")}</td><td>{item.referenceRange || "—"}</td><td><span className="source">{item.source}</span></td><td><span className={`tag status ${item.status}`}>{item.status}</span></td><td>{item.updatedAt}</td><td><div className="row-actions"><button onClick={() => openDrawer("view", item.code)}>查看</button><button onClick={() => openDrawer("edit", item.code)}>编辑</button><button className={item.status === "启用" ? "danger-link" : ""} onClick={() => setStatusTarget(item.code)}>{item.status === "启用" ? "停用" : "启用"}</button></div></td></tr>)}</tbody></table>
-              : <div className="empty"><div>⌕</div><h3>未找到符合条件的指标</h3><p>请调整查询条件，或重置后查看全部指标。</p><button className="button" onClick={() => { setFilters(emptyFilters); setAppliedFilters(emptyFilters); }}>重置查询</button></div>}
+              : <div className="empty"><div>⌕</div><h3>未找到符合条件的指标</h3><p>请修改或清空上方筛选条件</p></div>}
             </div>
             {paged.total > 0 && <div className="pagination"><span>共 {paged.total} 条</span><select value={pageSize} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }}><option value={5}>5 条/页</option><option value={10}>10 条/页</option></select><button disabled={paged.page === 1} onClick={() => setPage(paged.page - 1)}>‹</button>{Array.from({ length: paged.pageCount }, (_, i) => <button key={i} className={paged.page === i + 1 ? "current" : ""} onClick={() => setPage(i + 1)}>{i + 1}</button>)}<button disabled={paged.page === paged.pageCount} onClick={() => setPage(paged.page + 1)}>›</button></div>}
           </section>
