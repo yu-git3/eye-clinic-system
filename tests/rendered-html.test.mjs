@@ -101,19 +101,31 @@ test("product documents expose the latest PRDs as online-only reading pages", as
   assert.match(docs, /title: "眼科专科系统产品基线"/);
   assert.match(docs, /product-baseline-v1\.2\.html/);
   assert.match(baseline, /眼科专科系统产品基线与模块合并台账/);
-  assert.match(docs, /临床指标定义.*V1\.3/s);
-  assert.match(docs, /检查模板配置.*V1\.2/s);
+  assert.match(docs, /临床指标定义.*V1\.4/s);
+  assert.match(docs, /检查模板配置.*V1\.3/s);
   assert.match(docs, /检查报告查询.*V1\.3/s);
   assert.match(docs, /治疗方案基础档案.*V1\.4/s);
   assert.match(docs, /角膜接触镜专科病历.*V1\.0/s);
   assert.match(docs, /在线阅读/);
   assert.match(docs, /<iframe/);
   assert.doesNotMatch(docs, /download|下载 DOCX|下载文档/);
-  const prdHtml = await readFile(new URL("../public/prd/clinical-indicator-v1.3.html", import.meta.url), "utf8");
+  const prdHtml = await readFile(new URL("../public/prd/clinical-indicator-v1.4.html", import.meta.url), "utf8");
   const readerCss = await readFile(new URL("../public/prd/reader.css", import.meta.url), "utf8");
   assert.match(prdHtml, /\/prd\/reader\.css/);
   assert.match(readerCss, /font-size:15px/);
   assert.match(readerCss, /td p\{font-size:14px/);
+});
+
+test("latest configuration PRDs describe live filtering without query or reset buttons", async () => {
+  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.4.html", import.meta.url), "utf8");
+  const template = await readFile(new URL("../public/prd/check-template-v1.3.html", import.meta.url), "utf8");
+  assert.match(indicator, /指标名称 \/ 编码/);
+  assert.match(indicator, /条件变化后实时刷新列表并回到第1页/);
+  assert.match(template, /条件变化后实时刷新列表并回到第1页/);
+  assert.doesNotMatch(indicator, /<p class="p3"><b>查询<\/b><\/p>/);
+  assert.doesNotMatch(indicator, /<p class="p3"><b>重置<\/b><\/p>/);
+  assert.doesNotMatch(template, /<p class="p6">查询<\/p>/);
+  assert.doesNotMatch(template, /<p class="p6">重置<\/p>/);
 });
 
 test("the prototype uses the shared Ant Design 4.x visual baseline", async () => {
