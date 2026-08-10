@@ -1,6 +1,7 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   createSeedIndicators,
   filterIndicators,
@@ -44,6 +45,7 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
   const [statusTarget, setStatusTarget] = useState<string | null>(null);
   const [discardOpen, setDiscardOpen] = useState(false);
   const [toast, setToast] = useState("");
+  const drawerCloseRef = useRef<HTMLButtonElement>(null);
 
   const filtered = useMemo(() => filterIndicators(items, filters), [items, filters]);
   const paged = useMemo(() => paginateIndicators(filtered, page, pageSize), [filtered, page, pageSize]);
@@ -81,7 +83,7 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
     setDraft((current) => ({
       ...current, type, unit: type === "数值型" ? current.unit : "",
       numeric: type === "数值型" ? { decimals: 2 } : undefined,
-      text: type === "文本型" ? { maxLength: 500 } : undefined,
+      text: type === "文本型" ? { maxLength: 50 } : undefined,
       enumItems: type === "枚举型" || type === "多选枚举" ? [{ code: "NORMAL", name: "正常", externalCode: "", order: 1, status: "启用" }] : undefined,
       boolean: type === "布尔型" ? { trueLabel: "是", falseLabel: "否", trueExternalCode: "", falseExternalCode: "" } : undefined,
     }));
@@ -191,7 +193,7 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
         </main>
       </section>
 
-      {drawer && <><div className="overlay" onClick={requestCloseDrawer} /><aside className="drawer" aria-label="指标信息抽屉"><div className="drawer-head"><div><span className="eyebrow">临床指标</span><h2>{drawer.mode === "add" ? "新增指标" : drawer.mode === "edit" ? "编辑指标" : "指标详情"}</h2></div><button className="close" onClick={requestCloseDrawer} aria-label="关闭">×</button></div>
+      {drawer && <><div className="overlay" onClick={requestCloseDrawer} /><aside className="drawer" aria-label="指标信息抽屉"><div className="drawer-head"><div><span className="eyebrow">临床指标</span><h2>{drawer.mode === "add" ? "新增指标" : drawer.mode === "edit" ? "编辑指标" : "指标详情"}</h2></div><button ref={drawerCloseRef} className="close" onClick={requestCloseDrawer} aria-label="关闭">×</button></div>
         <form onSubmit={submitDraft} className="drawer-form"><div className="drawer-body">
           {drawer.mode === "view" && <div className="detail-banner"><span>◎</span><div><strong>{draft.name}</strong><p>{draft.code} · {draft.type} · {draft.status}</p></div></div>}
           <section className="form-section"><h3><span>1</span>基础信息</h3><div className="form-grid">
@@ -218,10 +220,21 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
         </div><div className="drawer-foot">{drawer.mode === "view" ? <button type="button" className="button primary" onClick={() => setDrawer(null)}>关闭</button> : <><button type="button" className="button" onClick={requestCloseDrawer}>取消</button>{drawer.mode === "add" && <button type="button" className="button" onClick={(e) => submitDraft(e as unknown as FormEvent, true)}>保存并新增</button>}<button className="button primary" type="submit">保存</button></>}</div></form></aside></>}
 
       {statusItem && <><div className="overlay dialog-layer" /><div className="dialog" role="dialog" aria-modal="true"><div className={`dialog-symbol ${statusItem.status === "启用" ? "warn" : "success"}`}>{statusItem.status === "启用" ? "!" : "✓"}</div><h2>确认{statusItem.status === "启用" ? "停用" : "启用"}指标？</h2><p>即将{statusItem.status === "启用" ? "停用" : "启用"}“{statusItem.name}（{statusItem.code}）”。</p>{statusItem.status === "启用" && <div className="impact">停用后不能被新的检查模板引用，历史检查数据仍可正常查看。</div>}<div className="dialog-actions"><button className="button" onClick={() => setStatusTarget(null)}>取消</button><button className={`button ${statusItem.status === "启用" ? "danger" : "primary"}`} onClick={() => { setItems(toggleIndicatorStatus(items, statusItem.code)); notify(`“${statusItem.name}”已${statusItem.status === "启用" ? "停用" : "启用"}`); setStatusTarget(null); }}>确认{statusItem.status === "启用" ? "停用" : "启用"}</button></div></div></>}
-      {discardOpen && <><div className="overlay dialog-layer" /><div className="dialog" role="dialog" aria-modal="true"><div className="dialog-symbol warn">!</div><h2>放弃未保存的修改？</h2><p>当前表单内容尚未保存，关闭后本次修改将丢失。</p><div className="dialog-actions"><button className="button" onClick={() => setDiscardOpen(false)}>继续编辑</button><button className="button danger" onClick={() => { setDiscardOpen(false); setDrawer(null); }}>放弃修改</button></div></div></>}
+      {discardOpen && <DiscardChangesDialog returnFocusRef={drawerCloseRef} onContinue={() => setDiscardOpen(false)} onDiscard={() => { setDiscardOpen(false); setDrawer(null); }} />}
       {toast && <div className="toast"><span>✓</span>{toast}</div>}
     </div>
   );
+}
+
+function DiscardChangesDialog({ onContinue, onDiscard, returnFocusRef }: { onContinue: () => void; onDiscard: () => void; returnFocusRef: { current: HTMLButtonElement | null } }) {
+  const continueRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    continueRef.current?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") { event.preventDefault(); onContinue(); } };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => { document.removeEventListener("keydown", handleKeyDown); window.setTimeout(() => returnFocusRef.current?.focus(), 0); };
+  }, [onContinue, returnFocusRef]);
+  return createPortal(<><div className="overlay dialog-layer global-dialog-layer" /><div className="dialog global-discard-dialog" role="dialog" aria-modal="true" aria-labelledby="discard-title"><div className="dialog-symbol warn">!</div><h2 id="discard-title">放弃未保存的修改？</h2><p>当前表单内容尚未保存，关闭后本次修改将丢失。</p><div className="dialog-actions"><button ref={continueRef} className="button" onClick={onContinue}>继续编辑</button><button className="button danger" onClick={onDiscard}>放弃修改</button></div></div></>, document.body);
 }
 
 function EyeMappingFields({ draft, mode, errors, setField }: {
@@ -263,7 +276,7 @@ function DataTypeConfig({ draft, mode, errors, setField, addEnumItem, updateEnum
 }) {
   return <div className="type-config">
     {draft.type === "数值型" && <div className="form-grid"><Field label="小数位数" required error={errors.decimals}><select disabled={mode === "view"} value={draft.numeric?.decimals ?? 2} onChange={(e) => setField("numeric", { ...draft.numeric, decimals: Number(e.target.value) })}>{[0,1,2,3,4].map((x) => <option key={x}>{x}</option>)}</select></Field><Field label="正常范围" error={errors.numericRange}><div className="range"><input disabled={mode === "view"} type="number" placeholder="最小值" value={draft.numeric?.min ?? ""} onChange={(e) => setField("numeric", { ...draft.numeric!, min: e.target.value === "" ? undefined : Number(e.target.value) })} /><span>至</span><input disabled={mode === "view"} type="number" placeholder="最大值" value={draft.numeric?.max ?? ""} onChange={(e) => setField("numeric", { ...draft.numeric!, max: e.target.value === "" ? undefined : Number(e.target.value) })} /></div></Field></div>}
-    {draft.type === "文本型" && <div className="form-grid"><Field label="最大长度" required error={errors.maxLength} hint="允许范围：1～2000"><input disabled={mode === "view"} type="number" value={draft.text?.maxLength ?? 500} onChange={(e) => setField("text", { maxLength: Number(e.target.value) })} /></Field></div>}
+    {draft.type === "文本型" && <div className="form-grid"><Field label="最大长度" required error={errors.maxLength} hint="允许范围：1～200"><input disabled={mode === "view"} type="number" min={1} max={200} value={draft.text?.maxLength ?? 50} onChange={(e) => setField("text", { maxLength: Number(e.target.value) })} /></Field></div>}
     {(draft.type === "枚举型" || draft.type === "多选枚举") && <div className="enum-block"><div className="enum-toolbar"><p>{draft.type === "多选枚举" ? "支持同时选择多个启用项，按枚举编码集合保存。" : "枚举值在当前页面维护并保存至业务数据表。"}</p>{mode !== "view" && <button type="button" className="button small" onClick={addEnumItem}>＋ 添加枚举项</button>}</div>{(errors.enumItems || errors.enumExternalCode) && <p className="error banner-error">{errors.enumItems || errors.enumExternalCode}</p>}<div className="enum-table"><div className="enum-row header"><span>系统枚举编码</span><span>枚举名称</span><span>外部映射编码</span><span>排序</span><span>状态</span><span>操作</span></div>{(draft.enumItems ?? []).map((row, index) => <div className="enum-row" key={`${row.code}-${index}`}><input disabled={mode === "view"} value={row.code} placeholder="CODE" onChange={(e) => updateEnum(index, { code: e.target.value.toUpperCase() })} /><input disabled={mode === "view"} value={row.name} placeholder="选项名称" onChange={(e) => updateEnum(index, { name: e.target.value })} /><input disabled={mode === "view"} value={row.externalCode ?? ""} placeholder="如：N" onChange={(e) => updateEnum(index, { externalCode: e.target.value.toUpperCase() })} /><span>{index + 1}</span><select disabled={mode === "view"} value={row.status} onChange={(e) => updateEnum(index, { status: e.target.value as IndicatorDraft["status"] })}><option>启用</option><option>停用</option></select><div className="enum-actions">{mode !== "view" && <><button type="button" disabled={index === 0} onClick={() => moveEnum(index, -1)}>↑</button><button type="button" disabled={index === (draft.enumItems?.length ?? 0) - 1} onClick={() => moveEnum(index, 1)}>↓</button><button type="button" disabled={(draft.enumItems?.length ?? 0) === 1} onClick={() => setField("enumItems", draft.enumItems?.filter((_, i) => i !== index))}>×</button></>}</div></div>)}</div></div>}
     {draft.type === "布尔型" && <div className="boolean-block"><div className="form-grid"><Field label="真值显示名称" required error={errors.booleanLabels}><input disabled={mode === "view"} value={draft.boolean?.trueLabel ?? ""} placeholder="如：是、阳性、存在" onChange={(e) => setField("boolean", { ...draft.boolean!, trueLabel: e.target.value })} /></Field><Field label="假值显示名称" required><input disabled={mode === "view"} value={draft.boolean?.falseLabel ?? ""} placeholder="如：否、阴性、不存在" onChange={(e) => setField("boolean", { ...draft.boolean!, falseLabel: e.target.value })} /></Field>{draft.source === "医技检查" && <><Field label="真值外部映射编码" required error={errors.booleanExternalCodes}><input disabled={mode === "view"} value={draft.boolean?.trueExternalCode ?? ""} placeholder="如：1、Y、POSITIVE" onChange={(e) => setField("boolean", { ...draft.boolean!, trueExternalCode: e.target.value.toUpperCase() })} /></Field><Field label="假值外部映射编码" required><input disabled={mode === "view"} value={draft.boolean?.falseExternalCode ?? ""} placeholder="如：0、N、NEGATIVE" onChange={(e) => setField("boolean", { ...draft.boolean!, falseExternalCode: e.target.value.toUpperCase() })} /></Field></>}</div></div>}
   </div>;

@@ -168,7 +168,7 @@ export function createSeedIndicators(): Indicator[] {
       referenceRange: "",
       referenced: false,
       externalMapping: { 无眼别: "EXAM_CONCLUSION" },
-      text: { maxLength: 1000 },
+      text: { maxLength: 200 },
       updatedAt: "2026-07-22 11:08",
     },
     {
@@ -267,8 +267,8 @@ export function validateIndicator(
   }
   if (draft.type === "文本型") {
     const maxLength = draft.text?.maxLength;
-    if (!maxLength || maxLength < 1 || maxLength > 2000) {
-      errors.maxLength = "最大长度须为1至2000";
+    if (!maxLength || maxLength < 1 || maxLength > 200) {
+      errors.maxLength = "最大长度须为1至200";
     }
   }
   if (draft.type === "枚举型" || draft.type === "多选枚举") {

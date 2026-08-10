@@ -248,6 +248,21 @@ test("query conditions omit data type and indicator category", async () => {
   assert.match(source, />3<\/span>管理信息/);
   assert.ok(source.indexOf('label="眼别"') < source.indexOf('label="数据来源"'));
   assert.ok(source.indexOf('label="数据来源"') < source.indexOf('label="状态"'));
+  assert.match(source, /maxLength: 50/);
+  assert.match(source, /允许范围：1～200/);
+  assert.match(source, /max=\{200\}/);
+});
+
+test("indicator unsaved confirmation is a viewport-level accessible dialog", async () => {
+  const source = await readFile(
+    new URL("../app/modules/clinical-indicator/ClinicalIndicatorModule.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.match(source, /createPortal/);
+  assert.match(source, /global-dialog-layer/);
+  assert.match(source, /global-discard-dialog/);
+  assert.match(source, /Escape/);
+  assert.match(source, /\.focus\(\)/);
 });
 
 test("check template filters apply immediately without query or reset actions", async () => {

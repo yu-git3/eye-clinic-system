@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Author" content="Un-named">
+  <meta name="LastAuthor" content="Un-named">
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 6.0px 0.0px; font: 18.5px Times; color: #17365d}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 8.5px Times; color: #17365d}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 8.5px Times; color: #23374d}
+    p.p4 {margin: 0.0px 0.0px 6.5px 0.0px; font: 8.5px Times; color: #23374d; min-height: 10.0px}
+    p.p5 {margin: 13.0px 0.0px 5.0px 0.0px; font: 14.5px Times; color: #2e74b5}
+    p.p6 {margin: 0.0px 0.0px 5.5px 0.0px; font: 10.0px Times; color: #23374d}
+    p.p8 {margin: 8.5px 0.0px 5.0px 0.0px; font: 12.0px Times; color: #17365d}
+    p.p9 {margin: 0.0px 0.0px 4.5px 18.0px; font: 10.0px Times; color: #23374d}
+    li.li7 {margin: 0.0px 0.0px 4.0px 0.0px; font: 10.0px Times; color: #23374d}
+    table.t1 {border-collapse: collapse}
+    td.td1 {border-style: solid; border-width: 1.0px 1.0px 1.0px 1.0px; border-color: #bfbfbf #bfbfbf #bfbfbf #bfbfbf; padding: 0.0px 5.0px 0.0px 5.0px}
+    ul.ul1 {list-style-type: disc}
+  </style>
+  <link rel="stylesheet" href="/prd/reader.css">
+</head>
+<body>
+<p class="p1"><b>PRODUCT REQUIREMENTS DOCUMENT</b></p>
+<p class="p1"><b>眼科专科系统</b></p>
+<p class="p1"><b>临床指标定义功能需求说明</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>需求编号</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>文档版本</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>编制日期</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>文档状态</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>122077</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>V1.5</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>2026-08-10</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>原型确认稿</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p5"><b>1. 修订记录</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>版本</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>日期</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>修订内容</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>状态</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>V1.0</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>2026-08-01</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>形成眼科检查指标定义初版需求。</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>历史版本</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>V1.2</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>2026-08-04</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>明确护士采集字典不提供数据类型，数据类型由维护人员必选。</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>历史版本</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>V1.3</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>2026-08-04</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>调整新增/编辑抽屉布局；明确字段编辑权限、配置版本和医技接口类型不一致处理。</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>历史版本</b></p>
+      </td>
+    </tr>
+  <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>V1.4</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>2026-08-10</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>合并指标名称/编码筛选；删除查询、重置按钮；改为条件变化实时筛选，并补充空结果处理。</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>历史版本</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1"><p class="p3"><b>V1.5</b></p></td>
+      <td valign="middle" class="td1"><p class="p3"><b>2026-08-10</b></p></td>
+      <td valign="middle" class="td1"><p class="p3"><b>文本型最大长度统一为默认50、范围1～200；补充未保存退出确认框的全局居中、遮罩及键盘交互。</b></p></td>
+      <td valign="middle" class="td1"><p class="p3"><b>当前版本</b></p></td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p5"><b>2. 业务背景与建设目标</b></p>
+<p class="p6">眼科临床数据来自护士采集、医生查体及医技检查。不同来源的数据类型、眼别、护理体征字典和接口映射要求不同；缺少统一主数据将造成模板引用、接口转换、临床展示和趋势分析口径不一致。</p>
+<p class="p6">本功能用于维护临床指标的名称、编码、数据类型、单位、参考范围、眼别、取值来源及映射，为检查模板、眼科检查组件、基础档案、专科病历、检查报告查询和趋势分析提供稳定的主数据基础。</p>
+<ul class="ul1">
+  <li class="li7">以唯一指标编码识别指标，统一业务口径。</li>
+  <li class="li7">先定义指标基础信息和数据类型，再按取值来源维护最少必要配置。</li>
+  <li class="li7">支持按眼别关联 HIHIS 护理体征或医技接口字段。</li>
+  <li class="li7">保障被模板引用、已产生结果后的配置变更可追溯，不误解历史数据。</li>
+</ul>
+<p class="p5"><b>3. 功能范围与边界</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>范围</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>包含内容</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>不包含内容</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>临床指标定义</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>查询、列表、查看、新增、编辑、启用/停用；数据类型配置；来源配置；眼别与映射；枚举/布尔值维护；接口转换规则。</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>检查模板编排、实际临床录入、PACS接口开发、HIHIS护理体征字典本身维护。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p6">护士采集只关联 HIHIS 已有护理体征字典 `hi.his.indnurtp`，本功能不新增或修改该字典。枚举值由本页面维护并存储于业务数据表，不使用系统字典。</p>
+<p class="p5"><b>4. 用户角色与权限</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>角色</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>权限</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>说明</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>专科配置管理员</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>查询、查看、新增、编辑、启停</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>维护指标主数据及配置版本。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>业务管理员</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>查询、查看</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>核对模板可引用指标。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>普通临床用户</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>无配置权限</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>在业务模块中使用已启用指标。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p5"><b>5. 页面总体说明</b></p>
+<p class="p6">入口：眼科专科管理 ＞ 基础配置 ＞ 临床指标定义。页面由查询区、指标列表、右侧信息抽屉组成；新增、编辑、查看均在抽屉内完成。</p>
+<p class="p8"><b>5.1 查询区</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>控件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标名称 / 编码</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>输入名称或编码进行模糊筛选；编码匹配忽略大小写。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>数据来源</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>下拉框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>全部、护士采集、医生查体、医技检查。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>状态</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>下拉框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>全部、启用、停用。</b></p>
+      </td>
+    </tr>
+    </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p6">筛选条件变化后实时刷新列表并回到第1页，不设置“查询”“重置”按钮。无匹配结果时提示“请修改或清空上方筛选条件”；用户可清空关键词并将下拉项选择为“全部”恢复完整列表。查询区不提供“指标分类”和“数据类型”条件。</p>
+<p class="p8"><b>5.2 指标列表</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>字段/操作</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>展示与交互要求</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标编码、名称</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>展示系统唯一编码及指标名称；已被模板引用时展示引用标识。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>数据类型、单位、眼别、参考范围、数据来源</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>数据类型以标签展示；无单位/范围显示“—”；多个眼别以“OD、OS、OU”展示。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>状态/更新时间</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>展示当前状态及最后更新时间。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>查看</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>只读抽屉，显示全部配置、配置版本和引用信息。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>编辑</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>打开编辑抽屉；指标编码、数据类型禁用。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>启用/停用</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>二次确认；停用不影响历史结果。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p5"><b>6. 新增、编辑与查看指标</b></p>
+<p class="p8"><b>6.1 基础字段</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>必填</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>控件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>业务规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标名称</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>最多50字符，用于临床展示。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标编码</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>全局唯一；仅大写字母、数字、下划线；创建后不可修改。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>数据类型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>下拉框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>数值型、文本型、枚举型、多选枚举型、布尔型；创建后不可修改。护士采集同样由维护人员选择，不默认文本。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>单位</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>否</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>仅数值型展示；自由输入，如 mmHg、mm、μm。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>参考范围</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>否</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>位于眼别之前；可维护展示型说明，如10～21 mmHg。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>眼别</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>多选框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>OD、OS、OU可同时选；无眼别与其他选项互斥；至少选择一项。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>状态</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>是</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>分段按钮</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>默认启用。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标说明</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>否</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>多行文本框</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>说明临床含义和使用场景。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p8"><b>6.2 抽屉布局与动态交互</b></p>
+<p class="p9">1. **基础信息区**按“指标名称、指标编码、数据类型、数据类型配置、单位、参考范围、眼别、状态、说明”排列。</p>
+<p class="p9">2. 选择数据类型后，紧邻数据类型立即展示相应配置；不得将类型配置放在表单底部。</p>
+<p class="p9">3. **取值来源区**在基础信息之后展示。选择护士采集、医生查体或医技检查后，紧邻来源选择器展示来源配置。</p>
+<p class="p9">4. 选择眼别后，立即展示该眼别对应的护理体征或医技外部字段；不再设置页面底部独立映射区。</p>
+<p class="p9">5. 来源或眼别变化时，只保留当前有效配置；保存时按当前来源、类型、眼别统一校验。关闭含未保存修改的抽屉时，在浏览器可视区域正中显示“放弃修改 / 继续编辑”确认框；二次遮罩不可点击关闭，按 Esc 等同“继续编辑”并保留表单。新增支持“保存”“保存并新增”。</p>
+<p class="p8"><b>6.3 编辑、查看与配置版本规则</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>字段或配置</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>新增</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>编辑</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标名称</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>必填，可修改</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>可修改</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>修改后用于后续展示，不回写既有病历/报告快照。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标编码</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>必填，可修改</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>**不可修改**</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>是唯一识别、模板引用及接口定位键；需变更时新建指标。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>数据类型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>必填，可修改</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>**不可修改**</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>决定存储结构、校验及趋势解释；需改变时新建指标。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>单位、参考范围、说明</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>可维护</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>可修改</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>单位不得自动换算历史结果；历史结果保留写入时单位快照。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>眼别、数据来源、护理关联、外部字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>按规则维护</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>可修改，需确认影响</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>修改后只对新采集/新回传生效。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>枚举/多选枚举项、布尔显示名及外部映射</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>按类型维护</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>可修改，需确认影响</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>已被历史结果使用的编码不可删除，可停用。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>状态</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>默认启用</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>可启用/停用</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>停用后不可被新模板引用。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p6">当指标已被模板引用或已有临床结果，修改“单位、眼别、来源、护理关联、外部字段、枚举/布尔映射”必须提示“本次修改仅对保存后新产生的数据生效”，并生成新的配置版本，记录生效时间、操作人和变更前后值。历史结果、病历快照、报告快照及趋势均按写入时配置版本解释。已被模板引用的指标不可物理删除。</p>
+<p class="p5"><b>7. 数据类型配置</b></p>
+<p class="p8"><b>7.1 数值型</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>配置项</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>小数位数</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>必填，0～4位，默认2位。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>正常范围</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>可维护最小值和最大值；同时填写时最小值小于最大值。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>单位</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>在基础信息区以文本框录入。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p8"><b>7.2 文本型</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>配置项</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>最大长度</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>必填，1～200，默认50。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p8"><b>7.3 枚举型与多选枚举型</b></p>
+<p class="p6">枚举值由本页面维护、业务表存储。枚举型只能选一项；多选枚举型可选零项或多项并按枚举编码集合存储，不拼接展示名称。</p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>系统枚举编码</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>必填，同一指标内唯一，建议大写英文编码。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>枚举名称</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>必填，用于页面展示。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>外部映射编码</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>医技接口转换使用；同一指标内不可重复。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>排序</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>支持上移、下移；系统按顺序展示。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>状态</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>启用/停用；至少保留一个启用项。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p8"><b>7.4 布尔型</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>配置项</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>规则</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>真/假显示名称</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>默认“是/否”，可修改为“阳性/阴性”等。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>真/假外部映射编码</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>医技来源时维护，分别用于转换为 true/false；不得重复。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p5"><b>8. 数据来源配置</b></p>
+<p class="p8"><b>8.1 护士采集</b></p>
+<p class="p6">护士采集字典不提供数据类型，维护人员必须选择指标数据类型，系统不得默认或强制文本型。运行时直接引用护士已采集数据。</p>
+<p class="p6">护理体征来自 `hi.his.indnurtp`，支持按体征编码或名称模糊搜索。每个已选眼别分别关联体征：OD对应OD体征、OS对应OS体征、OU对应OU体征；无眼别关联通用体征。本来源不维护PACS或其他外部接口字段。</p>
+<p class="p8"><b>8.2 医生查体</b></p>
+<p class="p6">医生直接录入数值、文本、枚举、多选枚举或布尔值；可维护单位、参考范围和眼别，不维护外部字段映射。</p>
+<p class="p8"><b>8.3 医技检查</b></p>
+<p class="p6">用于接收PACS或医技接口结果。每个已选眼别必须维护一个外部映射字段；选择无眼别时只维护一个通用字段。字段仅允许大写字母、数字、下划线和点号；同一指标内各眼别字段不可重复。</p>
+<p class="p5"><b>9. 眼别与映射规则</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>眼别</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>允许组合</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>护士采集配置</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>医技检查配置</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>OD</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>可与OS、OU组合</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>OD护理体征</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>OD外部映射字段</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>OS</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>可与OD、OU组合</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>OS护理体征</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>OS外部映射字段</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>OU</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>可与OD、OS组合</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>OU护理体征</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>OU外部映射字段</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>无眼别</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>不可与OD/OS/OU组合</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>通用护理体征</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>通用结果字段</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p6">勾选眼别后立即生成对应配置；取消眼别后该配置不参与保存和校验。选择无眼别时自动取消OD、OS、OU；选择任一具体眼别时自动取消无眼别。保存时每个选中眼别均须完成来源所需关联或映射。</p>
+<p class="p5"><b>10. 保存校验与提示</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>校验项</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>触发条件</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>提示/处理</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>名称必填</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标名称为空</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>请输入指标名称。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>编码格式/重复</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>为空、含非法字符或重复</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>仅允许大写字母、数字和下划线；指标编码已存在。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>眼别必填/互斥</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>未选或无眼别与其他眼别并存</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>请至少选择一项；无眼别不能与其他眼别同时选择。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>数值范围</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>最小值大于或等于最大值</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>最小值必须小于最大值。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本长度</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>不在1～200</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>最大长度须为1至200。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>护理关联/医技映射</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>已选眼别缺少配置</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>请按眼别关联护理体征或填写外部字段。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>映射格式/重复</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>字符非法或字段重复</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>提示格式限制或同一指标字段不可重复。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>枚举完整性</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>选项、编码、名称、启用项不完整</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>按具体错误阻止保存。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>布尔配置</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>显示名为空或医技映射缺失/重复</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>提示完成布尔值配置后再保存。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p5"><b>11. 数据与接口要求</b></p>
+<p class="p8"><b>11.1 数据对象</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>对象</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>关键数据</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>要求</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标主表</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>名称、编码、来源、类型、单位、范围、状态、说明</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>编码唯一；保留创建/更新时间。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标配置版本表</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标ID、版本、生效时间、操作人、前后值</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>取值语义配置变更必须留存。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标眼别表</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标ID、眼别</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>无眼别不得与其他眼别共存。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>护理关联表</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标ID、眼别、护理体征编码</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>编码来自`hi.his.indnurtp`。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>医技映射表</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标ID、眼别、外部字段</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>同一指标内字段唯一。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>枚举值表</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标ID、枚举编码、名称、外部映射、排序、状态</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>枚举/多选枚举共用；页面维护、业务表存储。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>布尔配置表</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>指标ID、真/假显示名及映射</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>医技来源支持值转换。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>接口处理日志</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>原始报告/字段/值/JSON类型、定位与转换结果、错误码、配置版本</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>转换成功与失败均保留。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p8"><b>11.2 接口定位与写入前提</b></p>
+<p class="p6">医技接口按“租户 + 机构 + 报告/就诊标识 + 指标配置版本 + 眼别 + 外部字段”定位目标指标。传入眼别必须与已配置眼别一致；无眼别指标仅接收通用字段。定位失败、眼别不匹配、外部字段缺失时，不得写入结构化指标。</p>
+<p class="p6">接口日志必须保留报告人、报告时间、原始字段名、原始JSON类型、原始值、定位结果、转换结果、失败原因和配置版本。报告状态仍只有“未出报告/已出报告”；“转换异常、待医生补录”是指标数据处理状态，不是报告状态。</p>
+<p class="p8"><b>11.3 类型转换矩阵</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>目标类型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>可接受接口返回</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>转换与写入规则</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>不匹配处理</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>数值型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>JSON数值、可解析数值文本</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>去除首尾空格后解析；保留原始值；超出参考范围可写入并提示异常。</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>空值、非数值、NaN、无穷值不写入；不得把“正常”等写入数值字段。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本、数值、布尔值</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本原样写入；数值/布尔可转为可读字符串并留痕。</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>对象/数组不自动拼接，保留原始值待补录。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>枚举型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本或数值编码</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>按外部映射编码精确匹配，写系统编码和展示快照。</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>未配置或未匹配时不写入。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>多选枚举型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>JSON数组；约定分隔符文本</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>每项均映射成功后，按配置顺序写入编码集合。</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>任一项未匹配时整项不部分写入。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>布尔型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>JSON true/false；配置映射文本/编码</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>原生布尔直接写；其他值只按真/假映射转换。</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>映射缺失或值不匹配时不写入。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p8"><b>11.4 类型不一致与人工处理</b></p>
+<p class="p9">1. 仅允许明确、无歧义的转换；禁止将异常值兜底写为文本、0、false、默认枚举或“正常”。</p>
+<p class="p9">2. 转换失败：保留原始报告和接口日志，目标指标保持为空；检查组件/报告详情标识“待医生补录”，医生可查看原始PDF/图片。</p>
+<p class="p9">3. 医生依据原始报告补录结构化结果时，标记来源“医生补录（依据原始报告）”，保存补录人、补录时间和报告ID。该结构化结果可参与历次对比和趋势；未补录的非结构化报告不参与趋势。</p>
+<p class="p9">4. 同一报告重传按报告ID、报告版本和字段幂等处理；转换失败不得覆盖人工补录；已被病历或基础档案引用的结果快照不得被自动重传覆盖。</p>
+<p class="p9">5. 错误码：`INDICATOR_NOT_FOUND`、`EYE_MAPPING_MISMATCH`、`TYPE_CONVERSION_FAILED`、`ENUM_MAPPING_NOT_FOUND`、`MULTI_ENUM_PARTIAL_UNMATCHED`、`BOOLEAN_MAPPING_NOT_FOUND`。</p>
+<p class="p8"><b>11.5 接口示例</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>场景</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>配置</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>接口值</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>处理结果</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>角膜曲率 Ks</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>数值型，OD字段`OD_KS`</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>`"43.83"`</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>写入43.83D并记录原始值与配置版本。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>眼睑张力</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>枚举型，`0=正常`、`1=偏高`</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>`"normal"`</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>不写入；`ENUM_MAPPING_NOT_FOUND`，待医生补录。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>角膜状态</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>多选枚举，`A=清亮`、`B=点染`</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>`["A","X"]`</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>不作部分写入；记录未匹配项X。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>泪河高度</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>数值型</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>`"正常"`</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>不写入数值字段；保留原始报告待补录。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p5"><b>12. 典型业务示例</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>示例</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>配置</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>眼压</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>数值型；单位mmHg；OD、OS；医技检查；字段IOP_RIGHT、IOP_LEFT。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>裸眼视力</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本型；OD、OS；护士采集；关联右/左眼裸眼视力护理体征。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>角膜状态</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>枚举型；OD、OS；医生查体；维护正常、水肿、混浊等。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>检查结论</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>文本型；无眼别；医技检查；通用字段EXAM_CONCLUSION。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p5"><b>13. 验收标准</b></p>
+<table cellspacing="0" cellpadding="0" class="t1">
+  <tbody>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>编号</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p2"><b>验收内容</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-01</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>查询区仅包含“指标名称 / 编码”、数据来源、状态；名称或编码支持模糊筛选，编码忽略大小写；条件变化实时刷新并回到第1页，不显示查询、重置按钮。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-02</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>单位为文本框，不显示固定单位下拉。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-03</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>OD、OS、OU可多选；无眼别与其他互斥，且至少选择一项。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-04</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>参考范围在眼别前；选眼别后立即展示映射字段。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-05</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>护士采集不默认或强制文本类型，并可逐眼关联`hi.his.indnurtp`。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-06</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>医生查体不显示外部字段映射。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-07</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>医技检查为每个选中眼别提供必填外部字段。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-08</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>五类数据类型配置均紧随数据类型展示，不在表单底部。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-09</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>枚举由页面维护并存业务表，支持外部映射编码，不显示系统字典关联。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-10</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>编码、范围、长度、眼别、护理关联、医技映射及枚举校验有效。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-11</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>新增、编辑、查看、保存并新增、启停确认均可用；未保存关闭确认框全局居中且高于抽屉，遮罩点击不关闭，“继续编辑”或 Esc 保留表单，“放弃修改”关闭抽屉并丢弃本次修改。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-12</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>被模板引用指标不可物理删除，停用不影响历史数据。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-13</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>编辑时编码和类型为禁用态，不能绕过修改；需改变时引导新建指标。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-14</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>修改取值语义配置时，对已引用/有结果指标生成配置版本；历史快照不变化。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-15</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>接口值仅按类型转换矩阵写入，禁止默认值与隐式兜底。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-16</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>类型不一致、映射缺失、眼别不匹配时不写错值，可查看原始报告、日志和待补录原因。</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>AC-17</b></p>
+      </td>
+      <td valign="middle" class="td1">
+        <p class="p3"><b>医生补录保留人、时间、报告关联；补录结构化值可参与趋势，原始非结构化报告不参与趋势。</b></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="p4"><b></b><br></p>
+<p class="p5"><b>14. 非功能要求</b></p>
+<ul class="ul1">
+  <li class="li7">正常网络和数据规模下页面操作响应不超过2秒；护理体征搜索快速返回候选项。</li>
+  <li class="li7">新增、编辑、启停及配置版本变更均记录操作人、操作时间和关键变更内容。</li>
+  <li class="li7">控件提供明确标签、禁用态、错误提示和键盘焦点样式。</li>
+  <li class="li7">接口字段与枚举映射变更不得影响已生成临床数据、病历快照和报告快照。</li>
+</ul>
+</body>
+</html>

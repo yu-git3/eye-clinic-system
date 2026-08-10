@@ -135,6 +135,15 @@ test("requires nurse dictionary mappings for each selected eye", () => {
   assert.equal(Boolean(errors.nursingMapping), true);
 });
 
+test("limits text indicators to 200 characters", () => {
+  const base = {
+    name: "检查备注2", code: "EXAM_NOTE_2", type: "文本型", unit: "", eyeRule: ["无眼别"],
+    source: "医生查体", status: "启用", description: "", referenced: false,
+  } as IndicatorDraft;
+  assert.equal(validateIndicator({ ...base, text: { maxLength: 200 } }, createSeedIndicators()).maxLength, undefined);
+  assert.equal(validateIndicator({ ...base, text: { maxLength: 201 } }, createSeedIndicators()).maxLength, "最大长度须为1至200");
+});
+
 test("switching to nurse collection preserves the selected data type", () => {
   const transitionSource = (store as unknown as {
     transitionIndicatorSource?: (draft: IndicatorDraft, source: IndicatorDraft["source"]) => IndicatorDraft;
