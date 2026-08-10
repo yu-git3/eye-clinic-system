@@ -238,6 +238,17 @@ test("query conditions omit data type and indicator category", async () => {
   assert.ok(source.indexOf('label="数据来源"') < source.indexOf('label="状态"'));
 });
 
+test("check template filters apply immediately without query or reset actions", async () => {
+  const source = await readFile(
+    new URL("../app/modules/check-template/CheckTemplateModule.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.match(source, /模板名称 \/ 编码/);
+  assert.doesNotMatch(source, />查询<\/button>|>重置<\/button>/);
+  assert.match(source, /请修改或清空上方筛选条件/);
+  assert.doesNotMatch(source, /const \[applied, setApplied\]/);
+});
+
 test("does not expose PACS as a standalone source option", async () => {
   const source = await readAppSources();
   assert.doesNotMatch(source, /<option[^>]*>PACS[^<]*<\/option>/i);
