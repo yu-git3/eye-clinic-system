@@ -326,6 +326,16 @@ test("treatment method history exposes stage summaries and linked clinical detai
   for (const section of ["阶段概况", "专科病历", "诊断与处置", "检查与报告", "治疗过程"]) assert.match(detail, new RegExp(section));
 });
 
+test("contact lens archive PRD documents treatment stage history navigation", async () => {
+  const prd = await readFile(
+    new URL("../public/prd/contact-lens-archive-v1.4.html", import.meta.url),
+    "utf8",
+  );
+  assert.match(prd, /查看历史（N）/);
+  assert.match(prd, /查看阶段详情/);
+  assert.match(prd, /开始时间.*发生时间.*下一阶段开始时间/s);
+});
+
 test("secondary overlays stay above global drawers", async () => {
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(css, /\.dialog-layer[^}]*--layer-modal-mask/s);

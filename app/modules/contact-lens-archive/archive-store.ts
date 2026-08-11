@@ -291,6 +291,10 @@ export function createArchiveSeed(): ContactLensArchive {
 
 export function createArchiveSeeds(): ContactLensArchive[] {
   const contactLens = createArchiveSeed();
+  contactLens.methodHistory = [
+    { method: "软性离焦镜", startedAt: "2025-05-10", endedAt: "2026-08-02", reason: "治疗效果调整", doctor: "徐英男" },
+    { method: "OK镜", startedAt: "2026-08-02", reason: "患者需求变化", doctor: "方红全", assessmentStrategy: "沿用近期检查并补充评估" },
+  ];
   const visualTraining: ContactLensArchive = {
     ...structuredClone(contactLens),
     id: "VT-20260718-0003",

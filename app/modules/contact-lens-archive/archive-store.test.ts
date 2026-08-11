@@ -111,6 +111,12 @@ test("different treatment plans can coexist for one patient", () => {
   assert.deepEqual(archives.map((item) => item.treatmentPlan), ["角膜接触镜标准治疗方案", "视功能训练方案"]);
 });
 
+test("population example contains a previous and current treatment method", () => {
+  const archive = createArchiveSeeds()[0];
+  assert.deepEqual(archive.methodHistory.map((item) => item.method), ["软性离焦镜", "OK镜"]);
+  assert.equal(archive.methodHistory[0].endedAt, "2026-08-02");
+});
+
 test("termination and reopening preserve the archive while creating a new cycle", () => {
   const archive = createArchiveSeed();
   const terminated = terminateArchive(archive, { endedAt: "2026-08-20 10:00", reason: "患者暂停治疗", operator: "方红全" });
