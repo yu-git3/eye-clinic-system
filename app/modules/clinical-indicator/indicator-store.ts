@@ -55,7 +55,12 @@ export const nursingSigns: NursingSign[] = [
 export type Indicator = IndicatorDraft & {
   updatedAt: string;
   referencedBy?: string[];
+  hasHistoricalData?: boolean;
 };
+
+export function canDeleteIndicator(item: Indicator): boolean {
+  return !item.referenced && !item.hasHistoricalData;
+}
 
 export type IndicatorFilters = {
   keyword: string;
@@ -132,8 +137,7 @@ export function createSeedIndicators(): Indicator[] {
       status: "启用",
       description: "患者未矫正状态下的远视力。",
       referenceRange: "0.8～1.5",
-      referenced: true,
-      referencedBy: ["视力检查模板"],
+      referenced: false,
       text: { maxLength: 50 },
       nursingMapping: { OD: "NUR_UCVA_OD", OS: "NUR_UCVA_OS" },
       updatedAt: "2026-07-28 09:45",
@@ -148,7 +152,8 @@ export function createSeedIndicators(): Indicator[] {
       status: "启用",
       description: "医生检查后记录角膜整体状态。",
       referenceRange: "透明",
-      referenced: false,
+      referenced: true,
+      referencedBy: ["视力检查模板"],
       enumItems: [
         { code: "NORMAL", name: "透明", externalCode: "N", order: 1, status: "启用" },
         { code: "EDEMA", name: "水肿", externalCode: "E", order: 2, status: "启用" },
@@ -181,7 +186,8 @@ export function createSeedIndicators(): Indicator[] {
       status: "启用",
       description: "记录患者同时存在的多项眼部伴随症状。",
       referenceRange: "",
-      referenced: false,
+      referenced: true,
+      referencedBy: ["视力检查模板"],
       enumItems: [
         { code: "ITCH", name: "眼痒", externalCode: "ITCH", order: 1, status: "启用" },
         { code: "PAIN", name: "眼痛", externalCode: "PAIN", order: 2, status: "启用" },
@@ -199,7 +205,8 @@ export function createSeedIndicators(): Indicator[] {
       status: "启用",
       description: "接收医技检查返回的角膜水肿判断。",
       referenceRange: "否",
-      referenced: false,
+      referenced: true,
+      referencedBy: ["眼压检查模板"],
       externalMapping: { OD: "EDEMA_OD", OS: "EDEMA_OS" },
       boolean: { trueLabel: "是", falseLabel: "否", trueExternalCode: "1", falseExternalCode: "0" },
       updatedAt: "2026-08-01 11:30",

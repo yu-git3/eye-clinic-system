@@ -359,6 +359,28 @@ test("check template filters apply immediately without query or reset actions", 
   assert.doesNotMatch(source, /const \[applied, setApplied\]/);
 });
 
+test("indicator and template deletion is limited to unused records", async () => {
+  const indicator = await readFile(new URL("../app/modules/clinical-indicator/ClinicalIndicatorModule.tsx", import.meta.url), "utf8");
+  const template = await readFile(new URL("../app/modules/check-template/CheckTemplateModule.tsx", import.meta.url), "utf8");
+  for (const source of [indicator, template]) {
+    assert.match(source, /删除/);
+    assert.match(source, /删除后不可恢复/);
+    assert.match(source, /setDeleteTarget/);
+  }
+  assert.match(indicator, /canDeleteIndicator/);
+  assert.match(template, /canDeleteTemplate/);
+});
+
+test("indicator and template PRDs define safe deletion rules", async () => {
+  const indicatorPrd = await readFile(new URL("../public/prd/clinical-indicator-v1.5.html", import.meta.url), "utf8");
+  const templatePrd = await readFile(new URL("../public/prd/check-template-v1.3.html", import.meta.url), "utf8");
+  for (const source of [indicatorPrd, templatePrd]) {
+    assert.match(source, /删除后不可恢复/);
+    assert.match(source, /不允许删除，只允许停用/);
+    assert.match(source, /服务端/);
+  }
+});
+
 test("does not expose PACS as a standalone source option", async () => {
   const source = await readAppSources();
   assert.doesNotMatch(source, /<option[^>]*>PACS[^<]*<\/option>/i);

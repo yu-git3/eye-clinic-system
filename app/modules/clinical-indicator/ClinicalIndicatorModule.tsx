@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { GlobalDrawerLayer } from "../../components/GlobalDrawerLayer";
 import {
   createSeedIndicators,
+  canDeleteIndicator,
   filterIndicators,
   paginateIndicators,
   toggleIndicatorStatus,
@@ -44,6 +45,7 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
   const [initialDraft, setInitialDraft] = useState("");
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [statusTarget, setStatusTarget] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [discardOpen, setDiscardOpen] = useState(false);
   const [toast, setToast] = useState("");
   const drawerCloseRef = useRef<HTMLButtonElement>(null);
@@ -140,6 +142,7 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
   }
 
   const statusItem = items.find((item) => item.code === statusTarget);
+  const deleteItem = items.find((item) => item.code === deleteTarget);
 
   return (
     <div className="app-shell">
@@ -186,7 +189,7 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
             <div className="card-title"><div><h2>指标列表</h2><span>共 {filtered.length} 项临床指标</span></div><div className="legend"><span className="status-dot" /> 数据实时更新于当前原型</div></div>
             <div className="table-wrap">
               {paged.total ? <table><thead><tr><th>指标编码</th><th>指标名称</th><th>数据类型</th><th>单位</th><th>眼别</th><th>参考范围</th><th>数据来源</th><th>状态</th><th>更新时间</th><th>操作</th></tr></thead>
-                <tbody>{paged.items.map((item) => <tr key={item.code}><td><code>{item.code}</code></td><td><strong>{item.name}</strong>{item.referenced && <span className="reference-dot" title="已被模板引用" />}</td><td><span className={`tag type ${item.type}`}>{item.type}</span></td><td>{item.unit || "—"}</td><td>{item.eyeRule.join("、")}</td><td>{item.referenceRange || "—"}</td><td><span className="source">{item.source}</span></td><td><span className={`tag status ${item.status}`}>{item.status}</span></td><td>{item.updatedAt}</td><td><div className="row-actions"><button onClick={() => openDrawer("view", item.code)}>查看</button><button onClick={() => openDrawer("edit", item.code)}>编辑</button><button className={item.status === "启用" ? "danger-link" : ""} onClick={() => setStatusTarget(item.code)}>{item.status === "启用" ? "停用" : "启用"}</button></div></td></tr>)}</tbody></table>
+                <tbody>{paged.items.map((item) => <tr key={item.code}><td><code>{item.code}</code></td><td><strong>{item.name}</strong>{item.referenced && <span className="reference-dot" title="已被模板引用" />}</td><td><span className={`tag type ${item.type}`}>{item.type}</span></td><td>{item.unit || "—"}</td><td>{item.eyeRule.join("、")}</td><td>{item.referenceRange || "—"}</td><td><span className="source">{item.source}</span></td><td><span className={`tag status ${item.status}`}>{item.status}</span></td><td>{item.updatedAt}</td><td><div className="row-actions"><button onClick={() => openDrawer("view", item.code)}>查看</button><button onClick={() => openDrawer("edit", item.code)}>编辑</button><button className={item.status === "启用" ? "danger-link" : ""} onClick={() => setStatusTarget(item.code)}>{item.status === "启用" ? "停用" : "启用"}</button>{canDeleteIndicator(item) && <button className="danger-link" onClick={() => setDeleteTarget(item.code)}>删除</button>}</div></td></tr>)}</tbody></table>
               : <div className="empty"><div>⌕</div><h3>未找到符合条件的指标</h3><p>请修改或清空上方筛选条件</p></div>}
             </div>
             {paged.total > 0 && <div className="pagination"><span>共 {paged.total} 条</span><select value={pageSize} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }}><option value={5}>5 条/页</option><option value={10}>10 条/页</option></select><button disabled={paged.page === 1} onClick={() => setPage(paged.page - 1)}>‹</button>{Array.from({ length: paged.pageCount }, (_, i) => <button key={i} className={paged.page === i + 1 ? "current" : ""} onClick={() => setPage(i + 1)}>{i + 1}</button>)}<button disabled={paged.page === paged.pageCount} onClick={() => setPage(paged.page + 1)}>›</button></div>}
@@ -221,6 +224,7 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
         </div><div className="drawer-foot">{drawer.mode === "view" ? <button type="button" className="button primary" onClick={() => setDrawer(null)}>关闭</button> : <><button type="button" className="button" onClick={requestCloseDrawer}>取消</button>{drawer.mode === "add" && <button type="button" className="button" onClick={(e) => submitDraft(e as unknown as FormEvent, true)}>保存并新增</button>}<button className="button primary" type="submit">保存</button></>}</div></form></aside>}</GlobalDrawerLayer>
 
       {statusItem && <><div className="overlay dialog-layer" /><div className="dialog" role="dialog" aria-modal="true"><div className={`dialog-symbol ${statusItem.status === "启用" ? "warn" : "success"}`}>{statusItem.status === "启用" ? "!" : "✓"}</div><h2>确认{statusItem.status === "启用" ? "停用" : "启用"}指标？</h2><p>即将{statusItem.status === "启用" ? "停用" : "启用"}“{statusItem.name}（{statusItem.code}）”。</p>{statusItem.status === "启用" && <div className="impact">停用后不能被新的检查模板引用，历史检查数据仍可正常查看。</div>}<div className="dialog-actions"><button className="button" onClick={() => setStatusTarget(null)}>取消</button><button className={`button ${statusItem.status === "启用" ? "danger" : "primary"}`} onClick={() => { setItems(toggleIndicatorStatus(items, statusItem.code)); notify(`“${statusItem.name}”已${statusItem.status === "启用" ? "停用" : "启用"}`); setStatusTarget(null); }}>确认{statusItem.status === "启用" ? "停用" : "启用"}</button></div></div></>}
+      {deleteItem && <><div className="overlay dialog-layer"/><div className="dialog" role="dialog" aria-modal="true"><div className="dialog-symbol warn">!</div><h2>确认删除指标？</h2><p>“{deleteItem.name}（{deleteItem.code}）”未被引用且无历史数据，删除后不可恢复。</p><div className="dialog-actions"><button className="button" onClick={() => setDeleteTarget(null)}>取消</button><button className="button danger" onClick={() => { setItems((current) => current.filter((item) => item.code !== deleteItem.code)); setDeleteTarget(null); notify("指标已删除"); }}>确认删除</button></div></div></>}
       {discardOpen && <DiscardChangesDialog returnFocusRef={drawerCloseRef} onContinue={() => setDiscardOpen(false)} onDiscard={() => { setDiscardOpen(false); setDrawer(null); }} />}
       {toast && <div className="toast"><span>✓</span>{toast}</div>}
     </div>

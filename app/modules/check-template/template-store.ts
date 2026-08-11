@@ -12,7 +12,11 @@ export type CheckTemplateDraft = {
   description: string;
 };
 
-export type CheckTemplate = CheckTemplateDraft & { updatedAt: string };
+export type CheckTemplate = CheckTemplateDraft & { updatedAt: string; referenced?: boolean; hasHistoricalData?: boolean };
+
+export function canDeleteTemplate(item: CheckTemplate): boolean {
+  return !item.referenced && !item.hasHistoricalData;
+}
 export type TemplateFilters = { keyword: string; type: string; status: string };
 export type TemplateErrors = Record<string, string>;
 
@@ -35,8 +39,8 @@ export function blankTemplate(): CheckTemplateDraft {
 
 export function createSeedTemplates(): CheckTemplate[] {
   return [
-    { ...blankTemplate(), name: "视力检查", code: "VISION_EXAM", type: "医生查体", indicatorCodes: ["UCVA", "CORNEA_STATUS", "SYMPTOMS"], status: "启用", updatedAt: "2026-08-01 15:30" },
-    { ...blankTemplate(), name: "角膜地形图", code: "CORNEA_TOPO", serviceItem: "角膜地形图", departmentIds: ["A-OPT", "B-REF"], indicatorCodes: ["IOP", "AL"], status: "启用", updatedAt: "2026-07-30 10:12" },
+    { ...blankTemplate(), name: "视力检查", code: "VISION_EXAM", type: "医生查体", indicatorCodes: ["UCVA", "CORNEA_STATUS", "SYMPTOMS"], status: "启用", referenced: true, hasHistoricalData: true, updatedAt: "2026-08-01 15:30" },
+    { ...blankTemplate(), name: "角膜地形图", code: "CORNEA_TOPO", serviceItem: "角膜地形图", departmentIds: ["A-OPT", "B-REF"], indicatorCodes: ["IOP", "AL"], status: "启用", referenced: true, hasHistoricalData: true, updatedAt: "2026-07-30 10:12" },
     { ...blankTemplate(), name: "眼压检查", code: "IOP_EXAM", serviceItem: "眼压检查", departmentIds: ["B-EXAM"], indicatorCodes: ["IOP", "HAS_EDEMA"], status: "停用", updatedAt: "2026-07-28 09:20" },
   ];
 }

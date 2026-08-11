@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  canDeleteIndicator,
   createSeedIndicators,
   filterIndicators,
   paginateIndicators,
@@ -237,4 +238,11 @@ test("toggles status without mutating the original collection", () => {
   const changed = toggleIndicatorStatus(original, "IOP");
   assert.equal(original.find((item) => item.code === "IOP")?.status, "启用");
   assert.equal(changed.find((item) => item.code === "IOP")?.status, "停用");
+});
+
+test("only unused indicators without historical data can be deleted", () => {
+  const items = createSeedIndicators();
+  assert.equal(canDeleteIndicator(items.find((item) => item.code === "IOP")!), false);
+  assert.equal(canDeleteIndicator({ ...items.find((item) => item.code === "EXAM_CONCLUSION")!, referenced: false, hasHistoricalData: false }), true);
+  assert.equal(canDeleteIndicator({ ...items.find((item) => item.code === "EXAM_CONCLUSION")!, referenced: false, hasHistoricalData: true }), false);
 });

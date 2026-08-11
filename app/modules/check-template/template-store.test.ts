@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  canDeleteTemplate,
   blankTemplate,
+  createSeedTemplates,
   filterTemplates,
   filterDepartments,
   filterServiceItems,
@@ -42,4 +44,11 @@ test("filters templates by name, type and status", () => {
   const item: CheckTemplate = { ...blankTemplate(), name: "眼压检查", code: "IOP_EXAM", serviceItem: "眼压检查", status: "启用", updatedAt: "2026-08-02" };
   assert.equal(filterTemplates([item], { keyword: "眼压", type: "医技检查", status: "启用" }).length, 1);
   assert.equal(filterTemplates([item], { keyword: "裂隙灯", type: "", status: "" }).length, 0);
+});
+
+test("only unused templates without historical instances can be deleted", () => {
+  const items = createSeedTemplates();
+  assert.equal(canDeleteTemplate(items[0]), false);
+  assert.equal(canDeleteTemplate(items[2]), true);
+  assert.equal(canDeleteTemplate({ ...items[2], hasHistoricalData: true }), false);
 });
