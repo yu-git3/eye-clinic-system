@@ -64,6 +64,15 @@ export type MethodStage = {
   assessmentStrategy?: string;
 };
 
+export type MethodStageDetail = MethodStage & {
+  id: string;
+  status: "当前使用" | "历史阶段";
+  records: Array<{ date: string; department: string; doctor: string; summary: string }>;
+  dispositions: Array<{ diagnosis: string; advice: string; order: string; followUp: string }>;
+  examinations: Array<{ name: string; date: string; summary: string; hasOriginalReport: boolean }>;
+  treatmentEvents: Array<{ date: string; node: string; detail: string }>;
+};
+
 export type TimelineEvent = {
   date: string;
   title: string;
@@ -156,6 +165,23 @@ export function changeTreatmentMethod(archive: ContactLensArchive, input: Method
       state: "change",
     }],
   };
+}
+
+export function createMethodStageDetails(archive: ContactLensArchive): MethodStageDetail[] {
+  return archive.methodHistory.map((stage, index) => {
+    const current = index === archive.methodHistory.length - 1;
+    const date = stage.startedAt.slice(0, 10);
+    return {
+      ...stage,
+      id: `${archive.id}-METHOD-${index + 1}`,
+      status: current ? "当前使用" : "历史阶段",
+      reason: stage.reason || "建档时确定",
+      records: [{ date, department: archive.department, doctor: stage.doctor, summary: current ? "复诊评估，确认当前治疗方式及随访计划。" : "初诊建档，完成配前评估并确定治疗方式。" }],
+      dispositions: [{ diagnosis: "屈光不正（近视）", advice: current ? "继续当前治疗方式，按计划复查。" : "完成配前检查，规范开展接触镜治疗。", order: current ? "角膜地形图、眼表综合检查" : "验光、角膜地形图、眼生物测量", followUp: current ? "1个月后复诊" : "试戴后复诊" }],
+      examinations: archive.checks.slice(0, current ? 3 : 4).map((check) => ({ name: check.group, date: check.reportDate, summary: check.rows.slice(0, 2).map((row) => `${row.item} OD ${row.od} / OS ${row.os}`).join("；"), hasOriginalReport: Boolean(check.report) })),
+      treatmentEvents: [{ date, node: current ? archive.currentNode : "阶段已结束", detail: current ? `${stage.method}治疗进行中` : `${stage.method}阶段资料已归档` }],
+    };
+  }).reverse();
 }
 
 export function reviseCheckValue(archive: ContactLensArchive, input: CheckValueRevision): ContactLensArchive {

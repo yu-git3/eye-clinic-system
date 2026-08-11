@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { changeTreatmentMethod, createArchiveSeed, createArchiveSeeds, referenceCheckReport, reopenArchive, reviseCheckValue, terminateArchive, validateArchiveDraft, validateBaseline } from "./archive-store.ts";
+import { changeTreatmentMethod, createArchiveSeed, createArchiveSeeds, createMethodStageDetails, referenceCheckReport, reopenArchive, reviseCheckValue, terminateArchive, validateArchiveDraft, validateBaseline } from "./archive-store.ts";
 
 test("archive requires treatment plan, method and responsible doctor", () => {
   assert.deepEqual(validateArchiveDraft({ treatmentPlan: "", treatmentMethod: "", responsibleDoctor: "" }), {
@@ -33,6 +33,26 @@ test("changing OK lens to RGP preserves the previous treatment stage", () => {
   assert.equal(changed.methodHistory[0].endedAt, "2026-08-02");
   assert.equal(changed.methodHistory[1].method, "RGP");
   assert.match(changed.timeline.at(-1)?.title ?? "", /OK镜 → RGP/);
+});
+
+test("treatment stage details are newest first and retain linked clinical records", () => {
+  const changed = changeTreatmentMethod(createArchiveSeed(), {
+    nextMethod: "RGP",
+    effectiveDate: "2026-08-20",
+    reason: "治疗效果调整",
+    doctor: "方红全",
+    assessmentStrategy: "沿用近期检查并补充评估",
+  });
+  const details = createMethodStageDetails(changed);
+  assert.deepEqual(details.map((item) => item.method), ["RGP", "OK镜"]);
+  assert.equal(details[0].status, "当前使用");
+  assert.equal(details[0].endedAt, undefined);
+  assert.equal(details[1].endedAt, "2026-08-20");
+  assert.equal(details[1].reason, "建档时确定");
+  assert.ok(details.every((item) => item.records.length > 0));
+  assert.ok(details.every((item) => item.dispositions.length > 0));
+  assert.ok(details.every((item) => item.examinations.length > 0));
+  assert.ok(details.every((item) => item.treatmentEvents.length > 0));
 });
 
 test("treatment plan retains its baseline template association", () => {
