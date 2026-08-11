@@ -117,8 +117,8 @@ test("product documents expose the latest PRDs as online-only reading pages", as
 });
 
 test("latest configuration PRDs describe live filtering without query or reset buttons", async () => {
-  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.4.html", import.meta.url), "utf8");
-  const template = await readFile(new URL("../public/prd/check-template-v1.3.html", import.meta.url), "utf8");
+  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.6.html", import.meta.url), "utf8");
+  const template = await readFile(new URL("../public/prd/check-template-v1.4.html", import.meta.url), "utf8");
   assert.match(indicator, /指标名称 \/ 编码/);
   assert.match(indicator, /条件变化后实时刷新列表并回到第1页/);
   assert.match(template, /条件变化后实时刷新列表并回到第1页/);
@@ -372,8 +372,8 @@ test("indicator and template deletion is limited to unused records", async () =>
 });
 
 test("indicator and template PRDs define safe deletion rules", async () => {
-  const indicatorPrd = await readFile(new URL("../public/prd/clinical-indicator-v1.5.html", import.meta.url), "utf8");
-  const templatePrd = await readFile(new URL("../public/prd/check-template-v1.3.html", import.meta.url), "utf8");
+  const indicatorPrd = await readFile(new URL("../public/prd/clinical-indicator-v1.6.html", import.meta.url), "utf8");
+  const templatePrd = await readFile(new URL("../public/prd/check-template-v1.4.html", import.meta.url), "utf8");
   for (const source of [indicatorPrd, templatePrd]) {
     assert.match(source, /删除后不可恢复/);
     assert.match(source, /不允许删除，只允许停用/);
