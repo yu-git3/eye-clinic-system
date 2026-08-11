@@ -305,6 +305,15 @@ test("doctor workspace drawers use the global drawer layer", async () => {
   }
 });
 
+test("secondary overlays stay above global drawers", async () => {
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(css, /\.dialog-layer[^}]*--layer-modal-mask/s);
+  assert.match(css, /\.picker-modal[^}]*--layer-modal/s);
+  assert.match(css, /\.sr-modal-layer[^}]*--layer-modal-mask/s);
+  assert.match(css, /\.global-discard-dialog[^}]*--layer-confirm/s);
+  assert.match(css, /\.toast[^}]*--layer-toast/s);
+});
+
 test("check template filters apply immediately without query or reset actions", async () => {
   const source = await readFile(
     new URL("../app/modules/check-template/CheckTemplateModule.tsx", import.meta.url),
