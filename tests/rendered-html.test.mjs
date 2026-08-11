@@ -293,6 +293,18 @@ test("configuration and exam entry drawers use the global drawer layer", async (
   }
 });
 
+test("doctor workspace drawers use the global drawer layer", async () => {
+  for (const path of [
+    "../app/modules/contact-lens-archive/ContactLensArchiveModule.tsx",
+    "../app/modules/specialty-record/SpecialtyRecordModule.tsx",
+    "../app/modules/exam-report/ExamReportModule.tsx",
+  ]) {
+    const source = await readFile(new URL(path, import.meta.url), "utf8");
+    assert.match(source, /import \{ GlobalDrawerLayer \}/);
+    assert.match(source, /<GlobalDrawerLayer/);
+  }
+});
+
 test("check template filters apply immediately without query or reset actions", async () => {
   const source = await readFile(
     new URL("../app/modules/check-template/CheckTemplateModule.tsx", import.meta.url),
