@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { GlobalDrawerLayer } from "../../components/GlobalDrawerLayer";
 import {
   createSeedIndicators,
   filterIndicators,
@@ -193,7 +194,7 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
         </main>
       </section>
 
-      {drawer && <><div className="overlay" onClick={requestCloseDrawer} /><aside className="drawer" aria-label="指标信息抽屉"><div className="drawer-head"><div><span className="eyebrow">临床指标</span><h2>{drawer.mode === "add" ? "新增指标" : drawer.mode === "edit" ? "编辑指标" : "指标详情"}</h2></div><button ref={drawerCloseRef} className="close" onClick={requestCloseDrawer} aria-label="关闭">×</button></div>
+      <GlobalDrawerLayer open={Boolean(drawer)} label="指标信息抽屉" onMaskClick={requestCloseDrawer}>{drawer && <aside className="drawer" aria-label="指标信息抽屉"><div className="drawer-head"><div><span className="eyebrow">临床指标</span><h2>{drawer.mode === "add" ? "新增指标" : drawer.mode === "edit" ? "编辑指标" : "指标详情"}</h2></div><button ref={drawerCloseRef} className="close" onClick={requestCloseDrawer} aria-label="关闭">×</button></div>
         <form onSubmit={submitDraft} className="drawer-form"><div className="drawer-body">
           {drawer.mode === "view" && <div className="detail-banner"><span>◎</span><div><strong>{draft.name}</strong><p>{draft.code} · {draft.type} · {draft.status}</p></div></div>}
           <section className="form-section"><h3><span>1</span>基础信息</h3><div className="form-grid">
@@ -217,7 +218,7 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
           </div></section>
 
           {draft.referenced && <section className="reference-box"><strong>已被业务模板引用</strong><p>当前指标被 {(draft as Indicator).referencedBy?.join("、")} 引用，只可停用，不可删除；历史数据不受影响。</p></section>}
-        </div><div className="drawer-foot">{drawer.mode === "view" ? <button type="button" className="button primary" onClick={() => setDrawer(null)}>关闭</button> : <><button type="button" className="button" onClick={requestCloseDrawer}>取消</button>{drawer.mode === "add" && <button type="button" className="button" onClick={(e) => submitDraft(e as unknown as FormEvent, true)}>保存并新增</button>}<button className="button primary" type="submit">保存</button></>}</div></form></aside></>}
+        </div><div className="drawer-foot">{drawer.mode === "view" ? <button type="button" className="button primary" onClick={() => setDrawer(null)}>关闭</button> : <><button type="button" className="button" onClick={requestCloseDrawer}>取消</button>{drawer.mode === "add" && <button type="button" className="button" onClick={(e) => submitDraft(e as unknown as FormEvent, true)}>保存并新增</button>}<button className="button primary" type="submit">保存</button></>}</div></form></aside>}</GlobalDrawerLayer>
 
       {statusItem && <><div className="overlay dialog-layer" /><div className="dialog" role="dialog" aria-modal="true"><div className={`dialog-symbol ${statusItem.status === "启用" ? "warn" : "success"}`}>{statusItem.status === "启用" ? "!" : "✓"}</div><h2>确认{statusItem.status === "启用" ? "停用" : "启用"}指标？</h2><p>即将{statusItem.status === "启用" ? "停用" : "启用"}“{statusItem.name}（{statusItem.code}）”。</p>{statusItem.status === "启用" && <div className="impact">停用后不能被新的检查模板引用，历史检查数据仍可正常查看。</div>}<div className="dialog-actions"><button className="button" onClick={() => setStatusTarget(null)}>取消</button><button className={`button ${statusItem.status === "启用" ? "danger" : "primary"}`} onClick={() => { setItems(toggleIndicatorStatus(items, statusItem.code)); notify(`“${statusItem.name}”已${statusItem.status === "启用" ? "停用" : "启用"}`); setStatusTarget(null); }}>确认{statusItem.status === "启用" ? "停用" : "启用"}</button></div></div></>}
       {discardOpen && <DiscardChangesDialog returnFocusRef={drawerCloseRef} onContinue={() => setDiscardOpen(false)} onDiscard={() => { setDiscardOpen(false); setDrawer(null); }} />}

@@ -1,15 +1,16 @@
 "use client";
 
+import { GlobalDrawerLayer } from "../../components/GlobalDrawerLayer";
 import { copyEye, setEyeNormal, setFinding, type ExamInstance, type Eye } from "./exam-engine";
 
 export function ExamEntryPanel({ exam, source, onChange, onClose, onSave }: { exam: ExamInstance; source: "档案基线" | "专科病历"; onChange: (next: ExamInstance) => void; onClose: () => void; onSave: (next: ExamInstance) => void }) {
-  return <><div className="overlay" onClick={onClose}/><aside className="drawer exam-entry-drawer" aria-label="眼科检查录入组件">
+  return <GlobalDrawerLayer open label="眼科检查录入组件" onMaskClick={onClose}><aside className="drawer exam-entry-drawer" aria-label="眼科检查录入组件">
     <div className="drawer-head"><div><span className="eyebrow">{source} · 检查模板驱动</span><h2>眼健康检查</h2></div><button className="close" onClick={onClose}>×</button></div>
     <div className="drawer-body">
       <ExamEntryContent exam={exam} onChange={onChange}/>
     </div>
     <div className="drawer-foot"><button className="button" onClick={onClose}>取消</button><button className="button" onClick={() => onSave({ ...exam, status:"已暂存" })}>暂存</button><button className="button primary" onClick={() => onSave({ ...exam, status:"已完成", syncStatus:"已同步" })}>保存并回传门诊病历</button></div>
-  </aside></>;
+  </aside></GlobalDrawerLayer>;
 }
 
 export function ExamEntryContent({ exam, onChange, embedded = false }: { exam: ExamInstance; onChange: (next: ExamInstance) => void; embedded?: boolean }) {

@@ -281,6 +281,18 @@ test("global drawer layer portals to the viewport with shared layer tokens", asy
   assert.match(css, /--layer-confirm:1201/);
 });
 
+test("configuration and exam entry drawers use the global drawer layer", async () => {
+  for (const path of [
+    "../app/modules/clinical-indicator/ClinicalIndicatorModule.tsx",
+    "../app/modules/check-template/CheckTemplateModule.tsx",
+    "../app/modules/exam-runtime/ExamEntryPanel.tsx",
+  ]) {
+    const source = await readFile(new URL(path, import.meta.url), "utf8");
+    assert.match(source, /import \{ GlobalDrawerLayer \}/);
+    assert.match(source, /<GlobalDrawerLayer/);
+  }
+});
+
 test("check template filters apply immediately without query or reset actions", async () => {
   const source = await readFile(
     new URL("../app/modules/check-template/CheckTemplateModule.tsx", import.meta.url),
