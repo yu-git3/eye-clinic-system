@@ -378,6 +378,7 @@ test("indicator and template PRDs define safe deletion rules", async () => {
     assert.match(source, /删除后不可恢复/);
     assert.match(source, /不允许删除，只允许停用/);
     assert.match(source, /服务端/);
+    assert.match(source, /<p class="p(?:3|7)">(\s*<b>)?删除/);
   }
 });
 
