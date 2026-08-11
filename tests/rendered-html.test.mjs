@@ -305,7 +305,7 @@ test("doctor workspace drawers use the global drawer layer", async () => {
   }
 });
 
-test("treatment method history exposes stage summaries and linked clinical detail", async () => {
+test("treatment method history reuses the full read-only treatment workspace", async () => {
   const archive = await readFile(
     new URL("../app/modules/contact-lens-archive/ContactLensArchiveModule.tsx", import.meta.url),
     "utf8",
@@ -315,15 +315,18 @@ test("treatment method history exposes stage summaries and linked clinical detai
     "utf8",
   );
   const detail = await readFile(
-    new URL("../app/modules/contact-lens-archive/TreatmentStageDetailDrawer.tsx", import.meta.url),
+    new URL("../app/modules/contact-lens-archive/HistoricalTreatmentStageView.tsx", import.meta.url),
     "utf8",
   );
   assert.match(archive, /治疗方式历史/);
   assert.match(archive, /查看阶段详情/);
   assert.match(archive, /查看历史（/);
   assert.match(specialty, /查看历史（/);
-  assert.match(detail, /GlobalDrawerLayer/);
-  for (const section of ["阶段概况", "专科病历", "诊断与处置", "检查与报告", "治疗过程"]) assert.match(detail, new RegExp(section));
+  assert.match(detail, /历史治疗阶段/);
+  assert.match(detail, /返回当前治疗阶段/);
+  for (const section of ["专科病历", "治疗跟踪", "专科视图"]) assert.match(detail, new RegExp(section));
+  assert.match(detail, /只读/);
+  assert.doesNotMatch(archive, /TreatmentStageDetailDrawer/);
 });
 
 test("contact lens archive PRD documents treatment stage history navigation", async () => {

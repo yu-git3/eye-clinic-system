@@ -8,7 +8,7 @@ import { createEyeHealthInstance, type ExamInstance } from "../exam-runtime/exam
 import { OrderedBaselineEditor } from "./OrderedBaselineEditor";
 import { ArchivePrintPreview } from "./ArchivePrintPreview";
 import { SpecialtyRecordModule } from "../specialty-record/SpecialtyRecordModule";
-import { TreatmentStageDetailDrawer } from "./TreatmentStageDetailDrawer";
+import { HistoricalTreatmentStageView } from "./HistoricalTreatmentStageView";
 
 type EntryMode = "doctor" | "population";
 type SpecialtyTab = "record" | "tracking" | "overview";
@@ -135,7 +135,7 @@ export function ContactLensArchiveModule({ entryMode }: { entryMode: EntryMode }
     {reportGroup && <Modal title="引用报告结果" onClose={() => setReportGroup(null)} footer={<button className="button" onClick={() => setReportGroup(null)}>取消</button>}><div className="cl-report-current"><b>{reportGroup.group}</b><span>当前引用：{reportGroup.reportId}</span></div><p>存在多次检查时，选择一份报告预览并引用；替换引用将保留历史审计记录。</p><div className="cl-report-candidates">{sampleReports.map((report) => <button key={report.reportId} onClick={() => citeReport(report)}><span><b>{report.checkedAt}</b><small>{report.reportId}　报告人：{report.reporterName}　{report.reportedAt}</small></span><em>{report.status}</em><strong>引用报告结果</strong></button>)}</div><div className="cl-report-page"><b>{reportGroup.group}报告结果预览</b><p>OD：{sampleReports[0].odSummary}</p><p>OS：{sampleReports[0].osSummary}</p></div></Modal>}
     {printOpen && archive && <ArchivePrintPreview archive={archive} onClose={() => setPrintOpen(false)}/>} 
     {examOpen && <ExamEntryPanel exam={eyeHealthExam} source={examSource} onChange={setEyeHealthExam} onClose={() => setExamOpen(false)} onSave={saveEyeHealth}/>} 
-    <TreatmentStageDetailDrawer detail={stageDetail} onClose={() => setStageDetail(null)} onReport={(name) => notify(`${name}原始报告预览已打开`)} />
+    <HistoricalTreatmentStageView detail={stageDetail} onBack={() => setStageDetail(null)} onReport={(name) => notify(`${name}原始报告预览已打开`)} />
     {toast && <div className="toast"><span>✓</span>{toast}</div>}
   </div>;
 }

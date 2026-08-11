@@ -176,10 +176,24 @@ export function createMethodStageDetails(archive: ContactLensArchive): MethodSta
       id: `${archive.id}-METHOD-${index + 1}`,
       status: current ? "当前使用" : "历史阶段",
       reason: stage.reason || "建档时确定",
-      records: [{ date, department: archive.department, doctor: stage.doctor, summary: current ? "复诊评估，确认当前治疗方式及随访计划。" : "初诊建档，完成配前评估并确定治疗方式。" }],
+      records: current
+        ? [{ date, department: archive.department, doctor: stage.doctor, summary: "复诊评估，确认当前治疗方式及随访计划。" }]
+        : [
+            { date: "2026-02-12", department: archive.department, doctor: "徐珊珊", summary: "复诊评估戴镜效果，裸眼视力稳定，建议继续随访。" },
+            { date: "2025-08-28", department: archive.department, doctor: "徐英男", summary: "复查角膜与眼轴变化，调整护理与复诊安排。" },
+            { date: stage.startedAt, department: archive.department, doctor: stage.doctor, summary: "初诊建档，完成配前评估并确定治疗方式。" },
+          ],
       dispositions: [{ diagnosis: "屈光不正（近视）", advice: current ? "继续当前治疗方式，按计划复查。" : "完成配前检查，规范开展接触镜治疗。", order: current ? "角膜地形图、眼表综合检查" : "验光、角膜地形图、眼生物测量", followUp: current ? "1个月后复诊" : "试戴后复诊" }],
       examinations: archive.checks.slice(0, current ? 3 : 4).map((check) => ({ name: check.group, date: check.reportDate, summary: check.rows.slice(0, 2).map((row) => `${row.item} OD ${row.od} / OS ${row.os}`).join("；"), hasOriginalReport: Boolean(check.report) })),
-      treatmentEvents: [{ date, node: current ? archive.currentNode : "阶段已结束", detail: current ? `${stage.method}治疗进行中` : `${stage.method}阶段资料已归档` }],
+      treatmentEvents: current
+        ? [{ date, node: archive.currentNode, detail: `${stage.method}治疗进行中` }]
+        : [
+            { date: stage.startedAt, node: "试戴评估", detail: `完成${stage.method}试戴与配适评估` },
+            { date: "2025-05-16", node: "定片下单", detail: "确认镜片参数并完成订单" },
+            { date: "2025-05-24", node: "镜片交付", detail: "完成验片、交付与护理指导" },
+            { date: "2025-08-28", node: "阶段复查", detail: "完成角膜地形图、眼轴及眼表复查" },
+            { date: stage.endedAt || date, node: "阶段已结束", detail: `${stage.method}阶段资料已归档` },
+          ],
     };
   }).reverse();
 }

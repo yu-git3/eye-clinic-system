@@ -54,21 +54,21 @@
 - [ ] 运行页面测试和 `npm run build`，确认通过。
 - [ ] 提交 `feat: add treatment method history entry`。
 
-### Task 3: 阶段详情抽屉
+### Task 3: 历史治疗阶段视图
 
 **Files:**
-- Create: `app/modules/contact-lens-archive/TreatmentStageDetailDrawer.tsx`
+- Create: `app/modules/contact-lens-archive/HistoricalTreatmentStageView.tsx`
 - Modify: `app/modules/contact-lens-archive/ContactLensArchiveModule.tsx`
 - Modify: `app/contact-lens-archive.css`
 - Modify: `tests/rendered-html.test.mjs`
 
 **Interfaces:**
 - Consumes: `MethodStageDetail`、`GlobalDrawerLayer`。
-- Produces: `TreatmentStageDetailDrawer({ detail, onClose })`。
+- Produces: `HistoricalTreatmentStageView({ detail, onBack, onReport })`。
 
-- [ ] 写失败测试：断言详情抽屉使用全局抽屉层，并展示阶段概况、专科病历、诊断与处置、检查与报告、治疗过程五部分。
+- [ ] 写失败测试：断言历史阶段视图展示专科病历、治疗跟踪、专科视图三个页签以及返回当前阶段入口。
 - [ ] 运行页面测试，确认缺少组件失败。
-- [ ] 创建只读详情抽屉；点击阶段的“查看阶段详情”时关闭弹窗并打开该抽屉。
+- [ ] 创建完整只读历史阶段视图；点击“查看阶段详情”时关闭弹窗并进入该视图，按阶段范围展示全部关联资料。
 - [ ] 为原始报告入口提供可点击演示反馈，不重复实现报告阅读器。
 - [ ] 运行页面测试和生产构建，确认通过。
 - [ ] 提交 `feat: add treatment stage detail drawer`。
