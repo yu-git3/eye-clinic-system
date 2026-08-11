@@ -3,6 +3,8 @@
   --text: #1f2d3d; --muted: #6b778c; --line: #dfe5ec; --page: #f3f6fa;
   --white: #fff; --green: #1f9d67; --red: #e24444; --orange: #f39b2f;
   --shadow: 0 6px 24px rgba(31, 45, 61, .08); --radius: 8px;
+  --layer-drawer-mask:1000; --layer-drawer:1001; --layer-modal-mask:1100; --layer-modal:1101;
+  --layer-confirm-mask:1200; --layer-confirm:1201; --layer-toast:1300;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; min-height: 100%; background: var(--page); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 14px; }
@@ -10,6 +12,7 @@ button, input, select, textarea { font: inherit; }
 button { cursor: pointer; }
 button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid rgba(36,104,242,.18); outline-offset: 1px; }
 .app-shell { min-height: 100vh; display: flex; }
+.global-drawer-root{position:fixed;inset:0;z-index:var(--layer-drawer-mask)}.global-drawer-mask{z-index:var(--layer-drawer-mask)}.global-drawer-panel{position:fixed;inset:0;z-index:var(--layer-drawer);pointer-events:none}.global-drawer-panel>:where(.drawer,.sr-record-drawer){position:fixed;inset:0 0 0 auto;z-index:var(--layer-drawer);pointer-events:auto}.global-drawer-panel :where(.drawer-body,.sr-drawer-body){min-height:0;overflow:auto}
 .sidebar { width: 230px; background: linear-gradient(180deg,#173967,#132b4e); color: #fff; position: fixed; inset: 0 auto 0 0; display: flex; flex-direction: column; z-index: 10; box-shadow: 4px 0 16px rgba(10,35,70,.12); }
 .brand { height: 70px; display:flex; align-items:center; gap:12px; padding:0 20px; border-bottom:1px solid rgba(255,255,255,.09); }
 .brand-mark { width:36px; height:36px; display:grid; place-items:center; border-radius:10px; background:linear-gradient(135deg,#54a0ff,#2468f2); font-weight:800; letter-spacing:-1px; box-shadow:0 5px 15px rgba(36,104,242,.35); }

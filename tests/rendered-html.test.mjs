@@ -265,6 +265,22 @@ test("indicator unsaved confirmation is a viewport-level accessible dialog", asy
   assert.match(source, /\.focus\(\)/);
 });
 
+test("global drawer layer portals to the viewport with shared layer tokens", async () => {
+  const component = await readFile(
+    new URL("../app/components/GlobalDrawerLayer.tsx", import.meta.url),
+    "utf8",
+  );
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(component, /createPortal/);
+  assert.match(component, /document\.body/);
+  assert.match(component, /global-drawer-mask/);
+  assert.match(component, /global-drawer-panel/);
+  assert.match(css, /--layer-drawer-mask:1000/);
+  assert.match(css, /--layer-drawer:1001/);
+  assert.match(css, /--layer-modal:1101/);
+  assert.match(css, /--layer-confirm:1201/);
+});
+
 test("check template filters apply immediately without query or reset actions", async () => {
   const source = await readFile(
     new URL("../app/modules/check-template/CheckTemplateModule.tsx", import.meta.url),
