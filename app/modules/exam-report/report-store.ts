@@ -84,9 +84,9 @@ export const reports: Report[] = [
 ];
 
 export const visits = [
-  {time:"2026-08-02 10:36",department:"眼视光中心",doctor:"方红全",type:"初诊 · OK镜评估"},
-  {time:"2026-05-10 09:12",department:"眼视光中心",doctor:"徐学庆",type:"复诊"},
-  {time:"2025-11-28 14:20",department:"眼视光中心",doctor:"徐学庆",type:"复诊"},
+  {time:"2026-08-02 10:36",department:"眼视光中心",doctor:"方红全",diagnosis:"双眼近视（中度）"},
+  {time:"2026-05-10 09:12",department:"眼视光中心",doctor:"徐学庆",diagnosis:"双眼屈光不正"},
+  {time:"2025-11-28 14:20",department:"眼视光中心",doctor:"徐学庆",diagnosis:"双眼近视"},
 ];
 
 export function visibleReports(projects:string[],status:string){return reports.filter(r=>(!projects.length||projects.includes(r.project))&&(!status||r.status===status));}

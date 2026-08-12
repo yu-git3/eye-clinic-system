@@ -92,6 +92,16 @@ test("exam reports are embedded in the doctor workspace instead of a standalone 
   assert.doesNotMatch(report, /er-project-filter/);
 });
 
+test("visit report list shows diagnosis instead of initial or follow-up type", async () => {
+  const module = await readFile(new URL("../app/modules/exam-report/ExamReportModule.tsx", import.meta.url), "utf8");
+  const store = await readFile(new URL("../app/modules/exam-report/report-store.ts", import.meta.url), "utf8");
+  const prd = await readFile(new URL("../public/prd/exam-report-v1.4.html", import.meta.url), "utf8");
+  assert.match(module, /诊断：\{v\.diagnosis\}/);
+  assert.doesNotMatch(module, /v\.type/);
+  assert.match(store, /diagnosis:/);
+  assert.match(prd, /不展示初诊\/复诊类型/);
+});
+
 test("product documents expose the latest PRDs as online-only reading pages", async () => {
   const shell = await readFile(new URL("../app/OphthalmologyPrototype.tsx", import.meta.url), "utf8");
   const docs = await readFile(new URL("../app/modules/product-docs/ProductDocsModule.tsx", import.meta.url), "utf8");
@@ -101,9 +111,9 @@ test("product documents expose the latest PRDs as online-only reading pages", as
   assert.match(docs, /title: "眼科专科系统产品基线"/);
   assert.match(docs, /product-baseline-v1\.2\.html/);
   assert.match(baseline, /眼科专科系统产品基线与模块合并台账/);
-  assert.match(docs, /临床指标定义.*V1\.4/s);
-  assert.match(docs, /检查模板配置.*V1\.3/s);
-  assert.match(docs, /检查报告查询.*V1\.3/s);
+  assert.match(docs, /临床指标定义.*V1\.6/s);
+  assert.match(docs, /检查模板配置.*V1\.4/s);
+  assert.match(docs, /检查报告查询.*V1\.4/s);
   assert.match(docs, /治疗方案基础档案.*V1\.4/s);
   assert.match(docs, /角膜接触镜专科病历.*V1\.0/s);
   assert.match(docs, /在线阅读/);

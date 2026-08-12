@@ -8,7 +8,7 @@ const documents = [
   { id: "baseline", title: "眼科专科系统产品基线", version: "V1.2", updatedAt: "2026-08-03", path: "/prd/product-baseline-v1.2.html", target: "doctor" as PrototypeTarget },
   { id: "indicator", title: "临床指标定义", version: "V1.6", updatedAt: "2026-08-11", path: "/prd/clinical-indicator-v1.6.html", target: "indicator" as PrototypeTarget },
   { id: "template", title: "检查模板配置", version: "V1.4", updatedAt: "2026-08-11", path: "/prd/check-template-v1.4.html", target: "template" as PrototypeTarget },
-  { id: "report", title: "检查报告查询", version: "V1.3", updatedAt: "2026-08-04", path: "/prd/exam-report-v1.3.html", target: "report" as PrototypeTarget },
+  { id: "report", title: "检查报告查询", version: "V1.4", updatedAt: "2026-08-12", path: "/prd/exam-report-v1.4.html", target: "report" as PrototypeTarget },
   { id: "archive", title: "角膜接触镜治疗方案基础档案", version: "V1.4", updatedAt: "2026-08-04", path: "/prd/contact-lens-archive-v1.4.html", target: "doctor" as PrototypeTarget },
   { id: "record", title: "角膜接触镜专科病历", version: "V1.0", updatedAt: "2026-08-02", path: "/prd/specialty-record-v1.0.html", target: "doctor" as PrototypeTarget },
 ];
