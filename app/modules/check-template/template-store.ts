@@ -52,6 +52,10 @@ export function validateTemplate(draft: CheckTemplateDraft, existing: CheckTempl
   else if (!/^[A-Z0-9_]+$/.test(draft.code)) errors.code = "仅允许大写字母、数字和下划线";
   else if (existing.some((item) => item.code === draft.code && item.code !== editingCode)) errors.code = "模板编码已存在";
   if (draft.type === "医技检查" && !draft.serviceItem) errors.serviceItem = "请选择服务项目";
+  else if (draft.type === "医技检查") {
+    const linkedTemplate = existing.find((item) => item.type === "医技检查" && item.serviceItem === draft.serviceItem && item.code !== editingCode);
+    if (linkedTemplate) errors.serviceItem = `该服务项目已关联检查模板“${linkedTemplate.name}”`;
+  }
   if (!draft.indicatorCodes.length) errors.indicatorCodes = "请至少选择一个指标";
   return errors;
 }

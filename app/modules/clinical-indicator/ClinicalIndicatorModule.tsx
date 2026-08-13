@@ -265,10 +265,10 @@ function EyeMappingFields({ draft, mode, errors, setField }: {
     </>}
     {draft.source === "医生查体" && <div className="config-note doctor"><strong>医生查体无需外部映射</strong><p>检查结果由医生在系统内直接录入，仅需维护眼别、数据类型与参考范围。</p></div>}
     {draft.source === "医技检查" && <>
-      <div className="config-note"><strong>PACS 外部字段映射</strong><p>接口返回数据后，系统根据下方字段将结果转换并保存到当前指标。</p></div>
+      <div className="config-note"><strong>PACS 外部字段映射（选填）</strong><p>配置后可按接口字段自动转换写入；未配置时仍可保存指标，但不自动接收对应字段结果。</p></div>
       {errors.externalMapping && <p className="error banner-error">{errors.externalMapping}</p>}
       <div className="form-grid">
-        {draft.eyeRule.map((eye) => <Field key={eye} label={`${eye}外部映射字段`} required hint={`如：RESULT_${eye === "无眼别" ? "GENERAL" : eye}`}><input disabled={readOnly} value={draft.externalMapping?.[eye] ?? ""} placeholder={`请输入${eye}返回字段`} onChange={(e) => updateExternal(eye, e.target.value)} /></Field>)}
+        {draft.eyeRule.map((eye) => <Field key={eye} label={`${eye}外部映射字段`} hint={`选填，如：RESULT_${eye === "无眼别" ? "GENERAL" : eye}`}><input disabled={readOnly} value={draft.externalMapping?.[eye] ?? ""} placeholder={`选填，输入${eye}返回字段`} onChange={(e) => updateExternal(eye, e.target.value)} /></Field>)}
       </div>
     </>}
   </div>;

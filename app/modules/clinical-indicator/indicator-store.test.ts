@@ -176,6 +176,12 @@ test("rejects duplicate medical fields for OD and OS", () => {
   assert.equal(Boolean(errors.externalMapping), true);
 });
 
+test("allows medical indicators to omit eye field mappings", () => {
+  const draft = createSeedIndicators()[0];
+  const errors = validateIndicator({ ...draft, externalMapping: { OD: "", OS: "" } }, []);
+  assert.equal(errors.externalMapping, undefined);
+});
+
 test("rejects duplicate enum external mapping codes for medical indicators", () => {
   const errors = validateIndicator({
     name: "检查状态",

@@ -317,10 +317,10 @@ export function validateIndicator(
   }
   if (draft.source === "医技检查") {
     const values = mappingKeys.map((key) => draft.externalMapping?.[key]?.trim() ?? "");
-    if (values.some((value) => !value)) errors.externalMapping = "请按眼别填写外部字段";
-    else if (values.some((value) => !/^[A-Z0-9_.]+$/.test(value))) {
+    const configuredValues = values.filter(Boolean);
+    if (configuredValues.some((value) => !/^[A-Z0-9_.]+$/.test(value))) {
       errors.externalMapping = "外部字段仅允许大写字母、数字、下划线和点号";
-    } else if (new Set(values).size !== values.length) {
+    } else if (new Set(configuredValues).size !== configuredValues.length) {
       errors.externalMapping = "同一指标的外部字段不能重复";
     }
   }

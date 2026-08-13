@@ -392,6 +392,15 @@ test("indicator and template PRDs define safe deletion rules", async () => {
   }
 });
 
+test("medical mappings are optional and service items are unique across templates", async () => {
+  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.6.html", import.meta.url), "utf8");
+  const template = await readFile(new URL("../public/prd/check-template-v1.4.html", import.meta.url), "utf8");
+  assert.match(indicator, /外部字段允许为空/);
+  assert.match(indicator, /全部留空时可保存/);
+  assert.match(template, /一个服务项目只能关联一个医技检查模板/);
+  assert.match(template, /已被其他模板关联的服务项目.*禁用/);
+});
+
 test("does not expose PACS as a standalone source option", async () => {
   const source = await readAppSources();
   assert.doesNotMatch(source, /<option[^>]*>PACS[^<]*<\/option>/i);

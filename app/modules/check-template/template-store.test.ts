@@ -18,6 +18,13 @@ test("medical template requires an order service item", () => {
   assert.equal(validateTemplate(draft, []).serviceItem, "请选择服务项目");
 });
 
+test("a service item can only be linked to one medical template", () => {
+  const existing = createSeedTemplates();
+  const duplicate = { ...blankTemplate(), name: "角膜地形图复查", code: "CORNEA_TOPO_RECHECK", serviceItem: "角膜地形图", indicatorCodes: ["IOP"] };
+  assert.equal(validateTemplate(duplicate, existing).serviceItem, "该服务项目已关联检查模板“角膜地形图”");
+  assert.equal(validateTemplate(existing[1], existing, existing[1].code).serviceItem, undefined);
+});
+
 test("searches service items and departments by code or name", () => {
   assert.deepEqual(filterServiceItems("TOPO").map((item) => item.code), ["CORNEA_TOPO"]);
   assert.deepEqual(filterServiceItems("眼压").map((item) => item.code), ["IOP_EXAM"]);
