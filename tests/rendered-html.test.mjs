@@ -188,6 +188,7 @@ test("archive prototype covers lifecycle, switching and report citation", async 
     "utf8",
   );
   assert.match(source, /档案切换器/);
+  assert.match(source, /示例包含：治疗中、已完成、终止后已重新开启/);
   assert.match(source, /终止档案/);
   assert.match(source, /完成日期/);
   assert.match(source, /完成人/);

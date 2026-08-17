@@ -27,7 +27,7 @@ const sampleReports: ReportCandidate[] = [
 export function ContactLensArchiveModule({ entryMode }: { entryMode: EntryMode }) {
   const [activeTab, setActiveTab] = useState<SpecialtyTab>(entryMode === "population" ? "overview" : "record");
   const [archives, setArchives] = useState<ContactLensArchive[]>(() => createArchiveSeeds());
-  const [selectedArchiveId, setSelectedArchiveId] = useState("CL-20260802-0001");
+  const [selectedArchiveId, setSelectedArchiveId] = useState(entryMode === "population" ? "CL-20260802-0001" : "");
   const [createOpen, setCreateOpen] = useState(false);
   const [baselineOpen, setBaselineOpen] = useState(false);
   const [changeOpen, setChangeOpen] = useState(false);
@@ -127,7 +127,7 @@ export function ContactLensArchiveModule({ entryMode }: { entryMode: EntryMode }
       <div className="cl-specialty-head"><span>就诊类型：<b>初诊</b></span><span>首次就诊，可选择通用视光或角膜接触镜病历模板</span></div>
       <nav className="cl-tabs"><button className={activeTab === "record" ? "active" : ""} onClick={() => setActiveTab("record")}>专科病历</button><button className={activeTab === "tracking" ? "active" : ""} onClick={() => setActiveTab("tracking")}>治疗跟踪</button><button className={activeTab === "overview" ? "active" : ""} onClick={() => setActiveTab("overview")}>专科视图</button></nav>
 
-      {archives.length > 0 && <div className="cl-archive-switcher"><b>档案切换器</b><select aria-label="档案切换器" value={selectedArchiveId} onChange={(e) => setSelectedArchiveId(e.target.value)}>{archives.map((item) => <option value={item.id} key={item.id}>{item.treatmentPlan}｜{item.currentTreatmentMethod}｜{archiveScenario(item)}</option>)}</select><span>示例包含：治疗中、已完成、终止后已重新开启</span>{archive && <button className="cl-history-entry" onClick={() => setMethodHistoryOpen(true)}>查看历史（{archive.methodHistory.length}）</button>}{!readOnly && <button onClick={() => setCreateOpen(true)}>＋ 新建其他档案</button>}</div>}
+      {archive && <div className="cl-archive-switcher"><b>档案切换器</b><select aria-label="档案切换器" value={selectedArchiveId} onChange={(e) => setSelectedArchiveId(e.target.value)}>{archives.map((item) => <option value={item.id} key={item.id}>{item.treatmentPlan}｜{item.currentTreatmentMethod}｜{archiveScenario(item)}</option>)}</select><span>示例包含：治疗中、已完成、终止后已重新开启</span><button className="cl-history-entry" onClick={() => setMethodHistoryOpen(true)}>查看历史（{archive.methodHistory.length}）</button>{!readOnly && <button onClick={() => setCreateOpen(true)}>＋ 新建其他档案</button>}</div>}
       {activeTab === "record" && <RecordTab archive={archive} readOnly={readOnly} eyeHealthExam={eyeHealthExam} onEyeHealthChange={setEyeHealthExam} onRevise={reviseValue} onReport={setReportGroup} onCreate={() => setCreateOpen(true)} onLoad={loadExamples} onBaseline={openBaseline} onViewBaselineHistory={() => setBaselineHistoryOpen(true)} onChange={() => setChangeOpen(true)} onViewHistory={() => setMethodHistoryOpen(true)} onComplete={() => setCompleteOpen(true)} onTerminate={() => setTerminateOpen(true)} onReopen={() => setReopenOpen(true)} />}
       {activeTab === "tracking" && <TrackingTab />}
       {activeTab === "overview" && <OverviewTab archive={archive} readOnly={readOnly} onLoad={loadExamples} onBaseline={openBaseline} onChange={() => setChangeOpen(true)} onViewHistory={() => setMethodHistoryOpen(true)} />}
