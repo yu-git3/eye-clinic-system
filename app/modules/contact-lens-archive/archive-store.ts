@@ -55,6 +55,30 @@ export type CheckSnapshot = {
 
 export type BaselineTemplateRef = { id: string; name: string; version: string };
 
+export type BaselineVersion = {
+  id: string;
+  versionNo: number;
+  status: "编辑中" | "已完成" | "历史版本";
+  createdReason: "首次建档" | "终止后重新开启";
+  createdAt: string;
+  completedAt?: string;
+  completedBy?: string;
+  derivedFromId?: string;
+  baseline: Baseline;
+};
+
+export type TreatmentCycle = {
+  id: string;
+  cycleNo: number;
+  methodCycleNo: number;
+  method: TreatmentMethod;
+  type: "首次验配" | "到期换片" | "破损换片" | "参数调整" | "重新开启";
+  startedAt: string;
+  endedAt?: string;
+  status: "进行中" | "已完成" | "已终止";
+  baselineVersionId: string;
+};
+
 export type MethodStage = {
   method: TreatmentMethod;
   startedAt: string;
@@ -96,6 +120,9 @@ export type ContactLensArchive = {
   currentNode: string;
   baselineTemplate: BaselineTemplateRef;
   baseline: Baseline;
+  currentBaselineVersionId: string;
+  baselineVersions: BaselineVersion[];
+  treatmentCycles: TreatmentCycle[];
   checks: CheckSnapshot[];
   methodHistory: MethodStage[];
   timeline: TimelineEvent[];
@@ -135,17 +162,34 @@ export function validateArchiveDraft(draft: ArchiveDraft, existing: ContactLensA
 }
 
 export function terminateArchive(archive: ContactLensArchive, input: { endedAt: string; reason: string; operator: string }): ContactLensArchive {
-  return { ...archive, status: "已终止", updatedAt: input.endedAt, currentNode: "档案已终止", cycleClosures: [...archive.cycleClosures, { cycleNumber: archive.cycleNumber, result: "已终止", endedAt: input.endedAt, operator: input.operator, conclusion: input.reason }], timeline: [...archive.timeline, { date: input.endedAt, title: "终止档案", detail: `${input.reason}；操作人：${input.operator}`, state: "change" }] };
+  return { ...archive, status: "已终止", updatedAt: input.endedAt, currentNode: "档案已终止", treatmentCycles: archive.treatmentCycles.map((item) => item.cycleNo === archive.cycleNumber ? { ...item, status: "已终止" as const, endedAt: input.endedAt } : item), cycleClosures: [...archive.cycleClosures, { cycleNumber: archive.cycleNumber, result: "已终止", endedAt: input.endedAt, operator: input.operator, conclusion: input.reason }], timeline: [...archive.timeline, { date: input.endedAt, title: "终止档案", detail: `${input.reason}；操作人：${input.operator}`, state: "change" }] };
 }
 
 export function completeArchive(archive: ContactLensArchive, input: { completedAt: string; conclusion: string; operator: string }): ContactLensArchive {
-  return { ...archive, status: "已完成", updatedAt: input.completedAt, currentNode: "治疗已完成", cycleClosures: [...archive.cycleClosures, { cycleNumber: archive.cycleNumber, result: "已完成", endedAt: input.completedAt, operator: input.operator, conclusion: input.conclusion }], timeline: [...archive.timeline, { date: input.completedAt, title: `第${archive.cycleNumber}周期治疗完成`, detail: `${input.conclusion}；完成人：${input.operator}`, state: "done" }] };
+  return { ...archive, status: "已完成", updatedAt: input.completedAt, currentNode: "治疗已完成", treatmentCycles: archive.treatmentCycles.map((item) => item.cycleNo === archive.cycleNumber ? { ...item, status: "已完成" as const, endedAt: input.completedAt } : item), cycleClosures: [...archive.cycleClosures, { cycleNumber: archive.cycleNumber, result: "已完成", endedAt: input.completedAt, operator: input.operator, conclusion: input.conclusion }], timeline: [...archive.timeline, { date: input.completedAt, title: `第${archive.cycleNumber}周期治疗完成`, detail: `${input.conclusion}；完成人：${input.operator}`, state: "done" }] };
 }
 
-export function reopenArchive(archive: ContactLensArchive, input: { startedAt: string; reason: string; operator: string; baselineValidity: "仍有效" | "部分过期" | "已失效" }): ContactLensArchive {
-  const baseline = input.baselineValidity === "仍有效" ? archive.baseline : { ...archive.baseline, status: input.baselineValidity === "部分过期" ? "评估中" as const : "未开始" as const, completedAt: undefined };
-  const requiresBaseline = input.baselineValidity !== "仍有效";
-  return { ...archive, baseline, status: requiresBaseline ? "基本档案待完成" : "治疗中", updatedAt: input.startedAt, cycleNumber: archive.cycleNumber + 1, currentNode: requiresBaseline ? "基本档案复核" : "治疗计划恢复", timeline: [...archive.timeline, { date: input.startedAt, title: `重新开启第${archive.cycleNumber + 1}治疗周期`, detail: `${input.reason}；操作人：${input.operator}；基础档案${input.baselineValidity}`, state: "current" }] };
+export function startTreatmentCycle(archive: ContactLensArchive, input: { startedAt: string; type: TreatmentCycle["type"] }): ContactLensArchive {
+  const nextNo = archive.cycleNumber + 1;
+  const methodCycleNo = archive.treatmentCycles.filter((item) => item.method === archive.currentTreatmentMethod).length + 1;
+  return { ...archive, status: "治疗中", updatedAt: input.startedAt, cycleNumber: nextNo, currentNode: input.type, treatmentCycles: [...archive.treatmentCycles, { id: `${archive.id}-C${nextNo}`, cycleNo: nextNo, methodCycleNo, method: archive.currentTreatmentMethod, type: input.type, startedAt: input.startedAt, status: "进行中", baselineVersionId: archive.currentBaselineVersionId }], timeline: [...archive.timeline, { date: input.startedAt, title: `开始第${nextNo}治疗周期`, detail: `${input.type}；沿用基础档案V${archive.baselineVersions.find((item) => item.id === archive.currentBaselineVersionId)?.versionNo ?? 1}`, state: "current" }] };
+}
+
+export function reopenArchive(archive: ContactLensArchive, input: { startedAt: string; reason: string; operator: string; baselineAction: "沿用当前基础档案" | "重新建立基础档案"; rebuildMode?: "复制上一版本" | "使用空白模板" }): ContactLensArchive {
+  const nextNo = archive.cycleNumber + 1;
+  let baseline = archive.baseline;
+  let currentBaselineVersionId = archive.currentBaselineVersionId;
+  let baselineVersions = archive.baselineVersions;
+  if (input.baselineAction === "重新建立基础档案") {
+    const previous = archive.baselineVersions.find((item) => item.id === archive.currentBaselineVersionId)!;
+    const versionNo = Math.max(...archive.baselineVersions.map((item) => item.versionNo)) + 1;
+    baseline = input.rebuildMode === "使用空白模板" ? { status: "未开始", purpose: "", lensHistory: "", systemicHistory: "", eyeHistory: "", allergyHistory: "", correctionHistory: "", workAndLife: "", electronicUsage: "", doctorConclusion: "" } : { ...structuredClone(previous.baseline), status: "评估中", completedAt: undefined };
+    currentBaselineVersionId = `${archive.id}-BASE-V${versionNo}`;
+    baselineVersions = [...archive.baselineVersions.map((item) => item.id === previous.id ? { ...item, status: "历史版本" as const } : item), { id: currentBaselineVersionId, versionNo, status: "编辑中", createdReason: "终止后重新开启", createdAt: input.startedAt, derivedFromId: previous.id, baseline: structuredClone(baseline) }];
+  }
+  const requiresBaseline = input.baselineAction === "重新建立基础档案";
+  const methodCycleNo = archive.treatmentCycles.filter((item) => item.method === archive.currentTreatmentMethod).length + 1;
+  return { ...archive, baseline, currentBaselineVersionId, baselineVersions, status: requiresBaseline ? "基本档案待完成" : "治疗中", updatedAt: input.startedAt, cycleNumber: nextNo, currentNode: requiresBaseline ? "重新建立基础档案" : "治疗计划恢复", treatmentCycles: [...archive.treatmentCycles, { id: `${archive.id}-C${nextNo}`, cycleNo: nextNo, methodCycleNo, method: archive.currentTreatmentMethod, type: "重新开启", startedAt: input.startedAt, status: "进行中", baselineVersionId: currentBaselineVersionId }], timeline: [...archive.timeline, { date: input.startedAt, title: `重新开启第${nextNo}治疗周期`, detail: `${input.reason}；操作人：${input.operator}；${input.baselineAction}${requiresBaseline ? `（${input.rebuildMode}）` : ""}`, state: "current" }] };
 }
 
 export function referenceCheckReport(archive: ContactLensArchive, group: string, report: ReportCandidate, operator: string, citedAt: string): ContactLensArchive {
@@ -261,7 +305,7 @@ function createBaselineChecks(): CheckSnapshot[] {
 }
 
 export function createArchiveSeed(): ContactLensArchive {
-  return {
+  const archive: ContactLensArchive = {
     id: "CL-20260802-0001",
     patientId: "V00000009340",
     treatmentPlan: "角膜接触镜标准治疗方案",
@@ -276,6 +320,9 @@ export function createArchiveSeed(): ContactLensArchive {
     status: "基本档案待完成",
     currentNode: "基线评估",
     baselineTemplate: { id: "CL_BASELINE_V1", name: "角膜接触镜基础档案基线模板", version: "1.0" },
+    currentBaselineVersionId: "CL-20260802-0001-BASE-V1",
+    baselineVersions: [],
+    treatmentCycles: [{ id: "CL-20260802-0001-C1", cycleNo: 1, methodCycleNo: 1, method: "OK镜", type: "首次验配", startedAt: "2026-08-02 10:42", status: "进行中", baselineVersionId: "CL-20260802-0001-BASE-V1" }],
     baseline: {
       status: "评估中",
       purpose: "控制近视进展，改善白天裸眼视力",
@@ -315,15 +362,20 @@ export function createArchiveSeed(): ContactLensArchive {
     ],
     cycleClosures: [],
   };
+  archive.baselineVersions = [{ id: archive.currentBaselineVersionId, versionNo: 1, status: "已完成", createdReason: "首次建档", createdAt: archive.createdAt, completedAt: "2026-08-02 11:18", completedBy: "方红全", baseline: structuredClone(archive.baseline) }];
+  return archive;
 }
 
 export function createArchiveSeeds(): ContactLensArchive[] {
   const contactLens = createArchiveSeed();
+  contactLens.status = "治疗中";
+  contactLens.currentNode = "复查随访";
+  contactLens.baseline = { ...contactLens.baseline, status: "已完成", completedAt: "2026-08-02 11:18" };
   contactLens.methodHistory = [
     { method: "软性离焦镜", startedAt: "2025-05-10", endedAt: "2026-08-02", reason: "治疗效果调整", doctor: "徐英男" },
     { method: "OK镜", startedAt: "2026-08-02", reason: "患者需求变化", doctor: "方红全", assessmentStrategy: "沿用近期检查并补充评估" },
   ];
-  const visualTraining: ContactLensArchive = {
+  let visualTraining: ContactLensArchive = {
     ...structuredClone(contactLens),
     id: "VT-20260718-0003",
     treatmentPlan: "视功能训练方案",
@@ -334,9 +386,36 @@ export function createArchiveSeeds(): ContactLensArchive[] {
     status: "治疗中",
     currentNode: "训练第3阶段",
     baselineTemplate: { id: "VT_BASELINE_V1", name: "视功能训练基线模板", version: "1.0" },
+    currentBaselineVersionId: "VT-20260718-0003-BASE-V1",
+    baselineVersions: [{ id: "VT-20260718-0003-BASE-V1", versionNo: 1, status: "已完成", createdReason: "首次建档", createdAt: "2026-07-18 15:20", completedAt: "2026-07-18 16:05", completedBy: "张功平", baseline: structuredClone(contactLens.baseline) }],
+    treatmentCycles: [{ id: "VT-20260718-0003-C1", cycleNo: 1, methodCycleNo: 1, method: "其他", type: "首次验配", startedAt: "2026-07-18 15:20", status: "进行中", baselineVersionId: "VT-20260718-0003-BASE-V1" }],
     methodHistory: [{ method: "其他", startedAt: "2026-07-18", doctor: "张功平" }],
     timeline: [{ date: "2026-07-18 15:20", title: "建立视功能治疗档案", detail: "完成初次评估", state: "done" }, { date: "当前", title: "训练第3阶段", detail: "每周训练2次", state: "current" }],
     cycleClosures: [],
   };
-  return [contactLens, visualTraining];
+  visualTraining = completeArchive(visualTraining, { completedAt: "2026-08-12 16:30", operator: "张功平", conclusion: "本阶段视功能训练目标已完成，转入家庭训练并定期复查。" });
+
+  const reopenedBase: ContactLensArchive = {
+    ...structuredClone(contactLens),
+    id: "MY-20260410-0008",
+    treatmentPlan: "近视综合干预方案",
+    currentTreatmentMethod: "软性离焦镜",
+    responsibleDoctor: "徐英男",
+    createdAt: "2026-04-10 09:20",
+    updatedAt: "2026-07-01 10:00",
+    cycleNumber: 1,
+    currentBaselineVersionId: "MY-20260410-0008-BASE-V1",
+    baselineVersions: [{ id: "MY-20260410-0008-BASE-V1", versionNo: 1, status: "已完成", createdReason: "首次建档", createdAt: "2026-04-10 09:20", completedAt: "2026-04-10 10:05", completedBy: "徐英男", baseline: structuredClone(contactLens.baseline) }],
+    treatmentCycles: [{ id: "MY-20260410-0008-C1", cycleNo: 1, methodCycleNo: 1, method: "软性离焦镜", type: "首次验配", startedAt: "2026-04-10 09:20", status: "进行中", baselineVersionId: "MY-20260410-0008-BASE-V1" }],
+    methodHistory: [{ method: "软性离焦镜", startedAt: "2026-04-10", doctor: "徐英男" }],
+    cycleClosures: [],
+  };
+  const terminated = terminateArchive(reopenedBase, { endedAt: "2026-07-01 10:00", reason: "患者暑期暂缓治疗", operator: "徐英男" });
+  const reopened = reopenArchive(terminated, { startedAt: "2026-08-15 09:30", reason: "患者返院继续治疗", operator: "徐英男", baselineAction: "重新建立基础档案", rebuildMode: "复制上一版本" });
+  reopened.baseline = { ...reopened.baseline, status: "已完成", completedAt: "2026-08-15 10:10" };
+  reopened.baselineVersions = reopened.baselineVersions.map((item) => item.id === reopened.currentBaselineVersionId ? { ...item, status: "已完成", completedAt: "2026-08-15 10:10", completedBy: "徐英男", baseline: structuredClone(reopened.baseline) } : item);
+  reopened.status = "治疗中";
+  reopened.currentNode = "重新开启后复查";
+
+  return [contactLens, visualTraining, reopened];
 }

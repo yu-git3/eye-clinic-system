@@ -30,6 +30,7 @@ type Props = {
   onCreateArchive: () => void;
   onLoadArchives: () => void;
   onEditBasic: () => void;
+  onViewBaselineHistory: () => void;
   onChangeMethod: () => void;
   onViewMethodHistory: () => void;
   onComplete: () => void;
@@ -87,6 +88,7 @@ export function SpecialtyRecordModule(props: Props) {
 
   return <div className="sr-page">
     {archiveBar}
+    {archive && <div className="sr-baseline-version-bar"><span>当前基础档案：<b>V{archive.baselineVersions.find((item) => item.id === archive.currentBaselineVersionId)?.versionNo ?? 1}</b></span><span>{archive.baselineVersions.find((item) => item.id === archive.currentBaselineVersionId)?.status}</span><button onClick={props.onViewBaselineHistory}>历史版本（{Math.max(archive.baselineVersions.length - 1, 0)}）</button><small>当前治疗周期引用：{archive.treatmentCycles.find((item) => item.cycleNo === archive.cycleNumber)?.baselineVersionId}</small></div>}
     <section className="sr-history-page">
       <header><div><h2>角膜接触镜专科病历</h2><p>历史专科病历默认按就诊时间倒序，共 {history.length} 次就诊</p></div>{!props.readOnly && <button className="primary" onClick={() => setDrawerOpen(true)}>＋ 新建专科病历</button>}</header>
       <div className="sr-history-table-wrap"><table className="sr-history-table" style={{ minWidth: 1280 }}><thead><tr><th>就诊日期</th><th>就诊类型</th><th>科室 / 接诊医生</th><th>主诉及现病史摘要</th><th>专科检查摘要</th><th>诊断、处理及医嘱</th><th>操作</th></tr></thead><tbody>{history.map((item, index) => <tr key={item.id}><td><b>{item.visitDate}</b><small>{index === 0 ? "最近一次" : "复诊"}</small></td><td>复诊</td><td>{item.department}<small>{item.doctor}</small></td><td>{item.complaintSummary}</td><td>{item.examSummary}</td><td>{item.planSummary}<small>治疗方式：{item.treatmentMethod}</small></td><td><button onClick={() => setSelectedHistory(item)}>查看详情</button>{!props.readOnly && <button onClick={() => referenceHistory(item)}>引用上次记录</button>}</td></tr>)}</tbody></table></div>

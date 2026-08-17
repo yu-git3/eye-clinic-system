@@ -114,7 +114,7 @@ test("product documents expose the latest PRDs as online-only reading pages", as
   assert.match(docs, /临床指标定义.*V1\.6/s);
   assert.match(docs, /检查模板配置.*V1\.4/s);
   assert.match(docs, /检查报告查询.*V1\.4/s);
-  assert.match(docs, /治疗方案基础档案.*V1\.4/s);
+  assert.match(docs, /治疗方案基础档案.*V1\.5/s);
   assert.match(docs, /角膜接触镜专科病历.*V1\.0/s);
   assert.match(docs, /在线阅读/);
   assert.match(docs, /<iframe/);
@@ -193,7 +193,10 @@ test("archive prototype covers lifecycle, switching and report citation", async 
   assert.match(source, /完成人/);
   assert.match(source, /完成结论/);
   assert.match(source, /重新开启/);
-  assert.match(source, /基础档案有效性/);
+  assert.match(source, /基础档案处理方式/);
+  assert.match(source, /沿用当前基础档案/);
+  assert.match(source, /重新建立基础档案/);
+  assert.match(source, /基础档案历史版本/);
   assert.match(source, /已有档案·/);
   assert.match(source, /当前机构、当前科室可用/);
   assert.match(source, /引用报告结果/);
@@ -347,7 +350,7 @@ test("treatment method history reuses the full read-only treatment workspace", a
 
 test("contact lens archive PRD documents treatment stage history navigation", async () => {
   const prd = await readFile(
-    new URL("../public/prd/contact-lens-archive-v1.4.html", import.meta.url),
+    new URL("../public/prd/contact-lens-archive-v1.5.html", import.meta.url),
     "utf8",
   );
   assert.match(prd, /查看历史（N）/);
