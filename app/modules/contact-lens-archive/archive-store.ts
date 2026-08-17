@@ -99,6 +99,13 @@ export type ContactLensArchive = {
   checks: CheckSnapshot[];
   methodHistory: MethodStage[];
   timeline: TimelineEvent[];
+  cycleClosures: Array<{
+    cycleNumber: number;
+    result: "已完成" | "已终止";
+    endedAt: string;
+    operator: string;
+    conclusion: string;
+  }>;
 };
 
 export type CheckValueRevision = {
@@ -128,11 +135,17 @@ export function validateArchiveDraft(draft: ArchiveDraft, existing: ContactLensA
 }
 
 export function terminateArchive(archive: ContactLensArchive, input: { endedAt: string; reason: string; operator: string }): ContactLensArchive {
-  return { ...archive, status: "已终止", updatedAt: input.endedAt, currentNode: "档案已终止", timeline: [...archive.timeline, { date: input.endedAt, title: "终止档案", detail: `${input.reason}；操作人：${input.operator}`, state: "change" }] };
+  return { ...archive, status: "已终止", updatedAt: input.endedAt, currentNode: "档案已终止", cycleClosures: [...archive.cycleClosures, { cycleNumber: archive.cycleNumber, result: "已终止", endedAt: input.endedAt, operator: input.operator, conclusion: input.reason }], timeline: [...archive.timeline, { date: input.endedAt, title: "终止档案", detail: `${input.reason}；操作人：${input.operator}`, state: "change" }] };
 }
 
-export function reopenArchive(archive: ContactLensArchive, input: { startedAt: string; reason: string; operator: string }): ContactLensArchive {
-  return { ...archive, status: "基本档案待完成", updatedAt: input.startedAt, cycleNumber: archive.cycleNumber + 1, currentNode: "基线评估", timeline: [...archive.timeline, { date: input.startedAt, title: `重新开启第${archive.cycleNumber + 1}治疗周期`, detail: `${input.reason}；操作人：${input.operator}`, state: "current" }] };
+export function completeArchive(archive: ContactLensArchive, input: { completedAt: string; conclusion: string; operator: string }): ContactLensArchive {
+  return { ...archive, status: "已完成", updatedAt: input.completedAt, currentNode: "治疗已完成", cycleClosures: [...archive.cycleClosures, { cycleNumber: archive.cycleNumber, result: "已完成", endedAt: input.completedAt, operator: input.operator, conclusion: input.conclusion }], timeline: [...archive.timeline, { date: input.completedAt, title: `第${archive.cycleNumber}周期治疗完成`, detail: `${input.conclusion}；完成人：${input.operator}`, state: "done" }] };
+}
+
+export function reopenArchive(archive: ContactLensArchive, input: { startedAt: string; reason: string; operator: string; baselineValidity: "仍有效" | "部分过期" | "已失效" }): ContactLensArchive {
+  const baseline = input.baselineValidity === "仍有效" ? archive.baseline : { ...archive.baseline, status: input.baselineValidity === "部分过期" ? "评估中" as const : "未开始" as const, completedAt: undefined };
+  const requiresBaseline = input.baselineValidity !== "仍有效";
+  return { ...archive, baseline, status: requiresBaseline ? "基本档案待完成" : "治疗中", updatedAt: input.startedAt, cycleNumber: archive.cycleNumber + 1, currentNode: requiresBaseline ? "基本档案复核" : "治疗计划恢复", timeline: [...archive.timeline, { date: input.startedAt, title: `重新开启第${archive.cycleNumber + 1}治疗周期`, detail: `${input.reason}；操作人：${input.operator}；基础档案${input.baselineValidity}`, state: "current" }] };
 }
 
 export function referenceCheckReport(archive: ContactLensArchive, group: string, report: ReportCandidate, operator: string, citedAt: string): ContactLensArchive {
@@ -300,6 +313,7 @@ export function createArchiveSeed(): ContactLensArchive {
       { date: "待开始", title: "试戴", detail: "基线评估完成后按治疗方案进入", state: "future" },
       { date: "待开始", title: "定片、交付与复查", detail: "后续治疗节点，本轮暂不开放表单", state: "future" },
     ],
+    cycleClosures: [],
   };
 }
 
@@ -322,6 +336,7 @@ export function createArchiveSeeds(): ContactLensArchive[] {
     baselineTemplate: { id: "VT_BASELINE_V1", name: "视功能训练基线模板", version: "1.0" },
     methodHistory: [{ method: "其他", startedAt: "2026-07-18", doctor: "张功平" }],
     timeline: [{ date: "2026-07-18 15:20", title: "建立视功能治疗档案", detail: "完成初次评估", state: "done" }, { date: "当前", title: "训练第3阶段", detail: "每周训练2次", state: "current" }],
+    cycleClosures: [],
   };
   return [contactLens, visualTraining];
 }

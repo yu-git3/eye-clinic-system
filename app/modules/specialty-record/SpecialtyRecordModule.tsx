@@ -32,6 +32,7 @@ type Props = {
   onEditBasic: () => void;
   onChangeMethod: () => void;
   onViewMethodHistory: () => void;
+  onComplete: () => void;
   onTerminate: () => void;
   onReopen: () => void;
 };
@@ -82,7 +83,7 @@ export function SpecialtyRecordModule(props: Props) {
     setPickerOpen(false);
   }
 
-  const archiveBar = archive ? <div className="sr-archive-bar"><div><span className="sr-dot"/><b>治疗方案档案</b><code>{archive.id}</code><span>{archive.treatmentPlan}</span><span className="sr-method" tabIndex={0}>{archive.currentTreatmentMethod}<span className="sr-lens-pop"><b>当前镜片信息</b><small>梦戴维 DreamLite · 已交付使用</small><em>OD　BC 8.50 / DIA 10.6 / -3.00D</em><em>OS　BC 8.55 / DIA 10.6 / -2.75D</em><small>订单：ORD-20260718-026　交付：2026-07-25</small></span></span><button className="sr-history-link" onClick={props.onViewMethodHistory}>查看历史（{archive.methodHistory.length}）</button><em>{archive.status === "基本档案待完成" ? "基本档案待完成" : archive.status}</em><small>责任医生：{archive.responsibleDoctor}　建档：{archive.createdAt}</small></div><div><button onClick={props.onEditBasic}>{props.readOnly || locked ? "查看基本档案" : "编辑基本档案"}</button>{!props.readOnly && !locked && <><button onClick={props.onChangeMethod}>变更治疗方式</button><button className="danger" onClick={props.onTerminate}>终止档案</button></>}{!props.readOnly && locked && <button onClick={props.onReopen}>重新开启</button>}</div></div> : <div className="sr-archive-empty"><div><b>当前未关联治疗方案档案</b><span>可先完成本次初诊病历，确定治疗方案后再关联基本档案。</span></div><button onClick={props.onLoadArchives}>载入复诊示例</button>{!props.readOnly && <button className="primary" onClick={props.onCreateArchive}>＋ 建立档案</button>}</div>;
+  const archiveBar = archive ? <div className="sr-archive-bar"><div><span className="sr-dot"/><b>治疗方案档案</b><code>{archive.id}</code><span>{archive.treatmentPlan}</span><span className="sr-method" tabIndex={0}>{archive.currentTreatmentMethod}<span className="sr-lens-pop"><b>当前镜片信息</b><small>梦戴维 DreamLite · 已交付使用</small><em>OD　BC 8.50 / DIA 10.6 / -3.00D</em><em>OS　BC 8.55 / DIA 10.6 / -2.75D</em><small>订单：ORD-20260718-026　交付：2026-07-25</small></span></span><button className="sr-history-link" onClick={props.onViewMethodHistory}>查看历史（{archive.methodHistory.length}）</button><em>{archive.status === "基本档案待完成" ? "基本档案待完成" : archive.status}</em><small>责任医生：{archive.responsibleDoctor}　建档：{archive.createdAt}　第{archive.cycleNumber}周期</small></div><div><button onClick={props.onEditBasic}>{props.readOnly || locked ? "查看基本档案" : "编辑基本档案"}</button>{!props.readOnly && !locked && <><button onClick={props.onChangeMethod}>变更治疗方式</button>{archive.status === "治疗中" && <button onClick={props.onComplete}>完成治疗</button>}<button className="danger" onClick={props.onTerminate}>终止档案</button></>}{!props.readOnly && locked && <button onClick={props.onReopen}>重新开启</button>}</div></div> : <div className="sr-archive-empty"><div><b>当前未关联治疗方案档案</b><span>可先完成本次初诊病历，确定治疗方案后再关联基本档案。</span></div><button onClick={props.onLoadArchives}>载入复诊示例</button>{!props.readOnly && <button className="primary" onClick={props.onCreateArchive}>＋ 建立档案</button>}</div>;
 
   return <div className="sr-page">
     {archiveBar}

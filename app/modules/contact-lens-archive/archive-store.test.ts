@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { changeTreatmentMethod, createArchiveSeed, createArchiveSeeds, createMethodStageDetails, referenceCheckReport, reopenArchive, reviseCheckValue, terminateArchive, validateArchiveDraft, validateBaseline } from "./archive-store.ts";
+import { changeTreatmentMethod, completeArchive, createArchiveSeed, createArchiveSeeds, createMethodStageDetails, referenceCheckReport, reopenArchive, reviseCheckValue, terminateArchive, validateArchiveDraft, validateBaseline } from "./archive-store.ts";
 
 test("archive requires treatment plan, method and responsible doctor", () => {
   assert.deepEqual(validateArchiveDraft({ treatmentPlan: "", treatmentMethod: "", responsibleDoctor: "" }), {
@@ -121,11 +121,25 @@ test("termination and reopening preserve the archive while creating a new cycle"
   const archive = createArchiveSeed();
   const terminated = terminateArchive(archive, { endedAt: "2026-08-20 10:00", reason: "患者暂停治疗", operator: "方红全" });
   assert.equal(terminated.status, "已终止");
-  const reopened = reopenArchive(terminated, { startedAt: "2026-09-01 09:00", reason: "患者恢复治疗", operator: "方红全" });
+  const reopened = reopenArchive(terminated, { startedAt: "2026-09-01 09:00", reason: "患者恢复治疗", operator: "方红全", baselineValidity: "已失效" });
   assert.equal(reopened.status, "基本档案待完成");
   assert.equal(reopened.cycleNumber, 2);
   assert.equal(reopened.id, archive.id);
   assert.match(reopened.timeline.at(-1)?.title ?? "", /重新开启/);
+  assert.equal(reopened.baseline.status, "未开始");
+  assert.equal(reopened.cycleClosures[0].result, "已终止");
+});
+
+test("completion records date operator and conclusion before reopening", () => {
+  const archive = createArchiveSeed();
+  archive.status = "治疗中";
+  archive.baseline.status = "已完成";
+  const completed = completeArchive(archive, { completedAt: "2026-08-20 10:00", conclusion: "治疗目标已达到", operator: "方红全" });
+  assert.equal(completed.status, "已完成");
+  assert.deepEqual(completed.cycleClosures[0], { cycleNumber: 1, result: "已完成", endedAt: "2026-08-20 10:00", operator: "方红全", conclusion: "治疗目标已达到" });
+  const reopened = reopenArchive(completed, { startedAt: "2026-09-01 09:00", reason: "再次开展治疗", operator: "方红全", baselineValidity: "仍有效" });
+  assert.equal(reopened.status, "治疗中");
+  assert.equal(reopened.baseline.status, "已完成");
 });
 
 test("referencing another report updates the result and keeps citation audit", () => {
