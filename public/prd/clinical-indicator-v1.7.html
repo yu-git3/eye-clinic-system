@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOfficeDev 26.8.0.0.alpha0 (MacOSX)"/>
+	<meta name="author" content="Un-named"/>
+	<meta name="created" content="2026-08-04T03:54:09.969000000"/>
+	<meta name="changedby" content="Un-named"/>
+	<meta name="changed" content="2026-08-04T03:54:09.970000000"/>
+	<link rel="stylesheet" href="/prd/reader.css">
+	<style type="text/css">
+		@page { size: 21cm 29.7cm; margin-left: 2.54cm; margin-right: 2.54cm; margin-top: 1.25cm; margin-bottom: 1.25cm }
+		p { direction: ltr; widows: 2; orphans: 2; margin-bottom: 0.25cm; text-align: start; line-height: 115%; background: transparent }
+		a:link { color: #0563c1; text-decoration: underline }
+	</style>
+</head>
+<body lang="zh-CN" link="#0563c1" vlink="#800000" dir="ltr">
+<div title="header"><p style="border-top: none; border-bottom: 1px solid #d7dee8; border-left: none; border-right: none; padding: 0cm; line-height: 100%; margin-bottom: 1.19cm">
+	<font color="#667085"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt">眼科专科系统
+	</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt">·
+	</font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt">临床指标定义
+	</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt">PRD
+	V1.7</font></font></span></font></font></p>
+</div><p style="line-height: 100%; margin-bottom: 0.21cm"><font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="5" style="font-size: 18pt"><b>PRODUCT
+REQUIREMENTS DOCUMENT</b></font></font></font></span></font></p>
+<p style="line-height: 100%; margin-bottom: 0.21cm"><font color="#17365d"><font face="Microsoft YaHei"><font size="5" style="font-size: 18pt"><b>眼科专科系统</b></font></font></font></p>
+<p style="line-height: 100%; margin-bottom: 0.21cm"><font color="#17365d"><font face="Microsoft YaHei"><font size="5" style="font-size: 18pt"><b>临床指标定义功能需求说明</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="145"/>
+	<col width="146"/>
+	<col width="146"/>
+	<col width="145"/>
+	<tr valign="top">
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>需求编号</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>文档版本</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>编制日期</b></font></font></font></p>
+		</td>
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>文档状态</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">122077</span></font></font></font></span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">V1.7</span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">2026-08-18</span></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">原型确认稿</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>1.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>修订记录</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="145"/>
+	<col width="146"/>
+	<col width="146"/>
+	<col width="145"/>
+	<tr valign="top">
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>版本</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>日期</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>修订内容</b></font></font></font></p>
+		</td>
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>状态</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">V1.0</span></font></font></font></span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">2026-08-01</span></font></font></font></span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">形成眼科检查指标定义初版需求。</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">历史版本</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">V1.2</span></font></font></font></span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">2026-08-04</span></font></font></font></span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">明确护士采集字典不提供数据类型，数据类型由维护人员必选。</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">历史版本</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">V1.3</span></font></font></font></span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">2026-08-04</span></font></font></font></span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">调整新增</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">编辑抽屉布局；明确字段编辑权限、配置版本和医技接口类型不一致处理。</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">历史版本</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">V1.4</span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">2026-08-10</span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			合并指标名称<font face="Microsoft YaHei, serif"><span lang="en-US">/</span></font>编码筛选；删除查询、重置按钮；改为条件变化实时筛选，并补充空结果处理。</p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			历史版本</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">V1.5</span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">2026-08-10</span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			文本型最大长度统一为默认<font face="Microsoft YaHei, serif"><span lang="en-US">50</span></font>、范围<font face="Microsoft YaHei, serif"><span lang="en-US">1</span></font>～<font face="Microsoft YaHei, serif"><span lang="en-US">200</span></font>；补充未保存退出确认框的全局居中、遮罩及键盘交互。</p>
+		</td>
+		<td width="145" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			历史版本</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">V1.6</span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">2026-08-11</span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			补充指标安全删除规则：仅未引用且无历史数据时允许删除，其余仅允许停用；增加二次确认、审计与服务端并发校验。</p>
+		</td>
+		<td width="145" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			历史版本</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">V1.7</span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">2026-08-18</span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			枚举值收敛为结果属性、是否默认、是否补充文本三项；补充文本固定<font face="Microsoft YaHei, serif"><span lang="en-US">200</span></font>字符；指标编码支持英文句点分层。</p>
+		</td>
+		<td width="145" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			当前版本</p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>2.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>业务背景与建设目标</b></font></font></font></p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">眼科临床数据来自护士采集、医生查体及医技检查。不同来源的数据类型、眼别、护理体征字典和接口映射要求不同；缺少统一主数据将造成模板引用、接口转换、临床展示和趋势分析口径不一致。</font></font></font></p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">本功能用于维护临床指标的名称、编码、数据类型、单位、参考范围、眼别、取值来源及映射，为检查模板、眼科检查组件、基础档案、专科病历、检查报告查询和趋势分析提供稳定的主数据基础。</font></font></font></p>
+<ul>
+	<li value="1"><p style="line-height: 117%; margin-bottom: 0.14cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">以唯一指标编码识别指标，统一业务口径。</font></font></font></p></li>
+	<li><p style="line-height: 117%; margin-bottom: 0.14cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">先定义指标基础信息和数据类型，再按取值来源维护最少必要配置。</font></font></font></p></li>
+	<li><p style="line-height: 117%; margin-bottom: 0.14cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">支持按眼别关联
+	</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">HIHIS
+	</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">护理体征或医技接口字段。</font></font></font></p></li>
+	<li><p style="line-height: 117%; margin-bottom: 0.14cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">保障被模板引用、已产生结果后的配置变更可追溯，不误解历史数据。</font></font></font></p></li>
+</ul>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>3.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>功能范围与边界</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="197"/>
+	<col width="198"/>
+	<col width="197"/>
+	<tr valign="top">
+		<td width="197" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>范围</b></font></font></font></p>
+		</td>
+		<td width="198" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>包含内容</b></font></font></font></p>
+		</td>
+		<td width="197" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>不包含内容</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">临床指标定义</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">查询、列表、查看、新增、编辑、启用</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">停用；数据类型配置；来源配置；眼别与映射；枚举</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">布尔值维护；接口转换规则。</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">检查模板编排、实际临床录入、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">PACS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">接口开发、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">HIHIS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">护理体征字典本身维护。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">护士采集只关联
+</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">HIHIS
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">已有护理体征字典
+</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">`hi.his.indnurtp`</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">，本功能不新增或修改该字典。枚举值由本页面维护并存储于业务数据表，不使用系统字典。</font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>4.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>用户角色与权限</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="197"/>
+	<col width="198"/>
+	<col width="197"/>
+	<tr valign="top">
+		<td width="197" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>角色</b></font></font></font></p>
+		</td>
+		<td width="198" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>权限</b></font></font></font></p>
+		</td>
+		<td width="197" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>说明</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">专科配置管理员</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">查询、查看、新增、编辑、启停</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">维护指标主数据及配置版本。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">业务管理员</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">查询、查看</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">核对模板可引用指标。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">普通临床用户</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">无配置权限</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">在业务模块中使用已启用指标。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>5.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>页面总体说明</b></font></font></font></p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">入口：眼科专科管理
+＞ 基础配置 ＞ 临床指标定义。页面由查询区、指标列表、右侧信息抽屉组成；新增、编辑、查看均在抽屉内完成。</font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>5.1
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>查询区</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="197"/>
+	<col width="198"/>
+	<col width="197"/>
+	<tr valign="top">
+		<td width="197" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>字段</b></font></font></font></p>
+		</td>
+		<td width="198" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>控件</b></font></font></font></p>
+		</td>
+		<td width="197" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>规则</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标名称
+			</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/
+			</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">编码</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本框</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">输入名称或编码进行模糊筛选；编码匹配忽略大小写。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数据来源</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">下拉框</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">全部、护士采集、医生查体、医技检查。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">状态</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">下拉框</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">全部、启用、停用。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">筛选条件变化后实时刷新列表并回到第</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">1</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">页，不设置“查询”“重置”按钮。无匹配结果时提示“请修改或清空上方筛选条件”；用户可清空关键词并将下拉项选择为“全部”恢复完整列表。查询区不提供“指标分类”和“数据类型”条件。</font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>5.2
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>指标列表</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="301"/>
+	<col width="301"/>
+	<tr valign="top">
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>字段</b></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><b>/</b></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>操作</b></font></font></font></p>
+		</td>
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>展示与交互要求</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标编码、名称</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">展示系统唯一编码及指标名称；已被模板引用时展示引用标识。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数据类型、单位、眼别、参考范围、数据来源</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数据类型以标签展示；无单位</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">范围显示“—”；多个眼别以“</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OU”</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">展示。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">状态</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">更新时间</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">展示当前状态及最后更新时间。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">查看</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">只读抽屉，显示全部配置、配置版本和引用信息。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">编辑</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">打开编辑抽屉；指标编码、数据类型禁用。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">启用</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">停用</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">二次确认；停用不影响历史结果。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>6.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>新增、编辑与查看指标</b></font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>6.1
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>基础字段</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="145"/>
+	<col width="146"/>
+	<col width="146"/>
+	<col width="145"/>
+	<tr valign="top">
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>字段</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>必填</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>控件</b></font></font></font></p>
+		</td>
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>业务规则</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标名称</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">是</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本框</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">最多</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">50</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">字符，用于临床展示。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标编码</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">是</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本框</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			全局唯一；允许大写字母、数字、下划线和英文句点；句点用于业务层级，不可连续或位于首尾；创建后不可修改。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数据类型</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">是</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">下拉框</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数值型、文本型、枚举型、多选枚举型、布尔型；创建后不可修改。护士采集同样由维护人员选择，不默认文本。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">单位</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">否</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本框</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">仅数值型展示；自由输入，如
+			</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">mmHg</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">mm</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">μm</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">参考范围</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">否</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本框</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">位于眼别之前；可维护展示型说明，如</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">10</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">～</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">21
+			mmHg</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">眼别</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">是</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">多选框</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OU</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可同时选；无眼别与其他选项互斥；至少选择一项。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">状态</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">是</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">分段按钮</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">默认启用。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标说明</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">否</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">多行文本框</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">说明临床含义和使用场景。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>6.2
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>抽屉布局与动态交互</b></font></font></font></p>
+<p style="margin-left: 0.64cm; line-height: 117%; margin-bottom: 0.16cm; text-indent: -0.46cm">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">1.
+**</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">基础信息区</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">**</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">按“指标名称、指标编码、数据类型、数据类型配置、单位、参考范围、眼别、状态、说明”排列。</font></font></font></p>
+<p style="margin-left: 0.64cm; line-height: 117%; margin-bottom: 0.16cm; text-indent: -0.46cm">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">2.
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">选择数据类型后，紧邻数据类型立即展示相应配置；不得将类型配置放在表单底部。</font></font></font></p>
+<p style="margin-left: 0.64cm; line-height: 117%; margin-bottom: 0.16cm; text-indent: -0.46cm">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">3.
+**</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">取值来源区</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">**</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">在基础信息之后展示。选择护士采集、医生查体或医技检查后，紧邻来源选择器展示来源配置。</font></font></font></p>
+<p style="margin-left: 0.64cm; line-height: 117%; margin-bottom: 0.16cm; text-indent: -0.46cm">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">4.
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">选择眼别后，立即展示该眼别对应的护理体征或医技外部字段；不再设置页面底部独立映射区。</font></font></font></p>
+<p style="margin-left: 0.64cm; line-height: 117%; margin-bottom: 0.16cm; text-indent: -0.46cm">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">5.
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">来源或眼别变化时，只保留当前有效配置；保存时按当前来源、类型、眼别统一校验。关闭含未保存修改的抽屉时，在浏览器可视区域正中显示“放弃修改
+</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">/
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">继续编辑”确认框；二次遮罩不可点击关闭，按
+</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">Esc
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">等同“继续编辑”并保留表单。新增支持“保存”“保存并新增”。</font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>6.3
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>编辑、查看与配置版本规则</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="145"/>
+	<col width="146"/>
+	<col width="146"/>
+	<col width="145"/>
+	<tr valign="top">
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>字段或配置</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>新增</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>编辑</b></font></font></font></p>
+		</td>
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>规则</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标名称</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">必填，可修改</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可修改</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">修改后用于后续展示，不回写既有病历</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">报告快照。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标编码</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">必填，可修改</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">**</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">不可修改</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">**</span></font></font></span></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">是唯一识别、模板引用及接口定位键；需变更时新建指标。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数据类型</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">必填，可修改</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">**</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">不可修改</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">**</span></font></font></span></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">决定存储结构、校验及趋势解释；需改变时新建指标。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">单位、参考范围、说明</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可维护</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可修改</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">单位不得自动换算历史结果；历史结果保留写入时单位快照。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">眼别、数据来源、护理关联、外部字段</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">按规则维护</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可修改，需确认影响</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">修改后只对新采集</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">新回传生效。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			枚举<font face="Microsoft YaHei, serif"><span lang="en-US">/</span></font>多选枚举项、结果属性、默认项、补充文本标志、布尔显示名及外部映射</p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">按类型维护</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可修改，需确认影响</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">已被历史结果使用的编码不可删除，可停用。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">状态</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">默认启用</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可启用</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">停用</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">停用后不可被新模板引用。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">当指标已被模板引用或已有临床结果，修改“单位、眼别、来源、护理关联、外部字段、枚举</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">/</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">布尔映射”必须提示“本次修改仅对保存后新产生的数据生效”，并生成新的配置版本，记录生效时间、操作人和变更前后值。历史结果、病历快照、报告快照及趋势均按写入时配置版本解释。仅未被模板引用且无历史临床数据的指标允许删除；其余情况不允许删除，只允许停用。删除后不可恢复，删除前需二次确认，服务端重新校验引用和历史数据并记录审计信息。</font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>7.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>数据类型配置</b></font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>7.1
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>数值型</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="301"/>
+	<col width="301"/>
+	<tr valign="top">
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>配置项</b></font></font></font></p>
+		</td>
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>规则</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">小数位数</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">必填，</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">0</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">～</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">4</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">位，默认</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">2</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">位。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">正常范围</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可维护最小值和最大值；同时填写时最小值小于最大值。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">单位</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">在基础信息区以文本框录入。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>7.2
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>文本型</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="301"/>
+	<col width="301"/>
+	<tr valign="top">
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>配置项</b></font></font></font></p>
+		</td>
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>规则</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">最大长度</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">必填，</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">1</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">～</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">200</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">，默认</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">50</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>7.3
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>枚举型与多选枚举型</b></font></font></font></p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">枚举值由本页面维护、业务表存储。枚举型只能选一项；多选枚举型可选零项或多项并按枚举编码集合存储。每个枚举值同行维护结果属性、是否默认、是否补充文本；不维护互斥属性和补充文本长度，补充文本长度统一为</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">200</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">字符。</font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="301"/>
+	<col width="301"/>
+	<tr valign="top">
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>字段</b></font></font></font></p>
+		</td>
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>规则</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">系统枚举编码</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">必填，同一指标内唯一，建议大写英文编码。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">枚举名称</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">必填，用于页面展示。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">外部映射编码</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			选填；医技接口转换使用；同一指标内已填写的编码不可重复。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			结果属性</p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">0-</span></font>正常、<font face="Microsoft YaHei, serif"><span lang="en-US">1-</span></font>异常、<font face="Microsoft YaHei, serif"><span lang="en-US">2-</span></font>无；默认<font face="Microsoft YaHei, serif"><span lang="en-US">2-</span></font>无。同时存在<font face="Microsoft YaHei, serif"><span lang="en-US">0</span></font>和<font face="Microsoft YaHei, serif"><span lang="en-US">1</span></font>时，录入组件生成正常<font face="Microsoft YaHei, serif"><span lang="en-US">/</span></font>异常快捷录入。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			是否默认</p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			是<font face="Microsoft YaHei, serif"><span lang="en-US">/</span></font>否；默认否。同一指标最多一个已启用的默认项。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			是否补充文本</p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			是<font face="Microsoft YaHei, serif"><span lang="en-US">/</span></font>否；默认否。选中该枚举值后展示补充文本框，最大长度固定<font face="Microsoft YaHei, serif"><span lang="en-US">200</span></font>字符。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">排序</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">支持上移、下移；系统按顺序展示。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">状态</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">启用</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">停用；至少保留一个启用项。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>7.4
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>布尔型</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="301"/>
+	<col width="301"/>
+	<tr valign="top">
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>配置项</b></font></font></font></p>
+		</td>
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>规则</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">真</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">假显示名称</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">默认“是</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">否”，可修改为“阳性</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">阴性”等。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">真</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">假外部映射编码</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			医技来源时选填；若维护则真、假映射需同时填写且不得重复。</p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>8.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>数据来源配置</b></font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>8.1
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>护士采集</b></font></font></font></p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">护士采集字典不提供数据类型，维护人员必须选择指标数据类型，系统不得默认或强制文本型。运行时直接引用护士已采集数据。</font></font></font></p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">护理体征来自
+</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">`hi.his.indnurtp`</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">，支持按体征编码或名称模糊搜索。每个已选眼别分别关联体征：</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">OD</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">对应</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">OD</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">体征、</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">OS</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">对应</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">OS</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">体征、</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">OU</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">对应</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">OU</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">体征；无眼别关联通用体征。本来源不维护</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">PACS</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">或其他外部接口字段。</font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>8.2
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>医生查体</b></font></font></font></p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">医生直接录入数值、文本、枚举、多选枚举或布尔值；可维护单位、参考范围和眼别，不维护外部字段映射。</font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>8.3
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>医技检查</b></font></font></font></p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">用于接收</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">PACS</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">或医技接口结果。每个已选眼别可选维护一个外部映射字段；选择无眼别时可选维护一个通用字段。全部留空时允许保存，未配置的结果不自动转换写入。字段仅允许大写字母、数字、下划线和点号；同一指标内各眼别字段不可重复。</font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>9.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>眼别与映射规则</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="145"/>
+	<col width="146"/>
+	<col width="146"/>
+	<col width="145"/>
+	<tr valign="top">
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>眼别</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>允许组合</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>护士采集配置</b></font></font></font></p>
+		</td>
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>医技检查配置</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></font></span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可与</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OU</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">组合</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">护理体征</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">外部映射字段</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OS</span></font></font></font></span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可与</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OU</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">组合</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">护理体征</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">外部映射字段</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OU</span></font></font></font></span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可与</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">组合</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OU</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">护理体征</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OU</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">外部映射字段</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">无眼别</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">不可与</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD/OS/OU</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">组合</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">通用护理体征</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">通用结果字段</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">勾选眼别后立即生成对应配置；取消眼别后该配置不参与保存和校验。选择无眼别时自动取消</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">OD</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">、</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">OS</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">、</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">OU</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">；选择任一具体眼别时自动取消无眼别。保存时，护士采集须为每个选中眼别完成护理体征关联；医技检查的外部字段为选填。</font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>10.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>保存校验与提示</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="197"/>
+	<col width="198"/>
+	<col width="197"/>
+	<tr valign="top">
+		<td width="197" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>校验项</b></font></font></font></p>
+		</td>
+		<td width="198" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>触发条件</b></font></font></font></p>
+		</td>
+		<td width="197" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>提示</b></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><b>/</b></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>处理</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">名称必填</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标名称为空</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">请输入指标名称。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">编码格式</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">重复</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">为空、含非法字符或重复</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			编码必须全局唯一；仅允许大写字母、数字、下划线和英文句点；句点不可连续或位于首尾。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">眼别必填</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">互斥</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">未选或无眼别与其他眼别并存</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">请至少选择一项；无眼别不能与其他眼别同时选择。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数值范围</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">最小值大于或等于最大值</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">最小值必须小于最大值。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本长度</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">不在</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">1</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">～</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">200</span></font></font></span></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">最大长度须为</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">1</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">至</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">200</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">护理关联</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">医技映射</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">已选眼别缺少配置</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">请按眼别关联护理体征或填写外部字段。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			护理关联</p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			护士采集已选眼别缺少护理体征</p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			请按眼别关联护理体征。医技外部字段选填，已填写时校验格式和重复。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">枚举完整性</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">选项、编码、名称、启用项不完整</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			校验枚举编码、名称、启用项、结果属性<font face="Microsoft YaHei, serif"><span lang="en-US">0/1/2</span></font>、唯一默认项及补充文本标志。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">布尔配置</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			显示名为空，或真<font face="Microsoft YaHei, serif"><span lang="en-US">/</span></font>假外部映射只填一项<font face="Microsoft YaHei, serif"><span lang="en-US">/</span></font>重复</p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			显示名必填；医技映射选填，填写时须成对且不得重复。</p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>11.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>数据与接口要求</b></font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>11.1
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>数据对象</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="197"/>
+	<col width="198"/>
+	<col width="197"/>
+	<tr valign="top">
+		<td width="197" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>对象</b></font></font></font></p>
+		</td>
+		<td width="198" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>关键数据</b></font></font></font></p>
+		</td>
+		<td width="197" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>要求</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标主表</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">名称、编码、来源、类型、单位、范围、状态、说明</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">编码唯一；保留创建</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">更新时间。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标配置版本表</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">ID</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、版本、生效时间、操作人、前后值</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">取值语义配置变更必须留存。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标眼别表</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">ID</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、眼别</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">无眼别不得与其他眼别共存。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">护理关联表</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">ID</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、眼别、护理体征编码</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">编码来自</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`hi.his.indnurtp`</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">医技映射表</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">ID</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、眼别、外部字段</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">同一指标内字段唯一。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">枚举值表</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			指标<font face="Microsoft YaHei, serif"><span lang="en-US">ID</span></font>、枚举编码、名称、外部映射、结果属性、默认标志、补充文本标志、排序、状态</p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">枚举</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">多选枚举共用；页面维护、业务表存储。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">布尔配置表</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">指标</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">ID</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、真</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">假显示名及映射</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">医技来源支持值转换。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">接口处理日志</span></font></font></font></p>
+		</td>
+		<td width="198" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">原始报告</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">字段</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">值</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/JSON</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">类型、定位与转换结果、错误码、配置版本</span></font></font></font></p>
+		</td>
+		<td width="197" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">转换成功与失败均保留。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>11.2
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>接口定位与写入前提</b></font></font></font></p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">医技接口按“租户
+</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">+
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">机构
+</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">+
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">报告</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">/</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">就诊标识
+</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">+
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">指标配置版本
+</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">+
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">眼别
+</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">+
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">外部字段”定位目标指标。传入眼别必须与已配置眼别一致；无眼别指标仅接收通用字段。定位失败、眼别不匹配、外部字段缺失时，不得写入结构化指标。</font></font></font></p>
+<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">接口日志必须保留报告人、报告时间、原始字段名、原始</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">JSON</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">类型、原始值、定位结果、转换结果、失败原因和配置版本。报告状态仍只有“未出报告</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">/</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">已出报告”；“转换异常、待医生补录”是指标数据处理状态，不是报告状态。</font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>11.3
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>类型转换矩阵</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="145"/>
+	<col width="146"/>
+	<col width="146"/>
+	<col width="145"/>
+	<tr valign="top">
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>目标类型</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>可接受接口返回</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>转换与写入规则</b></font></font></font></p>
+		</td>
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>不匹配处理</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数值型</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">JSON</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数值、可解析数值文本</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">去除首尾空格后解析；保留原始值；超出参考范围可写入并提示异常。</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">空值、非数值、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">NaN</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、无穷值不写入；不得把“正常”等写入数值字段。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本型</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本、数值、布尔值</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本原样写入；数值</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">布尔可转为可读字符串并留痕。</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">对象</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数组不自动拼接，保留原始值待补录。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">枚举型</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本或数值编码</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">按外部映射编码精确匹配，写系统编码和展示快照。</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">未配置或未匹配时不写入。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">多选枚举型</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">JSON</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数组；约定分隔符文本</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">每项均映射成功后，按配置顺序写入编码集合。</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">任一项未匹配时整项不部分写入。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">布尔型</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">JSON
+			true/false</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">；配置映射文本</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">编码</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">原生布尔直接写；其他值只按真</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">假映射转换。</span></font></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">映射缺失或值不匹配时不写入。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>11.4
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>类型不一致与人工处理</b></font></font></font></p>
+<p style="margin-left: 0.64cm; line-height: 117%; margin-bottom: 0.16cm; text-indent: -0.46cm">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">1.
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">仅允许明确、无歧义的转换；禁止将异常值兜底写为文本、</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">0</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">、</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">false</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">、默认枚举或“正常”。</font></font></font></p>
+<p style="margin-left: 0.64cm; line-height: 117%; margin-bottom: 0.16cm; text-indent: -0.46cm">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">2.
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">转换失败：保留原始报告和接口日志，目标指标保持为空；检查组件</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">/</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">报告详情标识“待医生补录”，医生可查看原始</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">PDF/</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">图片。</font></font></font></p>
+<p style="margin-left: 0.64cm; line-height: 117%; margin-bottom: 0.16cm; text-indent: -0.46cm">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">3.
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">医生依据原始报告补录结构化结果时，标记来源“医生补录（依据原始报告）”，保存补录人、补录时间和报告</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">ID</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">。该结构化结果可参与历次对比和趋势；未补录的非结构化报告不参与趋势。</font></font></font></p>
+<p style="margin-left: 0.64cm; line-height: 117%; margin-bottom: 0.16cm; text-indent: -0.46cm">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">4.
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">同一报告重传按报告</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">ID</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">、报告版本和字段幂等处理；转换失败不得覆盖人工补录；已被病历或基础档案引用的结果快照不得被自动重传覆盖。</font></font></font></p>
+<p style="margin-left: 0.64cm; line-height: 117%; margin-bottom: 0.16cm; text-indent: -0.46cm">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">5.
+</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">错误码：</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">`INDICATOR_NOT_FOUND`</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">、</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">`EYE_MAPPING_MISMATCH`</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">、</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">`TYPE_CONVERSION_FAILED`</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">、</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">`ENUM_MAPPING_NOT_FOUND`</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">、</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">`MULTI_ENUM_PARTIAL_UNMATCHED`</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">、</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">`BOOLEAN_MAPPING_NOT_FOUND`</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">。</font></font></font></p>
+<p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>11.5
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>接口示例</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="145"/>
+	<col width="146"/>
+	<col width="146"/>
+	<col width="145"/>
+	<tr valign="top">
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>场景</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>配置</b></font></font></font></p>
+		</td>
+		<td width="146" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>接口值</b></font></font></font></p>
+		</td>
+		<td width="145" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>处理结果</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">角膜曲率
+			</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">Ks</span></font></font></span></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数值型，</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">字段</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`OD_KS`</span></font></font></span></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`&quot;43.83&quot;`</span></font></font></font></span></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">写入</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">43.83D</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">并记录原始值与配置版本。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">眼睑张力</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">枚举型，</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`0=</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">正常</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`1=</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">偏高</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`</span></font></font></span></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`&quot;normal&quot;`</span></font></font></font></span></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">不写入；</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`ENUM_MAPPING_NOT_FOUND`</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">，待医生补录。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">角膜状态</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">多选枚举，</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`A=</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">清亮</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`B=</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">点染</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`</span></font></font></span></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`[&quot;A&quot;,&quot;X&quot;]`</span></font></font></font></span></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">不作部分写入；记录未匹配项</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">X</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">泪河高度</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数值型</span></font></font></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`&quot;</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">正常</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">&quot;`</span></font></font></span></font></font></p>
+		</td>
+		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">不写入数值字段；保留原始报告待补录。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>12.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>典型业务示例</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="301"/>
+	<col width="301"/>
+	<tr valign="top">
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>示例</b></font></font></font></p>
+		</td>
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>配置</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">眼压</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">数值型；单位</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">mmHg</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">；</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">；医技检查；字段</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">IOP_RIGHT</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">IOP_LEFT</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">裸眼视力</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本型；</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">；护士采集；关联右</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">左眼裸眼视力护理体征。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">角膜状态</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">枚举型；</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">；医生查体；维护正常、水肿、混浊等。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">检查结论</span></font></font></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">文本型；无眼别；医技检查；通用字段</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">EXAM_CONCLUSION</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>13.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>验收标准</b></font></font></font></p>
+<table width="624" cellpadding="5" cellspacing="0">
+	<col width="301"/>
+	<col width="301"/>
+	<tr valign="top">
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>编号</b></font></font></font></p>
+		</td>
+		<td width="301" bgcolor="#f2f5f9" style="background: #f2f5f9; border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#17365d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><b>验收内容</b></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-01</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">查询区仅包含“指标名称
+			</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/
+			</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">编码”、数据来源、状态；名称或编码支持模糊筛选，编码忽略大小写；条件变化实时刷新并回到第</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">1</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">页，不显示查询、重置按钮。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-02</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">单位为文本框，不显示固定单位下拉。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-03</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OD</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OS</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">、</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">OU</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">可多选；无眼别与其他互斥，且至少选择一项。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-04</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">参考范围在眼别前；选眼别后立即展示映射字段。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-05</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">护士采集不默认或强制文本类型，并可逐眼关联</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">`hi.his.indnurtp`</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-06</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">医生查体不显示外部字段映射。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-07</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			医技检查为每个选中眼别提供可选的外部映射字段；未配置时允许保存，但不自动转换写入。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-08</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">五类数据类型配置均紧随数据类型展示，不在表单底部。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-09</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			枚举由页面维护并存业务表；同行维护结果属性<font face="Microsoft YaHei, serif"><span lang="en-US">0/1/2</span></font>、是否默认、是否补充文本；补充文本固定<font face="Microsoft YaHei, serif"><span lang="en-US">200</span></font>字符。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-10</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			指标编码支持英文句点分层；编码、范围、长度、眼别、护理关联、医技映射及枚举校验有效。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-11</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">新增、编辑、查看、保存并新增、启停确认均可用；未保存关闭确认框全局居中且高于抽屉，遮罩点击不关闭，“继续编辑”或
+			</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">Esc
+			</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">保留表单，“放弃修改”关闭抽屉并丢弃本次修改。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-12</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			仅未引用且无历史数据的指标允许删除；其余仅允许停用；删除需二次确认、服务端并发校验和审计记录。</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-13</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">编辑时编码和类型为禁用态，不能绕过修改；需改变时引导新建指标。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-14</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">修改取值语义配置时，对已引用</span></font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">/</span></font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">有结果指标生成配置版本；历史快照不变化。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-15</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">接口值仅按类型转换矩阵写入，禁止默认值与隐式兜底。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-16</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">类型不一致、映射缺失、眼别不匹配时不写错值，可查看原始报告、日志和待补录原因。</span></font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">AC-17</span></font></font></font></span></font></p>
+		</td>
+		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
+			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">医生补录保留人、时间、报告关联；补录结构化值可参与趋势，原始非结构化报告不参与趋势。</span></font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="line-height: 100%; margin-bottom: 0.23cm"><br/>
+<br/>
+
+</p>
+<p style="line-height: 100%; margin-top: 0.46cm; margin-bottom: 0.18cm; page-break-after: avoid">
+<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#2e74b5"><font face="Microsoft YaHei, serif"><font size="4" style="font-size: 14pt"><b>14.
+</b></font></font></span></font><font face="Microsoft YaHei"><font size="4" style="font-size: 14pt"><b>非功能要求</b></font></font></font></p>
+<ul>
+	<li><p style="line-height: 117%; margin-bottom: 0.14cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">正常网络和数据规模下页面操作响应不超过</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">2</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">秒；护理体征搜索快速返回候选项。</font></font></font></p></li>
+	<li><p style="line-height: 117%; margin-bottom: 0.14cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">新增、编辑、启停及配置版本变更均记录操作人、操作时间和关键变更内容。</font></font></font></p></li>
+	<li><p style="line-height: 117%; margin-bottom: 0.14cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">控件提供明确标签、禁用态、错误提示和键盘焦点样式。</font></font></font></p></li>
+	<li><p style="line-height: 117%; margin-bottom: 0.14cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">接口字段与枚举映射变更不得影响已生成临床数据、病历快照和报告快照。</font></font></font></p></li>
+</ul>
+<div title="footer"><p style="text-align: end; line-height: 100%; margin-top: 1.19cm; margin-bottom: 0cm">
+	<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#667085"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt">V1.7
+	 ·  2026-08-18  ·  </font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt">第
+	 页</font></font></font></p>
+</div>
+</body>
+</html>

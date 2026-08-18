@@ -36,6 +36,8 @@ type Props = {
   onComplete: () => void;
   onTerminate: () => void;
   onReopen: () => void;
+  historyOverride?: SpecialtyHistoryItem[];
+  historicalStageLabel?: string;
 };
 
 export function SpecialtyRecordModule(props: Props) {
@@ -53,7 +55,7 @@ export function SpecialtyRecordModule(props: Props) {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [toast, setToast] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const history = useMemo(() => createHistorySeeds().sort((a, b) => b.visitDate.localeCompare(a.visitDate)), []);
+  const history = useMemo(() => [...(props.historyOverride ?? createHistorySeeds())].sort((a, b) => b.visitDate.localeCompare(a.visitDate)), [props.historyOverride]);
   const archive = props.archive;
   const locked = archive?.status === "已完成" || archive?.status === "已终止";
   const filteredTemplates = filterExamTemplates(pickerQuery);
@@ -84,11 +86,11 @@ export function SpecialtyRecordModule(props: Props) {
     setPickerOpen(false);
   }
 
-  const archiveBar = archive ? <div className="sr-archive-bar"><div><span className="sr-dot"/><b>治疗方案档案</b><code>{archive.id}</code><span>{archive.treatmentPlan}</span><span className="sr-method" tabIndex={0}>{archive.currentTreatmentMethod}<span className="sr-lens-pop"><b>当前镜片信息</b><small>梦戴维 DreamLite · 已交付使用</small><em>OD　BC 8.50 / DIA 10.6 / -3.00D</em><em>OS　BC 8.55 / DIA 10.6 / -2.75D</em><small>订单：ORD-20260718-026　交付：2026-07-25</small></span></span><button className="sr-history-link" onClick={props.onViewMethodHistory}>查看历史（{archive.methodHistory.length}）</button><em>{archive.status === "基本档案待完成" ? "基本档案待完成" : archive.status}</em><small>责任医生：{archive.responsibleDoctor}　建档：{archive.createdAt}　第{archive.cycleNumber}周期</small></div><div><button onClick={props.onEditBasic}>{props.readOnly || locked ? "查看基本档案" : "编辑基本档案"}</button>{!props.readOnly && !locked && <><button onClick={props.onChangeMethod}>变更治疗方式</button>{archive.status === "治疗中" && <button onClick={props.onComplete}>完成治疗</button>}<button className="danger" onClick={props.onTerminate}>终止档案</button></>}{!props.readOnly && locked && <button onClick={props.onReopen}>重新开启</button>}</div></div> : <div className="sr-archive-empty"><div><b>当前未关联治疗方案档案</b><span>可先完成本次初诊病历，确定治疗方案后再关联基本档案。</span></div><button onClick={props.onLoadArchives}>载入复诊示例</button>{!props.readOnly && <button className="primary" onClick={props.onCreateArchive}>＋ 建立档案</button>}</div>;
+  const archiveBar = archive ? <div className="sr-archive-bar"><div><span className="sr-dot"/><b>治疗方案档案</b><code>{archive.id}</code><span>{archive.treatmentPlan}</span><span className="sr-method" tabIndex={0}>{archive.currentTreatmentMethod}<span className="sr-lens-pop"><b>当前镜片信息</b><small>梦戴维 DreamLite · 已交付使用</small><em>OD　BC 8.50 / DIA 10.6 / -3.00D</em><em>OS　BC 8.55 / DIA 10.6 / -2.75D</em><small>订单：ORD-20260718-026　交付：2026-07-25</small></span></span>{props.historicalStageLabel ? <span className="cl-plan-badge">{props.historicalStageLabel} · 只读</span> : <button className="sr-history-link" onClick={props.onViewMethodHistory}>查看历史（{archive.methodHistory.length}）</button>}<em>{archive.status === "基本档案待完成" ? "基本档案待完成" : archive.status}</em><small>责任医生：{archive.responsibleDoctor}　建档：{archive.createdAt}　第{archive.cycleNumber}周期</small></div>{!props.historicalStageLabel && <div><button onClick={props.onEditBasic}>{props.readOnly || locked ? "查看基本档案" : "编辑基本档案"}</button>{!props.readOnly && !locked && <><button onClick={props.onChangeMethod}>变更治疗方式</button>{archive.status === "治疗中" && <button onClick={props.onComplete}>完成治疗</button>}<button className="danger" onClick={props.onTerminate}>终止档案</button></>}{!props.readOnly && locked && <button onClick={props.onReopen}>重新开启</button>}</div>}</div> : <div className="sr-archive-empty"><div><b>当前未关联治疗方案档案</b><span>可先完成本次初诊病历，确定治疗方案后再关联基本档案。</span></div><button onClick={props.onLoadArchives}>载入复诊示例</button>{!props.readOnly && <button className="primary" onClick={props.onCreateArchive}>＋ 建立档案</button>}</div>;
 
   return <div className="sr-page">
     {archiveBar}
-    {archive && <div className="sr-baseline-version-bar"><span>当前基础档案：<b>V{archive.baselineVersions.find((item) => item.id === archive.currentBaselineVersionId)?.versionNo ?? 1}</b></span><span>{archive.baselineVersions.find((item) => item.id === archive.currentBaselineVersionId)?.status}</span><button onClick={props.onViewBaselineHistory}>历史版本（{Math.max(archive.baselineVersions.length - 1, 0)}）</button><small>当前治疗周期引用：{archive.treatmentCycles.find((item) => item.cycleNo === archive.cycleNumber)?.baselineVersionId}</small></div>}
+    {archive && <div className="sr-baseline-version-bar"><span>当前基础档案：<b>V{archive.baselineVersions.find((item) => item.id === archive.currentBaselineVersionId)?.versionNo ?? 1}</b></span><span>{archive.baselineVersions.find((item) => item.id === archive.currentBaselineVersionId)?.status}</span>{!props.historicalStageLabel && <button onClick={props.onViewBaselineHistory}>历史版本（{Math.max(archive.baselineVersions.length - 1, 0)}）</button>}<small>{props.historicalStageLabel ? "该阶段引用" : "当前治疗周期引用"}：{archive.treatmentCycles.find((item) => item.cycleNo === archive.cycleNumber)?.baselineVersionId}</small></div>}
     <section className="sr-history-page">
       <header><div><h2>角膜接触镜专科病历</h2><p>历史专科病历默认按就诊时间倒序，共 {history.length} 次就诊</p></div>{!props.readOnly && <button className="primary" onClick={() => setDrawerOpen(true)}>＋ 新建专科病历</button>}</header>
       <div className="sr-history-table-wrap"><table className="sr-history-table" style={{ minWidth: 1280 }}><thead><tr><th>就诊日期</th><th>就诊类型</th><th>科室 / 接诊医生</th><th>主诉及现病史摘要</th><th>专科检查摘要</th><th>诊断、处理及医嘱</th><th>操作</th></tr></thead><tbody>{history.map((item, index) => <tr key={item.id}><td><b>{item.visitDate}</b><small>{index === 0 ? "最近一次" : "复诊"}</small></td><td>复诊</td><td>{item.department}<small>{item.doctor}</small></td><td>{item.complaintSummary}</td><td>{item.examSummary}</td><td>{item.planSummary}<small>治疗方式：{item.treatmentMethod}</small></td><td><button onClick={() => setSelectedHistory(item)}>查看详情</button>{!props.readOnly && <button onClick={() => referenceHistory(item)}>引用上次记录</button>}</td></tr>)}</tbody></table></div>

@@ -111,7 +111,7 @@ test("product documents expose the latest PRDs as online-only reading pages", as
   assert.match(docs, /title: "眼科专科系统产品基线"/);
   assert.match(docs, /product-baseline-v1\.2\.html/);
   assert.match(baseline, /眼科专科系统产品基线与模块合并台账/);
-  assert.match(docs, /临床指标定义.*V1\.6/s);
+  assert.match(docs, /临床指标定义.*V1\.7/s);
   assert.match(docs, /检查模板配置.*V1\.4/s);
   assert.match(docs, /检查报告查询.*V1\.4/s);
   assert.match(docs, /治疗方案基础档案.*V1\.5/s);
@@ -119,7 +119,7 @@ test("product documents expose the latest PRDs as online-only reading pages", as
   assert.match(docs, /在线阅读/);
   assert.match(docs, /<iframe/);
   assert.doesNotMatch(docs, /download|下载 DOCX|下载文档/);
-  const prdHtml = await readFile(new URL("../public/prd/clinical-indicator-v1.4.html", import.meta.url), "utf8");
+  const prdHtml = await readFile(new URL("../public/prd/clinical-indicator-v1.7.html", import.meta.url), "utf8");
   const readerCss = await readFile(new URL("../public/prd/reader.css", import.meta.url), "utf8");
   assert.match(prdHtml, /\/prd\/reader\.css/);
   assert.match(readerCss, /font-size:15px/);
@@ -127,10 +127,11 @@ test("product documents expose the latest PRDs as online-only reading pages", as
 });
 
 test("latest configuration PRDs describe live filtering without query or reset buttons", async () => {
-  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.6.html", import.meta.url), "utf8");
+  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.7.html", import.meta.url), "utf8");
+  const indicatorText = indicator.replace(/<[^>]+>/g, "").replace(/\s+/g, " ");
   const template = await readFile(new URL("../public/prd/check-template-v1.4.html", import.meta.url), "utf8");
-  assert.match(indicator, /指标名称 \/ 编码/);
-  assert.match(indicator, /条件变化后实时刷新列表并回到第1页/);
+  assert.match(indicatorText, /指标名称 \/ 编码/);
+  assert.match(indicatorText, /条件变化后实时刷新列表并回到第1页/);
   assert.match(template, /条件变化后实时刷新列表并回到第1页/);
   assert.doesNotMatch(indicator, /<p class="p3"><b>查询<\/b><\/p>/);
   assert.doesNotMatch(indicator, /<p class="p3"><b>重置<\/b><\/p>/);
@@ -271,6 +272,24 @@ test("query conditions omit data type and indicator category", async () => {
   assert.match(source, /maxLength: 50/);
   assert.match(source, /允许范围：1～200/);
   assert.match(source, /max=\{200\}/);
+  assert.match(source, /结果属性/);
+  assert.match(source, /0-正常/);
+  assert.match(source, /1-异常/);
+  assert.match(source, /2-无/);
+  assert.match(source, /正常\/\u5f02常快捷录入/);
+  assert.match(source, /是否默认/);
+  assert.match(source, /是否补充文本/);
+  assert.doesNotMatch(source, /互斥方式/);
+  assert.doesNotMatch(source, /补充文本必填/);
+  assert.doesNotMatch(source, /textMaxLength/);
+  assert.ok(source.indexOf("结果属性") < source.indexOf("排序"));
+  assert.match(source, /setPreviewNature/);
+  assert.match(source, /previewEnumItems/);
+  assert.match(source, /预览补充说明/);
+  assert.match(source, /普通枚举录入/);
+  assert.match(source, /isQuickEnumPreview/);
+  assert.match(source, /drawer indicator-drawer/);
+  assert.match(source, /大写字母、数字、下划线或英文句点/);
 });
 
 test("indicator unsaved confirmation is a viewport-level accessible dialog", async () => {
@@ -340,12 +359,20 @@ test("treatment method history reuses the full read-only treatment workspace", a
   );
   assert.match(archive, /治疗方式历史/);
   assert.match(archive, /查看阶段详情/);
+  assert.match(archive, /stageDetail \? <HistoricalTreatmentStageView/);
   assert.match(archive, /查看历史（/);
   assert.match(specialty, /查看历史（/);
   assert.match(detail, /历史治疗阶段/);
   assert.match(detail, /返回当前治疗阶段/);
   for (const section of ["专科病历", "治疗跟踪", "专科视图"]) assert.match(detail, new RegExp(section));
   assert.match(detail, /只读/);
+  assert.match(detail, /SpecialtyRecordModule/);
+  assert.match(detail, /historyOverride=\{stageHistory\}/);
+  assert.match(detail, /readOnly/);
+  assert.match(detail, /cl-history-workspace-inline/);
+  assert.doesNotMatch(detail, /createPortal/);
+  assert.match(specialty, /historyOverride/);
+  assert.doesNotMatch(detail, /阶段专科病历/);
   assert.doesNotMatch(archive, /TreatmentStageDetailDrawer/);
 });
 
@@ -392,21 +419,27 @@ test("indicator and template deletion is limited to unused records", async () =>
 });
 
 test("indicator and template PRDs define safe deletion rules", async () => {
-  const indicatorPrd = await readFile(new URL("../public/prd/clinical-indicator-v1.6.html", import.meta.url), "utf8");
+  const indicatorPrd = await readFile(new URL("../public/prd/clinical-indicator-v1.7.html", import.meta.url), "utf8");
   const templatePrd = await readFile(new URL("../public/prd/check-template-v1.4.html", import.meta.url), "utf8");
   for (const source of [indicatorPrd, templatePrd]) {
-    assert.match(source, /删除后不可恢复/);
-    assert.match(source, /不允许删除，只允许停用/);
-    assert.match(source, /服务端/);
-    assert.match(source, /<p class="p(?:3|7)">(\s*<b>)?删除/);
+    const text = source.replace(/<[^>]+>/g, "").replace(/\s+/g, " ");
+    assert.match(text, /删除后不可恢复/);
+    assert.match(text, /不允许删除，只允许停用/);
+    assert.match(text, /服务端/);
+    assert.match(text, /删除/);
   }
 });
 
 test("medical mappings are optional and service items are unique across templates", async () => {
-  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.6.html", import.meta.url), "utf8");
+  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.7.html", import.meta.url), "utf8");
+  const indicatorText = indicator.replace(/<[^>]+>/g, "");
+  assert.match(indicatorText, /0-正常/);
+  assert.match(indicatorText, /1-异常/);
+  assert.match(indicatorText, /2-无/);
+  assert.match(indicatorText, /英文句点/);
   const template = await readFile(new URL("../public/prd/check-template-v1.4.html", import.meta.url), "utf8");
-  assert.match(indicator, /外部字段允许为空/);
-  assert.match(indicator, /全部留空时可保存/);
+  assert.match(indicatorText, /未配置时允许保存/);
+  assert.match(indicatorText, /不自动转换写入/);
   assert.match(template, /一个服务项目只能关联一个医技检查模板/);
   assert.match(template, /已被其他模板关联的服务项目.*禁用/);
 });

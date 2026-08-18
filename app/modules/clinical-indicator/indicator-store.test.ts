@@ -89,6 +89,13 @@ test("rejects duplicate codes and inverted numeric ranges", () => {
   assert.equal(Boolean(errors.numericRange), true);
 });
 
+test("accepts hierarchical indicator codes and rejects malformed dots", () => {
+  const base = { ...createSeedIndicators()[0], name: "Ks轴位", code: "OPH.TOPO.KS.AXIS", referenced: false } as IndicatorDraft;
+  assert.equal(validateIndicator(base, createSeedIndicators()).code, undefined);
+  assert.equal(Boolean(validateIndicator({ ...base, code: "OPH..KS" }, createSeedIndicators()).code), true);
+  assert.equal(Boolean(validateIndicator({ ...base, code: "OPH.KS." }, createSeedIndicators()).code), true);
+});
+
 test("rejects combining no-eye with a specific eye", () => {
   const draft = {
     ...createSeedIndicators()[0],
@@ -203,6 +210,43 @@ test("rejects duplicate enum external mapping codes for medical indicators", () 
   assert.equal(Boolean(errors.enumExternalCode), true);
 });
 
+test("allows medical enum and boolean value mappings to be left blank", () => {
+  const enumErrors = validateIndicator({
+    name: "检查状态",
+    code: "OPH.EXAM.STATUS",
+    type: "枚举型",
+    unit: "",
+    eyeRule: ["无眼别"],
+    source: "医技检查",
+    status: "启用",
+    description: "",
+    referenced: false,
+    referenceRange: "",
+    externalMapping: { 无眼别: "" },
+    enumItems: [
+      { code: "NORMAL", name: "正常", externalCode: "", order: 1, status: "启用", nature: 0, isDefault: true, allowsText: false },
+      { code: "ABNORMAL", name: "异常", externalCode: "", order: 2, status: "启用", nature: 1, isDefault: false, allowsText: false },
+    ],
+  } as IndicatorDraft, createSeedIndicators());
+  assert.equal(enumErrors.enumExternalCode, undefined);
+
+  const booleanErrors = validateIndicator({
+    name: "是否水肿",
+    code: "OPH.HAS_EDEMA",
+    type: "布尔型",
+    unit: "",
+    eyeRule: ["OD"],
+    source: "医技检查",
+    status: "启用",
+    description: "",
+    referenced: false,
+    referenceRange: "",
+    externalMapping: { OD: "" },
+    boolean: { trueLabel: "是", falseLabel: "否", trueExternalCode: "", falseExternalCode: "" },
+  } as IndicatorDraft, createSeedIndicators());
+  assert.equal(booleanErrors.booleanExternalCodes, undefined);
+});
+
 test("applies enum validation to multi-select enum indicators", () => {
   const errors = validateIndicator({
     name: "伴随症状",
@@ -218,6 +262,31 @@ test("applies enum validation to multi-select enum indicators", () => {
     enumItems: [],
   } as IndicatorDraft, createSeedIndicators());
   assert.equal(errors.enumItems, "请至少添加一个枚举项");
+});
+
+test("derives normal-abnormal quick entry from enum value nature", () => {
+  const mode = (store as unknown as {
+    enumInteractionMode?: (items: IndicatorDraft["enumItems"]) => string;
+  }).enumInteractionMode;
+  assert.equal(typeof mode, "function");
+  assert.equal(mode?.([
+    { code: "NORMAL", name: "清亮", externalCode: "", order: 1, status: "启用", nature: 0, isDefault: true, allowsText: false },
+    { code: "STAIN", name: "点染", externalCode: "", order: 2, status: "启用", nature: 1, isDefault: false, allowsText: false },
+  ]), "正常/异常快捷录入");
+});
+
+test("validates enum default flags with fixed supplemental text length", () => {
+  const base = {
+    name: "角膜", code: "CORNEA_EXAM", type: "多选枚举", unit: "", eyeRule: ["OD", "OS"],
+    source: "医生查体", status: "启用", description: "", referenced: false, referenceRange: "清亮",
+  } as IndicatorDraft;
+  const errors = validateIndicator({ ...base, enumItems: [
+    { code: "NORMAL", name: "清亮", externalCode: "", order: 1, status: "启用", nature: 0, isDefault: true, allowsText: false },
+    { code: "OTHER", name: "其他", externalCode: "", order: 2, status: "启用", nature: 1, isDefault: true, allowsText: true },
+  ] }, createSeedIndicators());
+  assert.equal(Boolean(errors.enumDefault), true);
+  assert.equal("enumNormalExclusive" in errors, false);
+  assert.equal("enumTextLength" in errors, false);
 });
 
 test("validates boolean labels and medical value mappings", () => {

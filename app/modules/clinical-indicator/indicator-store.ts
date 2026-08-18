@@ -18,6 +18,9 @@ export type EnumItem = {
   externalCode: string;
   order: number;
   status: IndicatorStatus;
+  nature: 0 | 1 | 2;
+  isDefault: boolean;
+  allowsText: boolean;
 };
 
 export type IndicatorDraft = {
@@ -93,6 +96,13 @@ export function transitionIndicatorSource(
   };
 }
 
+export function enumInteractionMode(items: EnumItem[] | undefined): "普通枚举" | "正常/异常快捷录入" {
+  const enabled = (items ?? []).filter((item) => item.status === "启用");
+  return enabled.some((item) => item.nature === 0) && enabled.some((item) => item.nature === 1)
+    ? "正常/异常快捷录入"
+    : "普通枚举";
+}
+
 export function createSeedIndicators(): Indicator[] {
   return [
     {
@@ -145,7 +155,7 @@ export function createSeedIndicators(): Indicator[] {
     {
       name: "角膜状态",
       code: "CORNEA_STATUS",
-      type: "枚举型",
+      type: "多选枚举",
       unit: "",
       eyeRule: ["OD", "OS"],
       source: "医生查体",
@@ -155,9 +165,10 @@ export function createSeedIndicators(): Indicator[] {
       referenced: true,
       referencedBy: ["视力检查模板"],
       enumItems: [
-        { code: "NORMAL", name: "透明", externalCode: "N", order: 1, status: "启用" },
-        { code: "EDEMA", name: "水肿", externalCode: "E", order: 2, status: "启用" },
-        { code: "OPACITY", name: "混浊", externalCode: "O", order: 3, status: "启用" },
+        { code: "NORMAL", name: "透明", externalCode: "N", order: 1, status: "启用", nature: 0, isDefault: true, allowsText: false },
+        { code: "EDEMA", name: "水肿", externalCode: "E", order: 2, status: "启用", nature: 1, isDefault: false, allowsText: false },
+        { code: "OPACITY", name: "混浊", externalCode: "O", order: 3, status: "启用", nature: 1, isDefault: false, allowsText: false },
+        { code: "OTHER", name: "其他", externalCode: "", order: 4, status: "启用", nature: 1, isDefault: false, allowsText: true },
       ],
       updatedAt: "2026-07-26 16:20",
     },
@@ -189,9 +200,9 @@ export function createSeedIndicators(): Indicator[] {
       referenced: true,
       referencedBy: ["视力检查模板"],
       enumItems: [
-        { code: "ITCH", name: "眼痒", externalCode: "ITCH", order: 1, status: "启用" },
-        { code: "PAIN", name: "眼痛", externalCode: "PAIN", order: 2, status: "启用" },
-        { code: "TEAR", name: "流泪", externalCode: "TEAR", order: 3, status: "启用" },
+        { code: "ITCH", name: "眼痒", externalCode: "ITCH", order: 1, status: "启用", nature: 2, isDefault: false, allowsText: false },
+        { code: "PAIN", name: "眼痛", externalCode: "PAIN", order: 2, status: "启用", nature: 2, isDefault: false, allowsText: false },
+        { code: "TEAR", name: "流泪", externalCode: "TEAR", order: 3, status: "启用", nature: 2, isDefault: false, allowsText: false },
       ],
       updatedAt: "2026-08-01 11:20",
     },
@@ -248,8 +259,8 @@ export function validateIndicator(
   if (!draft.name.trim()) errors.name = "请输入指标名称";
   if (draft.name.trim().length > 50) errors.name = "指标名称不能超过50个字符";
   if (!draft.code.trim()) errors.code = "请输入指标编码";
-  else if (!/^[A-Z0-9_]+$/.test(draft.code.trim())) {
-    errors.code = "仅允许大写字母、数字和下划线";
+  else if (!/^[A-Z][A-Z0-9_]*(\.[A-Z0-9_]+)*$/.test(draft.code.trim())) {
+    errors.code = "仅允许大写字母、数字、下划线或英文句点；句点不可连续或位于首尾";
   } else if (existing.some((item) => item.code === draft.code && item.code !== editingCode)) {
     errors.code = "指标编码已存在";
   }
@@ -289,10 +300,15 @@ export function validateIndicator(
     } else if (!rows.some((item) => item.status === "启用")) {
       errors.enumItems = "至少保留一个启用的枚举项";
     }
+    const defaults = rows.filter((item) => item.isDefault);
+    const normalItems = rows.filter((item) => item.nature === 0);
+    if (defaults.length > 1 || defaults.some((item) => item.status !== "启用")) {
+      errors.enumDefault = "最多设置一个已启用的默认项";
+    }
+    if (normalItems.length > 1) errors.enumNature = "最多设置一个正常项";
     if (draft.source === "医技检查") {
       const externalCodes = rows.map((item) => item.externalCode?.trim()).filter(Boolean);
-      if (!externalCodes.length) errors.enumExternalCode = "请至少配置一个外部映射编码";
-      else if (new Set(externalCodes).size !== externalCodes.length) {
+      if (new Set(externalCodes).size !== externalCodes.length) {
         errors.enumExternalCode = "外部映射编码不能重复";
       }
     }
@@ -305,8 +321,8 @@ export function validateIndicator(
     if (draft.source === "医技检查") {
       const trueCode = config?.trueExternalCode.trim() ?? "";
       const falseCode = config?.falseExternalCode.trim() ?? "";
-      if (!trueCode || !falseCode) errors.booleanExternalCodes = "请填写真假外部映射编码";
-      else if (trueCode === falseCode) errors.booleanExternalCodes = "真假外部映射编码不能重复";
+      if (Boolean(trueCode) !== Boolean(falseCode)) errors.booleanExternalCodes = "真假外部映射编码需同时填写或同时留空";
+      else if (trueCode && trueCode === falseCode) errors.booleanExternalCodes = "真假外部映射编码不能重复";
     }
   }
   const mappingKeys = requiredMappingKeys(draft.source, draft.eyeRule);
