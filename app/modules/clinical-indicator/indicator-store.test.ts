@@ -5,6 +5,7 @@ import {
   createSeedIndicators,
   filterIndicators,
   paginateIndicators,
+  toggleEnumSelection,
   toggleIndicatorStatus,
   validateIndicator,
   type IndicatorDraft,
@@ -273,6 +274,42 @@ test("derives normal-abnormal quick entry from enum value nature", () => {
     { code: "NORMAL", name: "清亮", externalCode: "", order: 1, status: "启用", nature: 0, isDefault: true, allowsText: false },
     { code: "STAIN", name: "点染", externalCode: "", order: 2, status: "启用", nature: 1, isDefault: false, allowsText: false },
   ]), "正常/异常快捷录入");
+});
+
+test("multi-select enum makes any concrete result and no-nature mutually exclusive", () => {
+  const items = [
+    { code: "NORMAL", name: "正常", externalCode: "", order: 1, status: "启用", nature: 0, isDefault: false, allowsText: false },
+    { code: "ABNORMAL", name: "异常", externalCode: "", order: 2, status: "启用", nature: 1, isDefault: false, allowsText: false },
+    { code: "NONE", name: "无", externalCode: "", order: 3, status: "启用", nature: 2, isDefault: false, allowsText: false },
+  ] as IndicatorDraft["enumItems"];
+  assert.deepEqual(toggleEnumSelection(["NONE"], "NORMAL", items, true), ["NORMAL"]);
+  assert.deepEqual(toggleEnumSelection(["NONE"], "ABNORMAL", items, true), ["ABNORMAL"]);
+  assert.deepEqual(toggleEnumSelection(["NORMAL", "ABNORMAL"], "NONE", items, true), ["NONE"]);
+});
+
+test("enum definition rejects combining any concrete result and no-nature items", () => {
+  const errors = validateIndicator({
+    name: "角膜状态", code: "CORNEA_STATE", type: "多选枚举", unit: "", eyeRule: ["OD", "OS"],
+    source: "医生查体", status: "启用", description: "", referenced: false, referenceRange: "",
+    enumItems: [
+      { code: "NORMAL", name: "正常", externalCode: "", order: 1, status: "启用", nature: 0, isDefault: true, allowsText: false },
+      { code: "NONE", name: "无", externalCode: "", order: 2, status: "启用", nature: 2, isDefault: false, allowsText: false },
+      { code: "EDEMA", name: "水肿", externalCode: "", order: 3, status: "启用", nature: 1, isDefault: false, allowsText: false },
+    ],
+  }, createSeedIndicators());
+  assert.equal(errors.enumNature, "正常或异常不能与无同时配置");
+});
+
+test("enum definition rejects combining abnormal and no-nature without a normal item", () => {
+  const errors = validateIndicator({
+    name: "症状", code: "SYMPTOM", type: "多选枚举", unit: "", eyeRule: ["OD", "OS"],
+    source: "医生查体", status: "启用", description: "", referenced: false, referenceRange: "",
+    enumItems: [
+      { code: "NONE", name: "无", externalCode: "", order: 1, status: "启用", nature: 2, isDefault: true, allowsText: false },
+      { code: "PAIN", name: "疼痛", externalCode: "", order: 2, status: "启用", nature: 1, isDefault: false, allowsText: false },
+    ],
+  }, createSeedIndicators());
+  assert.equal(errors.enumNature, "正常或异常不能与无同时配置");
 });
 
 test("validates enum default flags with fixed supplemental text length", () => {

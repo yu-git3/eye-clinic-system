@@ -13,6 +13,7 @@ import {
   nursingSigns,
   transitionIndicatorSource,
   enumInteractionMode,
+  toggleEnumSelection,
   type EnumItem,
   type Indicator,
   type IndicatorDraft,
@@ -127,7 +128,8 @@ export function ClinicalIndicatorModule({ onNavigateTemplate }: { onNavigateTemp
 
   function addEnumItem() {
     const rows = draft.enumItems ?? [];
-    setField("enumItems", [...rows, { code: "", name: "", externalCode: "", order: rows.length + 1, status: "启用", nature: 2, isDefault: false, allowsText: false }]);
+    const nature: EnumItem["nature"] = rows.some((item) => item.nature === 2) ? 2 : rows.some((item) => item.nature === 0 || item.nature === 1) ? 1 : 2;
+    setField("enumItems", [...rows, { code: "", name: "", externalCode: "", order: rows.length + 1, status: "启用", nature, isDefault: false, allowsText: false }]);
   }
 
   function updateEnum(index: number, patch: Partial<EnumItem>) {
@@ -287,9 +289,7 @@ function DataTypeConfig({ draft, mode, errors, setField, addEnumItem, updateEnum
   const previewEnumItems = (draft.enumItems ?? []).filter((item) => item.status === "启用" && (!isQuickEnumPreview || item.nature === previewNatureValue));
 
   function togglePreviewItem(code: string) {
-    setPreviewSelected((current) => draft.type === "枚举型"
-      ? (current.includes(code) ? [] : [code])
-      : (current.includes(code) ? current.filter((item) => item !== code) : [...current, code]));
+    setPreviewSelected((current) => toggleEnumSelection(current, code, draft.enumItems, draft.type === "多选枚举"));
   }
 
   return <div className="type-config">
@@ -298,7 +298,28 @@ function DataTypeConfig({ draft, mode, errors, setField, addEnumItem, updateEnum
     {(draft.type === "枚举型" || draft.type === "多选枚举") && <div className="enum-block">
       <div className="enum-toolbar"><div><p>{draft.type === "多选枚举" ? "支持同时选择多个启用项，按枚举编码集合保存。" : "枚举值在当前页面维护并保存至业务数据表。"}</p><strong>录入交互：{enumInteractionMode(draft.enumItems)}</strong></div>{mode !== "view" && <button type="button" className="button small" onClick={addEnumItem}>＋ 添加枚举项</button>}</div>
       {Object.entries(errors).some(([key]) => key.startsWith("enum")) && <p className="error banner-error">{Object.entries(errors).find(([key]) => key.startsWith("enum"))?.[1]}</p>}
-      <div className="enum-table"><div className="enum-row header"><span>系统枚举编码</span><span>枚举名称</span><span>外部映射编码</span><span>结果属性</span><span>是否默认</span><span>是否补充文本</span><span>排序</span><span>状态</span><span>操作</span></div>{(draft.enumItems ?? []).map((row, index) => <div className="enum-item" key={`${row.code}-${index}`}><div className="enum-row"><input disabled={mode === "view"} value={row.code} placeholder="CODE" onChange={(e) => updateEnum(index, { code: e.target.value.toUpperCase() })} /><input disabled={mode === "view"} value={row.name} placeholder="选项名称" onChange={(e) => updateEnum(index, { name: e.target.value })} /><input disabled={mode === "view"} value={row.externalCode ?? ""} placeholder="选填，如：N" onChange={(e) => updateEnum(index, { externalCode: e.target.value.toUpperCase() })} /><select disabled={mode === "view"} value={row.nature ?? 2} onChange={(e) => updateEnum(index, { nature: Number(e.target.value) as EnumItem["nature"] })}><option value={0}>0-正常</option><option value={1}>1-异常</option><option value={2}>2-无</option></select><label className="enum-inline-check"><input type="checkbox" disabled={mode === "view"} checked={row.isDefault ?? false} onChange={(e) => updateEnum(index, { isDefault: e.target.checked })} />是</label><label className="enum-inline-check"><input type="checkbox" disabled={mode === "view"} checked={row.allowsText ?? false} onChange={(e) => updateEnum(index, { allowsText: e.target.checked })} />是</label><span>{index + 1}</span><select disabled={mode === "view"} value={row.status} onChange={(e) => updateEnum(index, { status: e.target.value as IndicatorDraft["status"] })}><option>启用</option><option>停用</option></select><div className="enum-actions">{mode !== "view" && <><button type="button" disabled={index === 0} onClick={() => moveEnum(index, -1)}>↑</button><button type="button" disabled={index === (draft.enumItems?.length ?? 0) - 1} onClick={() => moveEnum(index, 1)}>↓</button><button type="button" disabled={(draft.enumItems?.length ?? 0) === 1} onClick={() => setField("enumItems", draft.enumItems?.filter((_, i) => i !== index))}>×</button></>}</div></div></div>)}</div>
+      <div className="enum-table">
+        <div className="enum-row header"><span>系统枚举编码</span><span>枚举名称</span><span>外部映射编码</span><span>结果属性</span><span>是否默认</span><span>是否补充文本</span><span>排序</span><span>状态</span><span>操作</span></div>
+        {(draft.enumItems ?? []).map((row, index) => {
+          const hasOtherConcreteResult = (draft.enumItems ?? []).some((item, itemIndex) => itemIndex !== index && (item.nature === 0 || item.nature === 1));
+          const hasOtherNone = (draft.enumItems ?? []).some((item, itemIndex) => itemIndex !== index && item.nature === 2);
+          return <div className="enum-item" key={`${row.code}-${index}`}><div className="enum-row">
+            <input disabled={mode === "view"} value={row.code} placeholder="CODE" onChange={(e) => updateEnum(index, { code: e.target.value.toUpperCase() })} />
+            <input disabled={mode === "view"} value={row.name} placeholder="选项名称" onChange={(e) => updateEnum(index, { name: e.target.value })} />
+            <input disabled={mode === "view"} value={row.externalCode ?? ""} placeholder="选填，如：N" onChange={(e) => updateEnum(index, { externalCode: e.target.value.toUpperCase() })} />
+            <select disabled={mode === "view"} value={row.nature ?? 2} onChange={(e) => updateEnum(index, { nature: Number(e.target.value) as EnumItem["nature"] })}>
+              <option value={0} disabled={mode === "view" || hasOtherNone}>0-正常</option>
+              <option value={1} disabled={mode === "view" || hasOtherNone}>1-异常</option>
+              <option value={2} disabled={mode === "view" || hasOtherConcreteResult}>2-无</option>
+            </select>
+            <label className="enum-inline-check"><input type="checkbox" disabled={mode === "view"} checked={row.isDefault ?? false} onChange={(e) => updateEnum(index, { isDefault: e.target.checked })} />是</label>
+            <label className="enum-inline-check"><input type="checkbox" disabled={mode === "view"} checked={row.allowsText ?? false} onChange={(e) => updateEnum(index, { allowsText: e.target.checked })} />是</label>
+            <span>{index + 1}</span>
+            <select disabled={mode === "view"} value={row.status} onChange={(e) => updateEnum(index, { status: e.target.value as IndicatorDraft["status"] })}><option>启用</option><option>停用</option></select>
+            <div className="enum-actions">{mode !== "view" && <><button type="button" disabled={index === 0} onClick={() => moveEnum(index, -1)}>↑</button><button type="button" disabled={index === (draft.enumItems?.length ?? 0) - 1} onClick={() => moveEnum(index, 1)}>↓</button><button type="button" disabled={(draft.enumItems?.length ?? 0) === 1} onClick={() => setField("enumItems", draft.enumItems?.filter((_, i) => i !== index))}>×</button></>}</div>
+          </div></div>;
+        })}
+      </div>
       <div className="enum-preview"><div className="enum-preview-title"><b>录入效果预览</b><span>可直接点击体验；上方枚举配置变化后，预览内容即时更新。</span>{isQuickEnumPreview && <div className="enum-preview-controls"><button type="button" className={previewNature === "正常" ? "active" : ""} onClick={() => setPreviewNature("正常")}>正常</button><button type="button" className={previewNature === "异常" ? "active abnormal" : ""} onClick={() => setPreviewNature("异常")}>异常</button></div>}</div><div className="enum-preview-result"><strong>{isQuickEnumPreview ? `${previewNature}结果` : "普通枚举录入"}</strong>{previewEnumItems.length ? <div className="enum-preview-options">{previewEnumItems.map((item) => { const selected = isQuickEnumPreview && previewNature === "正常" ? true : previewSelected.includes(item.code); return <label key={item.code} className={selected ? "selected" : ""}><input type={draft.type === "多选枚举" ? "checkbox" : "radio"} name="enum-preview" checked={selected} onChange={() => togglePreviewItem(item.code)} />{item.name}{item.allowsText && selected && <input className="enum-preview-text" placeholder="预览补充说明" maxLength={200} />}</label>; })}</div> : <span className="hint">当前没有启用的枚举项</span>}</div></div>
     </div>}
     {draft.type === "布尔型" && <div className="boolean-block"><div className="form-grid"><Field label="真值显示名称" required error={errors.booleanLabels}><input disabled={mode === "view"} value={draft.boolean?.trueLabel ?? ""} placeholder="如：是、阳性、存在" onChange={(e) => setField("boolean", { ...draft.boolean!, trueLabel: e.target.value })} /></Field><Field label="假值显示名称" required><input disabled={mode === "view"} value={draft.boolean?.falseLabel ?? ""} placeholder="如：否、阴性、不存在" onChange={(e) => setField("boolean", { ...draft.boolean!, falseLabel: e.target.value })} /></Field>{draft.source === "医技检查" && <><Field label="真值外部映射编码" error={errors.booleanExternalCodes} hint="选填；若填写则真假值需成对维护"><input disabled={mode === "view"} value={draft.boolean?.trueExternalCode ?? ""} placeholder="选填，如：1、Y、POSITIVE" onChange={(e) => setField("boolean", { ...draft.boolean!, trueExternalCode: e.target.value.toUpperCase() })} /></Field><Field label="假值外部映射编码" hint="选填；若填写则真假值需成对维护"><input disabled={mode === "view"} value={draft.boolean?.falseExternalCode ?? ""} placeholder="选填，如：0、N、NEGATIVE" onChange={(e) => setField("boolean", { ...draft.boolean!, falseExternalCode: e.target.value.toUpperCase() })} /></Field></>}</div></div>}

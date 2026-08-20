@@ -21,7 +21,7 @@
 	</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt">·
 	</font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt">临床指标定义
 	</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt">PRD
-	V1.7</font></font></span></font></font></p>
+	V1.8</font></font></span></font></font></p>
 </div><p style="line-height: 100%; margin-bottom: 0.21cm"><font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="5" style="font-size: 18pt"><b>PRODUCT
 REQUIREMENTS DOCUMENT</b></font></font></font></span></font></p>
 <p style="line-height: 100%; margin-bottom: 0.21cm"><font color="#17365d"><font face="Microsoft YaHei"><font size="5" style="font-size: 18pt"><b>眼科专科系统</b></font></font></font></p>
@@ -50,10 +50,10 @@ REQUIREMENTS DOCUMENT</b></font></font></font></span></font></p>
 			<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#23374d"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">122077</span></font></font></font></span></font></p>
 		</td>
 		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
-			<font face="Microsoft YaHei, serif"><span lang="en-US">V1.7</span></font></p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">V1.8</span></font></p>
 		</td>
 		<td width="146" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
-			<font face="Microsoft YaHei, serif"><span lang="en-US">2026-08-18</span></font></p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">2026-08-20</span></font></p>
 		</td>
 		<td width="145" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
 			<font color="#23374d"><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt"><span style="font-weight: normal">原型确认稿</span></font></font></font></p>
@@ -179,6 +179,20 @@ REQUIREMENTS DOCUMENT</b></font></font></font></span></font></p>
 		</td>
 		<td width="146" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
 			枚举值收敛为结果属性、是否默认、是否补充文本三项；补充文本固定<font face="Microsoft YaHei, serif"><span lang="en-US">200</span></font>字符；指标编码支持英文句点分层。</p>
+		</td>
+		<td width="145" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			历史版本</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="145" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">V1.8</span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">2026-08-20</span></font></p>
+		</td>
+		<td width="146" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
+			调整枚举结果属性互斥规则：<font face="Microsoft YaHei, serif"><span lang="en-US">0-</span></font>正常与<font face="Microsoft YaHei, serif"><span lang="en-US">1-</span></font>异常可共存；<font face="Microsoft YaHei, serif"><span lang="en-US">2-</span></font>无与<font face="Microsoft YaHei, serif"><span lang="en-US">0-</span></font>正常、<font face="Microsoft YaHei, serif"><span lang="en-US">1-</span></font>异常均互斥；明确配置禁选、保存校验及多选录入自动取消规则。</p>
 		</td>
 		<td width="145" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p>
 			当前版本</p>
@@ -795,7 +809,7 @@ REQUIREMENTS DOCUMENT</b></font></font></font></span></font></p>
 <p style="line-height: 100%; margin-top: 0.3cm; margin-bottom: 0.18cm; page-break-after: avoid">
 <font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#17365d"><font face="Microsoft YaHei, serif"><font size="3" style="font-size: 12pt"><b>7.3
 </b></font></font></span></font><font face="Microsoft YaHei"><font size="3" style="font-size: 12pt"><b>枚举型与多选枚举型</b></font></font></font></p>
-<p style="line-height: 121%; margin-bottom: 0.19cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">枚举值由本页面维护、业务表存储。枚举型只能选一项；多选枚举型可选零项或多项并按枚举编码集合存储。每个枚举值同行维护结果属性、是否默认、是否补充文本；不维护互斥属性和补充文本长度，补充文本长度统一为</font></font><font face="Microsoft YaHei, serif"><span lang="en-US"><font face="Microsoft YaHei, serif"><font size="2" style="font-size: 10pt">200</font></font></span></font><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">字符。</font></font></font></p>
+<p style="line-height: 121%; margin-bottom: 0.19cm">枚举值由本页面维护、业务表存储。枚举型只能选一项；多选枚举型可选零项或多项并按枚举编码集合存储。每个枚举值同行维护结果属性、是否默认、是否补充文本，补充文本长度统一为<font face="Microsoft YaHei, serif"><span lang="en-US">200</span></font>字符。结果属性中，<font face="Microsoft YaHei, serif"><span lang="en-US">0-</span></font>正常与<font face="Microsoft YaHei, serif"><span lang="en-US">1-</span></font>异常允许同时配置；<font face="Microsoft YaHei, serif"><span lang="en-US">2-</span></font>无与<font face="Microsoft YaHei, serif"><span lang="en-US">0-</span></font>正常、<font face="Microsoft YaHei, serif"><span lang="en-US">1-</span></font>异常均互斥。同一指标存在<font face="Microsoft YaHei, serif"><span lang="en-US">2-</span></font>无时，其他枚举值不可选择<font face="Microsoft YaHei, serif"><span lang="en-US">0-</span></font>正常或<font face="Microsoft YaHei, serif"><span lang="en-US">1-</span></font>异常；存在<font face="Microsoft YaHei, serif"><span lang="en-US">0-</span></font>正常或<font face="Microsoft YaHei, serif"><span lang="en-US">1-</span></font>异常时，其他枚举值不可选择<font face="Microsoft YaHei, serif"><span lang="en-US">2-</span></font>无。多选枚举录入时，<font face="Microsoft YaHei, serif"><span lang="en-US">2-</span></font>无与所有正常、异常枚举值双向互斥，选择一方自动取消另一方。</p>
 <table width="624" cellpadding="5" cellspacing="0">
 	<col width="301"/>
 	<col width="301"/>
@@ -836,7 +850,7 @@ REQUIREMENTS DOCUMENT</b></font></font></font></span></font></p>
 			结果属性</p>
 		</td>
 		<td width="301" style="border: 1px solid #d7dee8; padding: 0.14cm 0.21cm"><p>
-			<font face="Microsoft YaHei, serif"><span lang="en-US">0-</span></font>正常、<font face="Microsoft YaHei, serif"><span lang="en-US">1-</span></font>异常、<font face="Microsoft YaHei, serif"><span lang="en-US">2-</span></font>无；默认<font face="Microsoft YaHei, serif"><span lang="en-US">2-</span></font>无。同时存在<font face="Microsoft YaHei, serif"><span lang="en-US">0</span></font>和<font face="Microsoft YaHei, serif"><span lang="en-US">1</span></font>时，录入组件生成正常<font face="Microsoft YaHei, serif"><span lang="en-US">/</span></font>异常快捷录入。</p>
+			<font face="Microsoft YaHei, serif"><span lang="en-US">0-</span></font>正常、<font face="Microsoft YaHei, serif"><span lang="en-US">1-</span></font>异常、<font face="Microsoft YaHei, serif"><span lang="en-US">2-</span></font>无；默认<font face="Microsoft YaHei, serif"><span lang="en-US">2-</span></font>无。<font face="Microsoft YaHei, serif"><span lang="en-US">0</span></font>与<font face="Microsoft YaHei, serif"><span lang="en-US">1</span></font>允许同时存在；<font face="Microsoft YaHei, serif"><span lang="en-US">2</span></font>与<font face="Microsoft YaHei, serif"><span lang="en-US">0</span></font>、<font face="Microsoft YaHei, serif"><span lang="en-US">1</span></font>均互斥。页面应禁用冲突选项，保存时再次校验。多选录入时选择<font face="Microsoft YaHei, serif"><span lang="en-US">2</span></font>会自动取消所有<font face="Microsoft YaHei, serif"><span lang="en-US">0/1</span></font>值，选择任一<font face="Microsoft YaHei, serif"><span lang="en-US">0/1</span></font>值会自动取消<font face="Microsoft YaHei, serif"><span lang="en-US">2</span></font>。同时存在<font face="Microsoft YaHei, serif"><span lang="en-US">0</span></font>和<font face="Microsoft YaHei, serif"><span lang="en-US">1</span></font>时，录入组件生成正常<font face="Microsoft YaHei, serif"><span lang="en-US">/</span></font>异常快捷录入。</p>
 		</td>
 	</tr>
 	<tr valign="top">
@@ -1683,8 +1697,8 @@ REQUIREMENTS DOCUMENT</b></font></font></font></span></font></p>
 	<li><p style="line-height: 117%; margin-bottom: 0.14cm"><font color="#23374d"><font face="Microsoft YaHei"><font size="2" style="font-size: 10pt">接口字段与枚举映射变更不得影响已生成临床数据、病历快照和报告快照。</font></font></font></p></li>
 </ul>
 <div title="footer"><p style="text-align: end; line-height: 100%; margin-top: 1.19cm; margin-bottom: 0cm">
-	<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#667085"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt">V1.7
-	 ·  2026-08-18  ·  </font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt">第
+	<font face="Microsoft YaHei, serif"><span lang="en-US"><font color="#667085"><font face="Microsoft YaHei, serif"><font size="1" style="font-size: 8pt">V1.8
+	 ·  2026-08-20  ·  </font></font></span></font><font face="Microsoft YaHei"><font size="1" style="font-size: 8pt">第
 	 页</font></font></font></p>
 </div>
 </body>

@@ -30,7 +30,6 @@ export type ExamTemplateOption = {
   name: string;
   type: "医生查体" | "医技检查";
   indicatorCount: number;
-  eyes: string;
 };
 
 export type SelectedExamRef = {
@@ -40,15 +39,15 @@ export type SelectedExamRef = {
 };
 
 export const examTemplateCatalog: ExamTemplateOption[] = [
-  { code: "EYE_HEALTH", name: "眼健康检查", type: "医生查体", indicatorCount: 15, eyes: "OD/OS" },
-  { code: "TOPO", name: "角膜地形图", type: "医技检查", indicatorCount: 6, eyes: "OD/OS" },
-  { code: "BIOMETRY", name: "眼生物测量", type: "医技检查", indicatorCount: 4, eyes: "OD/OS" },
-  { code: "EYE_SURFACE", name: "眼表综合报告", type: "医技检查", indicatorCount: 3, eyes: "OD/OS" },
-  { code: "ENDOTHELIUM", name: "角膜内皮", type: "医技检查", indicatorCount: 3, eyes: "OD/OS" },
-  { code: "CYCLO_REFRACTION", name: "散瞳医学验光", type: "医技检查", indicatorCount: 4, eyes: "OD/OS" },
-  { code: "REFRACTION", name: "小瞳医学验光", type: "医技检查", indicatorCount: 4, eyes: "OD/OS" },
-  { code: "ANTERIOR", name: "眼前节与瞳孔", type: "医生查体", indicatorCount: 4, eyes: "OD/OS" },
-  { code: "VISION_IOP", name: "视力与眼压", type: "医生查体", indicatorCount: 3, eyes: "OD/OS" },
+  { code: "EYE_HEALTH", name: "眼健康检查", type: "医生查体", indicatorCount: 15 },
+  { code: "TOPO", name: "角膜地形图", type: "医技检查", indicatorCount: 6 },
+  { code: "BIOMETRY", name: "眼生物测量", type: "医技检查", indicatorCount: 4 },
+  { code: "EYE_SURFACE", name: "眼表综合报告", type: "医技检查", indicatorCount: 3 },
+  { code: "ENDOTHELIUM", name: "角膜内皮", type: "医技检查", indicatorCount: 3 },
+  { code: "CYCLO_REFRACTION", name: "散瞳医学验光", type: "医技检查", indicatorCount: 4 },
+  { code: "REFRACTION", name: "小瞳医学验光", type: "医技检查", indicatorCount: 4 },
+  { code: "ANTERIOR", name: "眼前节与瞳孔", type: "医生查体", indicatorCount: 4 },
+  { code: "VISION_IOP", name: "视力与眼压", type: "医生查体", indicatorCount: 3 },
 ];
 
 export function filterExamTemplates(query: string) {

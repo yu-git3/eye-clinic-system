@@ -111,7 +111,7 @@ test("product documents expose the latest PRDs as online-only reading pages", as
   assert.match(docs, /title: "眼科专科系统产品基线"/);
   assert.match(docs, /product-baseline-v1\.2\.html/);
   assert.match(baseline, /眼科专科系统产品基线与模块合并台账/);
-  assert.match(docs, /临床指标定义.*V1\.7/s);
+  assert.match(docs, /临床指标定义.*V1\.8/s);
   assert.match(docs, /检查模板配置.*V1\.4/s);
   assert.match(docs, /检查报告查询.*V1\.4/s);
   assert.match(docs, /治疗方案基础档案.*V1\.5/s);
@@ -119,7 +119,7 @@ test("product documents expose the latest PRDs as online-only reading pages", as
   assert.match(docs, /在线阅读/);
   assert.match(docs, /<iframe/);
   assert.doesNotMatch(docs, /download|下载 DOCX|下载文档/);
-  const prdHtml = await readFile(new URL("../public/prd/clinical-indicator-v1.7.html", import.meta.url), "utf8");
+  const prdHtml = await readFile(new URL("../public/prd/clinical-indicator-v1.8.html", import.meta.url), "utf8");
   const readerCss = await readFile(new URL("../public/prd/reader.css", import.meta.url), "utf8");
   assert.match(prdHtml, /\/prd\/reader\.css/);
   assert.match(readerCss, /font-size:15px/);
@@ -127,7 +127,7 @@ test("product documents expose the latest PRDs as online-only reading pages", as
 });
 
 test("latest configuration PRDs describe live filtering without query or reset buttons", async () => {
-  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.7.html", import.meta.url), "utf8");
+  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.8.html", import.meta.url), "utf8");
   const indicatorText = indicator.replace(/<[^>]+>/g, "").replace(/\s+/g, " ");
   const template = await readFile(new URL("../public/prd/check-template-v1.4.html", import.meta.url), "utf8");
   assert.match(indicatorText, /指标名称 \/ 编码/);
@@ -181,6 +181,29 @@ test("specialty record exposes the reusable ophthalmology examination component"
   assert.match(panel, /复制OD到OS/);
   assert.match(panel, /病历描述预览/);
   assert.match(panel, /保存并回传门诊病历/);
+});
+
+test("specialty record template picker does not show a template-level eye rule", async () => {
+  const source = await readFile(new URL("../app/modules/specialty-record/SpecialtyRecordModule.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /item\.eyes/);
+  assert.match(source, /item\.indicatorCount/);
+});
+
+test("baseline check table renders OU and no-eye indicators as one result control", async () => {
+  const source = await readFile(new URL("../app/modules/contact-lens-archive/OrderedBaselineEditor.tsx", import.meta.url), "utf8");
+  const styles = await readFile(new URL("../app/baseline-overrides.css", import.meta.url), "utf8");
+  assert.match(source, /row\.options/);
+  assert.match(source, /<th>OU<\/th>/);
+  assert.match(styles, /\.general[\s\S]*display:\s*none/);
+});
+
+test("enum definition disables mutually exclusive concrete and no-nature properties", async () => {
+  const source = await readFile(new URL("../app/modules/clinical-indicator/ClinicalIndicatorModule.tsx", import.meta.url), "utf8");
+  assert.match(source, /hasOtherConcreteResult/);
+  assert.match(source, /hasOtherNone/);
+  assert.match(source, /rows\.some\(\(item\) => item\.nature === 2\) \? 2/);
+  assert.match(source, /disabled=\{mode === "view" \|\| hasOtherNone\}/);
+  assert.match(source, /disabled=\{mode === "view" \|\| hasOtherConcreteResult\}/);
 });
 
 test("archive prototype covers lifecycle, switching and report citation", async () => {
@@ -419,7 +442,7 @@ test("indicator and template deletion is limited to unused records", async () =>
 });
 
 test("indicator and template PRDs define safe deletion rules", async () => {
-  const indicatorPrd = await readFile(new URL("../public/prd/clinical-indicator-v1.7.html", import.meta.url), "utf8");
+  const indicatorPrd = await readFile(new URL("../public/prd/clinical-indicator-v1.8.html", import.meta.url), "utf8");
   const templatePrd = await readFile(new URL("../public/prd/check-template-v1.4.html", import.meta.url), "utf8");
   for (const source of [indicatorPrd, templatePrd]) {
     const text = source.replace(/<[^>]+>/g, "").replace(/\s+/g, " ");
@@ -430,8 +453,21 @@ test("indicator and template PRDs define safe deletion rules", async () => {
   }
 });
 
+test("clinical indicator PRD defines concrete-result and no-nature exclusivity in the enum section", async () => {
+  const source = await readFile(new URL("../public/prd/clinical-indicator-v1.8.html", import.meta.url), "utf8");
+  assert.match(source, /2-<\/span><\/font>无与/);
+  assert.match(source, /均互斥/);
+  assert.match(source, /页面应禁用冲突选项，保存时再次校验/);
+  assert.match(source, /选择一方自动取消另一方/);
+});
+
+test("product documents expose clinical indicator PRD V1.8 with its revision date", async () => {
+  const source = await readFile(new URL("../app/modules/product-docs/ProductDocsModule.tsx", import.meta.url), "utf8");
+  assert.match(source, /临床指标定义.*V1\.8.*2026-08-20.*clinical-indicator-v1\.8\.html/);
+});
+
 test("medical mappings are optional and service items are unique across templates", async () => {
-  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.7.html", import.meta.url), "utf8");
+  const indicator = await readFile(new URL("../public/prd/clinical-indicator-v1.8.html", import.meta.url), "utf8");
   const indicatorText = indicator.replace(/<[^>]+>/g, "");
   assert.match(indicatorText, /0-正常/);
   assert.match(indicatorText, /1-异常/);

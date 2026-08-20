@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { GlobalDrawerLayer } from "../../components/GlobalDrawerLayer";
-import type { ContactLensArchive } from "../contact-lens-archive/archive-store";
+import type { CheckValueKey, ContactLensArchive } from "../contact-lens-archive/archive-store";
 import { CheckCard } from "../contact-lens-archive/OrderedBaselineEditor";
 import { ExamEntryContent } from "../exam-runtime/ExamEntryPanel";
 import type { ExamInstance } from "../exam-runtime/exam-engine";
@@ -25,7 +25,7 @@ type Props = {
   eyeHealthExam: ExamInstance;
   readOnly: boolean;
   onEyeHealthChange: (exam: ExamInstance) => void;
-  onRevise: (group: string, item: string, eye: "od" | "os", value: string) => void;
+  onRevise: (group: string, item: string, eye: CheckValueKey, value: string) => void;
   onReport: (group: Check) => void;
   onCreateArchive: () => void;
   onLoadArchives: () => void;
@@ -112,7 +112,7 @@ export function SpecialtyRecordModule(props: Props) {
       <section className="sr-section"><h3>备注</h3><textarea disabled={props.readOnly} value={record.note} onChange={(e) => update("note", e.target.value)}/></section>
     </div><footer className="sr-actions"><button onClick={() => setPreviewOpen(true)}>普通门诊病历回传预览</button>{!props.readOnly && <><button onClick={() => save(false)}>暂存</button><button className="primary" onClick={() => save(true)}>保存并回传</button></>}</footer></div>}</GlobalDrawerLayer>
 
-    {pickerOpen && <div className="sr-modal-layer"><div className="sr-modal sr-exam-picker"><header><div><b>添加眼科检查</b><span>支持模板名称或编码模糊搜索，可多选后一次添加</span></div><button onClick={() => setPickerOpen(false)}>×</button></header><div className="sr-picker-search"><input autoFocus placeholder="搜索检查模板名称或编码" value={pickerQuery} onChange={(e) => setPickerQuery(e.target.value)}/></div><div className="sr-picker-list">{filteredTemplates.map((item) => { const added = selectedExams.some((exam) => exam.name === item.name); const checked = pending.includes(item.name); return <label className={added ? "added" : ""} key={item.code}><input type="checkbox" disabled={added} checked={added || checked} onChange={() => setPending((names) => names.includes(item.name) ? names.filter((name) => name !== item.name) : [...names, item.name])}/><span><b>{item.name}</b><small>{item.code}　{item.type}　{item.eyes}　{item.indicatorCount}项指标</small></span><em>{added ? "已添加" : checked ? "已选择" : "可添加"}</em></label>; })}</div><footer><span>已选 {pending.length} 项</span><button onClick={() => setPickerOpen(false)}>取消</button><button className="primary" disabled={!pending.length} onClick={addSelected}>添加选中</button></footer></div></div>}
+    {pickerOpen && <div className="sr-modal-layer"><div className="sr-modal sr-exam-picker"><header><div><b>添加眼科检查</b><span>支持模板名称或编码模糊搜索，可多选后一次添加</span></div><button onClick={() => setPickerOpen(false)}>×</button></header><div className="sr-picker-search"><input autoFocus placeholder="搜索检查模板名称或编码" value={pickerQuery} onChange={(e) => setPickerQuery(e.target.value)}/></div><div className="sr-picker-list">{filteredTemplates.map((item) => { const added = selectedExams.some((exam) => exam.name === item.name); const checked = pending.includes(item.name); return <label className={added ? "added" : ""} key={item.code}><input type="checkbox" disabled={added} checked={added || checked} onChange={() => setPending((names) => names.includes(item.name) ? names.filter((name) => name !== item.name) : [...names, item.name])}/><span><b>{item.name}</b><small>{item.code}　{item.type}　{item.indicatorCount}项指标</small></span><em>{added ? "已添加" : checked ? "已选择" : "可添加"}</em></label>; })}</div><footer><span>已选 {pending.length} 项</span><button onClick={() => setPickerOpen(false)}>取消</button><button className="primary" disabled={!pending.length} onClick={addSelected}>添加选中</button></footer></div></div>}
     {selectedHistory && <div className="sr-modal-layer"><div className="sr-modal"><header><div><b>{selectedHistory.visitDate} 专科病历</b><span>{selectedHistory.department}　{selectedHistory.doctor}</span></div><button onClick={() => setSelectedHistory(null)}>×</button></header><article><h4>主诉/现病史</h4><p>{selectedHistory.complaintSummary}</p><h4>专科检查</h4><p>{selectedHistory.examSummary}</p><h4>检查及处理</h4><p>{selectedHistory.planSummary}</p></article><footer><button onClick={() => setSelectedHistory(null)}>关闭</button>{!props.readOnly && <button className="primary" onClick={() => referenceHistory(selectedHistory)}>引用此记录</button>}</footer></div></div>}
     {previewOpen && <div className="sr-modal-layer"><div className="sr-modal preview"><header><div><b>普通门诊病历回传预览</b><span>保存后回传“专科查体及处理建议”</span></div><button onClick={() => setPreviewOpen(false)}>×</button></header><pre>{buildOutpatientRecordText(record)}</pre><footer><button onClick={() => setPreviewOpen(false)}>关闭</button></footer></div></div>}
     {toast && <div className="toast"><span>✓</span>{toast}</div>}

@@ -3,6 +3,8 @@ export type ArchiveStatus = "基本档案待完成" | "治疗中" | "已完成" 
 export type BaselineStatus = "未开始" | "评估中" | "已完成";
 export type DataSource = "护士采集" | "医生查体" | "医技检查";
 export type ValueOrigin = "接口自动获取" | "医生手工录入" | "自动获取后人工修订";
+export type CheckEye = "OD" | "OS" | "OU" | "无眼别";
+export type CheckValueKey = "od" | "os" | "ou" | "value";
 
 export type ArchiveDraft = {
   treatmentPlan: string;
@@ -50,8 +52,14 @@ export type CheckSnapshot = {
   reportTime?: string;
   report?: { kind: "PDF" | "图片" | "报告正文"; name: string; summary: string };
   citationHistory?: Array<{ reportId: string; operator: string; citedAt: string }>;
-  rows: Array<{ item: string; od: string; os: string; originalOd?: string; originalOs?: string; unit?: string; reference?: string; revision?: { revisedBy: string; revisedAt: string } }>;
+  rows: Array<{ item: string; od: string; os: string; ou?: string; value?: string; eyeRule?: CheckEye[]; options?: string[]; originalOd?: string; originalOs?: string; originalOu?: string; originalValue?: string; unit?: string; reference?: string; revision?: { revisedBy: string; revisedAt: string } }>;
 };
+
+export function getCheckRowPresentation(row: CheckSnapshot["rows"][number]): { kind: "multi-eye"; eyes: Array<"OD" | "OS" | "OU"> } | { kind: "single"; eye: "无眼别"; valueKey: "value" } {
+  if (row.eyeRule?.includes("无眼别")) return { kind: "single", eye: "无眼别", valueKey: "value" };
+  const configured = (row.eyeRule ?? ["OD", "OS"]).filter((eye): eye is "OD" | "OS" | "OU" => eye !== "无眼别");
+  return { kind: "multi-eye", eyes: configured };
+}
 
 export type BaselineTemplateRef = { id: string; name: string; version: string };
 
@@ -138,7 +146,7 @@ export type ContactLensArchive = {
 export type CheckValueRevision = {
   group: string;
   item: string;
-  eye: "od" | "os";
+  eye: CheckValueKey;
   value: string;
   revisedBy: string;
   revisedAt: string;
@@ -263,7 +271,7 @@ export function reviseCheckValue(archive: ContactLensArchive, input: CheckValueR
       valueOrigin: group.valueOrigin === "医生手工录入" ? group.valueOrigin : "自动获取后人工修订",
       rows: group.rows.map((row) => {
         if (row.item !== input.item) return row;
-        const originalKey = input.eye === "od" ? "originalOd" : "originalOs";
+        const originalKey = input.eye === "od" ? "originalOd" : input.eye === "os" ? "originalOs" : input.eye === "ou" ? "originalOu" : "originalValue";
         return {
           ...row,
           [originalKey]: row[originalKey] ?? row[input.eye],
@@ -279,7 +287,7 @@ function createBaselineChecks(): CheckSnapshot[] {
   const common = { reportDate: "2026-08-02 10:05", snapshotAt: "2026-08-02 10:44", status: "已获取" as const, enteredBy: "方红全", enteredAt: "2026-08-02 10:44" };
   return [
     { ...common, group: "视力与眼压", source: "护士采集", enteredBy: "王丽", enteredAt: "2026-08-02 10:26", reportId: "VS-20260802-1026", valueOrigin: "接口自动获取", rows: [
-      { item: "裸眼视力", od: "CF-50cm", os: "1.0" }, { item: "矫正视力", od: "1.0", os: "1.0" }, { item: "眼压", od: "19", os: "18", unit: "mmHg", reference: "10–21" }, { item: "主视眼", od: "—", os: "主视眼" },
+      { item: "裸眼视力", od: "CF-50cm", os: "1.0", ou: "0.8", eyeRule: ["OD", "OS", "OU"] }, { item: "矫正视力", od: "1.0", os: "1.0", eyeRule: ["OD", "OS"] }, { item: "眼压", od: "19", os: "18", unit: "mmHg", reference: "10–21", eyeRule: ["OD", "OS"] }, { item: "主视眼", od: "", os: "", value: "右眼", eyeRule: ["无眼别"], options: ["右眼", "左眼"] },
     ] },
     { ...common, group: "眼健康检查", source: "医生查体", reportId: "EX-20260802-0018", valueOrigin: "医生手工录入", rows: [
       { item: "睑结膜", od: "正常", os: "正常" }, { item: "球结膜", od: "正常", os: "正常" }, { item: "角膜", od: "基质层散在白色颗粒混浊", os: "基质层散在白色颗粒混浊" }, { item: "前房", od: "不浅，周深>1/4CT", os: "不浅，周深>1/4CT" }, { item: "瞳孔", od: "等圆", os: "等圆" }, { item: "晶体", od: "透明", os: "透明" }, { item: "玻璃体", od: "未见明显混浊", os: "未见明显混浊" }, { item: "散瞳眼底", od: "未见明显异常", os: "未见明显异常" }, { item: "眼位", od: "正", os: "正" }, { item: "眼球运动", od: "自如", os: "自如" }, { item: "眼球", od: "大小基本正常", os: "大小基本正常" }, { item: "其他眼部情况", od: "", os: "" },

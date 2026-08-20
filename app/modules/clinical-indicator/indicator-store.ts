@@ -103,6 +103,17 @@ export function enumInteractionMode(items: EnumItem[] | undefined): "普通枚�
     : "普通枚举";
 }
 
+export function toggleEnumSelection(current: string[], code: string, items: EnumItem[] | undefined, multiple: boolean): string[] {
+  if (current.includes(code)) return current.filter((item) => item !== code);
+  if (!multiple) return [code];
+  const selected = (items ?? []).find((item) => item.code === code);
+  if (!selected) return [...current, code];
+  const incompatibleCodes = new Set((items ?? [])
+    .filter((item) => selected.nature === 2 ? item.nature !== 2 : item.nature === 2)
+    .map((item) => item.code));
+  return [...current.filter((item) => !incompatibleCodes.has(item)), code];
+}
+
 export function createSeedIndicators(): Indicator[] {
   return [
     {
@@ -302,10 +313,13 @@ export function validateIndicator(
     }
     const defaults = rows.filter((item) => item.isDefault);
     const normalItems = rows.filter((item) => item.nature === 0);
+    const noneItems = rows.filter((item) => item.nature === 2);
+    const concreteItems = rows.filter((item) => item.nature === 0 || item.nature === 1);
     if (defaults.length > 1 || defaults.some((item) => item.status !== "启用")) {
       errors.enumDefault = "最多设置一个已启用的默认项";
     }
     if (normalItems.length > 1) errors.enumNature = "最多设置一个正常项";
+    else if (concreteItems.length && noneItems.length) errors.enumNature = "正常或异常不能与无同时配置";
     if (draft.source === "医技检查") {
       const externalCodes = rows.map((item) => item.externalCode?.trim()).filter(Boolean);
       if (new Set(externalCodes).size !== externalCodes.length) {

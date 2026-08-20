@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buildOutpatientRecordText, createHistorySeeds, createSpecialtyRecordSeed, filterExamTemplates, removeSelectedExam, recommendFollowUpDate, validateSpecialtyRecord } from "./specialty-record-store.ts";
+import { buildOutpatientRecordText, createHistorySeeds, createSpecialtyRecordSeed, examTemplateCatalog, filterExamTemplates, removeSelectedExam, recommendFollowUpDate, validateSpecialtyRecord } from "./specialty-record-store.ts";
 
 test("recommends the next follow-up from the active treatment rule", () => {
   assert.deepEqual(recommendFollowUpDate("2026-08-02", 3), {
@@ -37,6 +37,10 @@ test("saving requires complaint and specialty assessment", () => {
 test("exam template picker searches by code or name", () => {
   assert.deepEqual(filterExamTemplates("TOPO").map((item) => item.name), ["角膜地形图"]);
   assert.deepEqual(filterExamTemplates("眼表").map((item) => item.code), ["EYE_SURFACE"]);
+});
+
+test("exam templates do not expose a template-level eye rule", () => {
+  assert.equal(examTemplateCatalog.some((item) => "eyes" in item), false);
 });
 
 test("only manually added unsaved exams can be removed", () => {

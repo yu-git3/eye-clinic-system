@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { changeTreatmentMethod, completeArchive, createArchiveSeed, createArchiveSeeds, createMethodStageDetails, referenceCheckReport, reopenArchive, reviseCheckValue, startTreatmentCycle, terminateArchive, validateArchiveDraft, validateBaseline } from "./archive-store.ts";
+import { changeTreatmentMethod, completeArchive, createArchiveSeed, createArchiveSeeds, createMethodStageDetails, getCheckRowPresentation, referenceCheckReport, reopenArchive, reviseCheckValue, startTreatmentCycle, terminateArchive, validateArchiveDraft, validateBaseline } from "./archive-store.ts";
 
 test("archive requires treatment plan, method and responsible doctor", () => {
   assert.deepEqual(validateArchiveDraft({ treatmentPlan: "", treatmentMethod: "", responsibleDoctor: "" }), {
@@ -91,6 +91,19 @@ test("OK lens baseline auto-loads the nine confirmed examination components", ()
   assert.deepEqual(topo.rows.map((item) => item.item), ["睑裂高度", "眼睑张力", "Ks曲率", "Ks轴位", "MinK曲率", "MinK轴位"]);
   assert.ok(!archive.checks.find((item) => item.group === "眼健康检查")?.rows.some((item) => ["睑裂高度","眼睑张力"].includes(item.item)));
   assert.ok(!topo.rows.some((item) => /K2|ΔK|E值/.test(item.item)));
+});
+
+test("mixed-eye templates render OD/OS, OU and no-eye indicators by each indicator rule", () => {
+  const vision = createArchiveSeed().checks.find((item) => item.group === "视力与眼压")!;
+  const nakedVision = vision.rows.find((item) => item.item === "裸眼视力")!;
+  const dominantEye = vision.rows.find((item) => item.item === "主视眼")!;
+
+  assert.deepEqual(getCheckRowPresentation(nakedVision), { kind: "multi-eye", eyes: ["OD", "OS", "OU"] });
+  assert.deepEqual(getCheckRowPresentation(dominantEye), { kind: "single", eye: "无眼别", valueKey: "value" });
+  assert.equal(nakedVision.ou, "0.8");
+  assert.equal(vision.rows.some((item) => item.item === "双眼视力"), false);
+  assert.equal(dominantEye.value, "右眼");
+  assert.deepEqual(dominantEye.options, ["右眼", "左眼"]);
 });
 
 test("the same patient cannot create the same treatment-plan archive twice", () => {
