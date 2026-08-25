@@ -39,7 +39,7 @@ export function TreatmentTrackingModule({ embedded = false, readOnly = false }: 
   const [orders, setOrders] = useState(initialOrders);
   const [historyEye, setHistoryEye] = useState<"ALL" | Eye>("ALL");
   const [selectedLens, setSelectedLens] = useState<"current" | "previous" | "history-1">("current");
-  const [lensExample, setLensExample] = useState<"same" | "different">("same");
+  const [lensExample, setLensExample] = useState<"same" | "different">("different");
   const [prototypeView, setPrototypeView] = useState<"new" | "legacy">("new");
   const [nodeAction, setNodeAction] = useState<NodeAction | null>(null);
   const [replacementStartOpen, setReplacementStartOpen] = useState(false);
@@ -100,28 +100,28 @@ function Overview({ onReplace, onOrder, onNodeAction, activeReplacement, readOnl
   const olderHistoricalRecords: NodeRecord[] = [
     {date:"2025-07-25",time:"2025-07-25 09:30",node:"完成治疗",action:"complete",content:"第一副镜片治疗周期完成，更换新镜片。",interval:"交付后12月22天",operator:"方红全"},
     {date:"2025-01-03",time:"2025-01-03 10:15",node:"复查",action:"review",content:"6月复查，双眼视力1.0，角膜正常，镜片轻微划痕。",interval:"交付后6月0天",operator:"林医生"},
-    {date:"2024-07-03",time:"2024-07-03 15:40",node:"交付",action:"delivery",content:"双眼梦戴维镜片交付，完成戴镜及护理指导。",interval:"双眼启用",operator:"林医生"},
-    {date:"2024-07-01",time:"2024-07-01 14:10",node:"取片通知",action:"notify",content:"短信通知患者来院取片。",interval:"验片后7天",operator:"林医生"},
-    {date:"2024-06-24",time:"2024-06-24 11:20",node:"验片",action:"inspection",content:"镜片到货，外观及参数验收合格。",interval:"下单后6天",operator:"林医生"},
-    {date:"2024-06-18",time:"2024-06-18 09:45",node:"镜片下单",action:"order",content:"双眼梦戴维镜片完成下单并关联已缴费医嘱。",interval:"试戴后3天",operator:"林医生"},
-    {date:"2024-06-15",time:"2024-06-15 16:00",node:"试戴",action:"trial",content:"双眼试戴，中心定位良好，荧光染色0级。",interval:"治疗开始",operator:"林医生"},
+    {date:"2024-07-03",time:"2024-07-03 15:40",node:"交付",action:"delivery",content:"双眼梦戴维镜片交付，完成戴镜及护理指导。",interval:"交付后0天",operator:"林医生"},
+    {date:"2024-07-01",time:"2024-07-01 14:10",node:"取片通知",action:"notify",content:"短信通知患者来院取片。",interval:"—",operator:"林医生"},
+    {date:"2024-06-24",time:"2024-06-24 11:20",node:"验片",action:"inspection",content:"镜片到货，外观及参数验收合格。",interval:"—",operator:"林医生"},
+    {date:"2024-06-18",time:"2024-06-18 09:45",node:"镜片下单",action:"order",content:"双眼梦戴维镜片完成下单并关联已缴费医嘱。",interval:"—",operator:"林医生"},
+    {date:"2024-06-15",time:"2024-06-15 16:00",node:"试戴",action:"trial",content:"双眼试戴，中心定位良好，荧光染色0级。",interval:"—",operator:"林医生"},
   ];
   const previousHistoricalRecords: NodeRecord[] = [
-    {date:"2026-02-12",time:"2026-02-12 15:20",node:"OS换片交付",action:"delivery",content:"OS更换为梦戴维镜片；OD原CRT镜片继续沿用。",interval:"组合阶段结束",operator:"徐英男"},
+    {date:"2026-02-12",time:"2026-02-12 15:20",node:"OS换片交付",action:"delivery",content:"OS更换为梦戴维镜片；OD原CRT镜片继续沿用。",interval:"原OS交付后6月18天",operator:"徐英男"},
     {date:"2026-01-25",time:"2026-01-25 10:18",node:"复查",action:"review",content:"OD镜片状态良好；OS建议更换镜片。",interval:"交付后6月",operator:"方红全"},
-    {date:"2025-07-25",time:"2025-07-25 14:35",node:"交付",action:"delivery",content:"OD、OS CRT镜片同批交付并启用。",interval:"双眼启用",operator:"徐珊珊"},
-    {date:"2025-07-18",time:"2025-07-18 11:06",node:"镜片下单",action:"order",content:"OD、OS分别维护镜片明细并完成下单。",interval:"试戴后6天",operator:"方红全"},
-    {date:"2025-07-12",time:"2025-07-12 16:10",node:"试戴",action:"trial",content:"双眼CRT试戴，配适良好。",interval:"治疗开始",operator:"方红全"},
+    {date:"2025-07-25",time:"2025-07-25 14:35",node:"交付",action:"delivery",content:"OD、OS CRT镜片同批交付并启用。",interval:"交付后0天",operator:"徐珊珊"},
+    {date:"2025-07-18",time:"2025-07-18 11:06",node:"镜片下单",action:"order",content:"OD、OS分别维护镜片明细并完成下单。",interval:"—",operator:"方红全"},
+    {date:"2025-07-12",time:"2025-07-12 16:10",node:"试戴",action:"trial",content:"双眼CRT试戴，配适良好。",interval:"—",operator:"方红全"},
   ];
   const historicalRecords = previous ? previousHistoricalRecords : olderHistoricalRecords;
   const dispositions: NodeRecord[] = historical ? historicalRecords : [...extraRecords, ...(different ? [
     { date:"2026-08-25", time:"2026-08-25 10:48", node:"复查", action:"review", content:"双眼戴镜状态良好，继续观察。", interval:"OD交付后13月0天；OS交付后6月13天", operator:"方红全" },
-    { date:"2026-02-12", time:"2026-02-12 15:20", node:"交付", action:"delivery", content:"OS 梦戴维 DreamLite Pro镜片验收合格，完成交付并启用。", interval:"OS启用", operator:"徐英男" },
-    { date:"2025-07-25", time:"2025-07-25 14:35", node:"交付", action:"delivery", content:"OD CRT 100系列镜片验收合格，完成交付并启用。", interval:"OD启用", operator:"徐珊珊" },
+    { date:"2026-02-12", time:"2026-02-12 15:20", node:"交付", action:"delivery", content:"OS 梦戴维 DreamLite Pro镜片验收合格，完成交付并启用。", interval:"OS交付后0天", operator:"徐英男" },
+    { date:"2025-07-25", time:"2025-07-25 14:35", node:"交付", action:"delivery", content:"OD CRT 100系列镜片验收合格，完成交付并启用。", interval:"OD交付后0天", operator:"徐珊珊" },
     { date:"2025-07-18", time:"2025-07-18 11:06", node:"镜片下单", action:"order", content:"OD与OS按不同品牌分别生成产品订单。", interval:"—", operator:"方红全" },
   ] : [
     { date:"2026-08-25", time:"2026-08-25 10:48", node:"复查", action:"review", content:"双眼戴镜状态良好，继续观察。", interval:"交付后13月0天", operator:"方红全" },
-    { date:"2025-07-25", time:"2025-07-25 14:35", node:"交付", action:"delivery", content:"双眼CRT 100系列镜片验收合格，同批交付并启用。", interval:"双眼启用", operator:"徐珊珊" },
+    { date:"2025-07-25", time:"2025-07-25 14:35", node:"交付", action:"delivery", content:"双眼CRT 100系列镜片验收合格，同批交付并启用。", interval:"交付后0天", operator:"徐珊珊" },
     { date:"2025-07-18", time:"2025-07-18 11:06", node:"镜片下单", action:"order", content:"双眼同品牌合并生成一张产品订单。", interval:"—", operator:"方红全" },
   ])];
   let detailOrderDraft=createOrderDraft();
@@ -130,8 +130,8 @@ function Overview({ onReplace, onOrder, onNodeAction, activeReplacement, readOnl
   return <main className="tt-main">
     {!historical&&<div className="tt-example-bar"><span>数据样例</span><div className="tt-segment"><button className={!different?"active":""} onClick={()=>setExample("same")}>同品牌同批交付</button><button className={different?"active":""} onClick={()=>setExample("different")}>异品牌不同日期</button></div><p>{different?"左右眼分别关联品牌、产品订单和实际交付日期":"常见场景，双眼合并下单并同批交付"}</p></div>}
     <section className={`tt-current-card ${different?"different-lenses":""}`}><header><div><span className="tt-dot"/><div><h2>{previous?"上一镜片组合":historical?"历史镜片组合":"当前镜片组合"}</h2><p>{previous?"OS已更换，OD原镜片沿用至当前组合；以下内容只读":historical?"双眼均已更换；以下内容只读":different?"左右眼异品牌·分批交付，按眼独立管理":"双眼同品牌·同批交付，合并展示"}</p></div></div></header><div className="tt-eye-grid">
-      <article><strong>OD</strong><div><span className="tt-lens-brand">{previous?"CRT　100系列":historical?"梦戴维　DreamLite":"CRT　100系列"}</span><b>{historical&&!previous?"BC 8.40　DIA 10.60　-3.25D":"BC 8.50　DIA 10.60　-3.00D"}</b><span>{historical&&!previous?"E值 0.55　目标降幅 -3.25D":"RZD 550μm　LZA 34°"}</span></div><dl><dt>订单</dt><dd>{previous?"ORD-20250718-026":historical?"ORD-20240618-001":"ORD-20250718-026"}</dd><dt>交付/启用</dt><dd>{previous?"2025-07-25":historical?"2024-07-03":"2025-07-25"}</dd><dt>{historical?"阶段状态":"已使用"}</dt><dd>{previous?"沿用至当前组合":historical?"已更换":"13月0天"}</dd><dt>缴费状态</dt><dd><em className="tt-paid">已缴费　¥{historical&&!previous?"3,400":"2,490"}</em></dd></dl></article>
-      <article><strong>OS</strong><div><span className="tt-lens-brand">{previous?"CRT　100系列":historical?"梦戴维　DreamLite":different?"梦戴维　DreamLite Pro":"CRT　100系列"}</span><b>{historical&&!previous?"BC 8.45　DIA 10.60　-2.75D":different?"BC 8.45　DIA 10.60　-2.75D":"BC 8.55　DIA 10.60　-2.75D"}</b><span>{historical&&!previous?"E值 0.52　目标降幅 -2.75D":different?"E值 0.52　目标降幅 -2.75D":"RZD 525μm　LZA 34°"}</span></div><dl><dt>订单</dt><dd>{previous?"ORD-20250718-026":historical?"ORD-20240618-001":different?"ORD-20260205-014":"ORD-20250718-026"}</dd><dt>交付/启用</dt><dd>{previous?"2025-07-25":historical?"2024-07-03":different?"2026-02-12":"2025-07-25"}</dd><dt>{historical?"阶段状态":"已使用"}</dt><dd>{previous?"2026-02-12 已更换":historical?"已更换":different?"6月13天":"13月0天"}</dd><dt>缴费状态</dt><dd><em className="tt-paid">已缴费　¥{historical&&!previous?"3,400":different?"2,580":"2,490"}</em></dd></dl></article>
+      <article><strong>OD</strong><div><span className="tt-lens-brand">{previous?"CRT　100系列":historical?"梦戴维　DreamLite":"CRT　100系列"}</span><b>{historical&&!previous?"BC 8.40　DIA 10.60　-3.25D":"BC 8.50　DIA 10.60　-3.00D"}</b><span>{historical&&!previous?"E值 0.55　目标降幅 -3.25D":"RZD 550μm　LZA 34°"}</span></div><dl><dt>订单</dt><dd>{previous?"ORD-20250718-026":historical?"ORD-20240618-001":"ORD-20250718-026"}</dd><dt>交付/启用</dt><dd>{previous?"2025-07-25":historical?"2024-07-03":"2025-07-25"}</dd><dt>已使用</dt><dd>{previous?"13月0天（仍在使用）":historical?"12月22天（已更换）":"13月0天"}</dd><dt>缴费状态</dt><dd><em className="tt-paid">已缴费　¥{historical&&!previous?"3,400":"2,490"}</em></dd></dl></article>
+      <article><strong>OS</strong><div><span className="tt-lens-brand">{previous?"CRT　100系列":historical?"梦戴维　DreamLite":different?"梦戴维　DreamLite Pro":"CRT　100系列"}</span><b>{historical&&!previous?"BC 8.45　DIA 10.60　-2.75D":different?"BC 8.45　DIA 10.60　-2.75D":"BC 8.55　DIA 10.60　-2.75D"}</b><span>{historical&&!previous?"E值 0.52　目标降幅 -2.75D":different?"E值 0.52　目标降幅 -2.75D":"RZD 525μm　LZA 34°"}</span></div><dl><dt>订单</dt><dd>{previous?"ORD-20250718-026":historical?"ORD-20240618-001":different?"ORD-20260205-014":"ORD-20250718-026"}</dd><dt>交付/启用</dt><dd>{previous?"2025-07-25":historical?"2024-07-03":different?"2026-02-12":"2025-07-25"}</dd><dt>已使用</dt><dd>{previous?"6月18天（已更换）":historical?"12月22天（已更换）":different?"6月13天":"13月0天"}</dd><dt>缴费状态</dt><dd><em className="tt-paid">已缴费　¥{historical&&!previous?"3,400":different?"2,580":"2,490"}</em></dd></dl></article>
     </div></section>
     {!readOnly&&<div className="tt-node-actions"><b>{activeReplacement ? `第2镜片周期 · ${activeReplacement === "BOTH" ? "双眼" : activeReplacement}换片 · 试戴中` : "节点操作"}</b><div className="tt-node-action-buttons"><button className={activeReplacement?"recommended":""} onClick={()=>onNodeAction("trial")}>试戴</button><button onClick={onOrder}>定片</button><button onClick={()=>onNodeAction("inspection")}>验片</button><button onClick={()=>onNodeAction("notify")}>取片通知</button><button onClick={()=>onNodeAction("delivery")}>交付</button><button className={!activeReplacement?"recommended":""} onClick={()=>onNodeAction("review")}>复查</button>{!activeReplacement&&<button className="replace" onClick={onReplace}>换片</button>}<i/><button className="complete" onClick={()=>onNodeAction("complete")}>完成治疗</button><button className="danger" onClick={()=>onNodeAction("terminate")}>终止治疗</button></div></div>}
     <section className="tt-progress"><header><div><h2>治疗进度</h2><p>{previous?"该组合因OS单眼换片结束，OD镜片继续沿用":historical?"历史镜片组合完整治疗节点":different?"左右眼交付、启用与换片时间分别记录":"定片、订单、验片、交付及复查记录集中追踪"}</p></div><span>{previous?"组合区间：2025-07-25 至 2026-02-11":historical?"组合结束：2025-07-24":"下次复查：2026-09-02"}</span></header><div className={`tt-steps ${different?"split-progress":""}`}>{progressSteps.map((item,index)=><div className={`${historical||index<4?"done":index===4?"current":""} ${item[1].includes("|")?"split-date":""}`} key={item[0]}><i>{historical||index<4?"✓":index+1}</i><b>{item[0]}</b>{item[1].split("|").map((date)=><span key={date}>{date}</span>)}<em>{item[2]}</em></div>)}</div></section>
@@ -147,12 +147,13 @@ function OrderList({ orders, onNew, readOnly }: { orders: OrderRecord[]; onNew: 
 
 function LensHistory({ eye, setEye }: { eye: "ALL" | Eye; setEye: (eye: "ALL" | Eye) => void }) {
   const rows = [
-    { eye:"OD", brand:"CRT 100系列", start:"2025-07-25", end:"使用中", reason:"当前镜片", status:"当前使用" },
-    { eye:"OS", brand:"CRT 100系列", start:"2025-07-25", end:"使用中", reason:"当前镜片", status:"当前使用" },
-    { eye:"OD", brand:"梦戴维 DreamLite", start:"2024-05-18", end:"2025-07-25", reason:"常规到期换片", status:"已更换" },
-    { eye:"OS", brand:"梦戴维 DreamLite", start:"2024-05-18", end:"2025-07-25", reason:"常规到期换片", status:"已更换" },
+    { eye:"OD", brand:"CRT 100系列", start:"2025-07-25", end:"使用中", duration:"13月0天", reason:"原镜片继续使用", status:"当前使用" },
+    { eye:"OS", brand:"梦戴维 DreamLite Pro", start:"2026-02-12", end:"使用中", duration:"6月13天", reason:"OS单眼换片后启用", status:"当前使用" },
+    { eye:"OS", brand:"CRT 100系列", start:"2025-07-25", end:"2026-02-12", duration:"6月18天", reason:"OS单眼换片", status:"已更换" },
+    { eye:"OD", brand:"梦戴维 DreamLite", start:"2024-07-03", end:"2025-07-25", duration:"12月22天", reason:"常规到期换片", status:"已更换" },
+    { eye:"OS", brand:"梦戴维 DreamLite", start:"2024-07-03", end:"2025-07-25", duration:"12月22天", reason:"常规到期换片", status:"已更换" },
   ].filter((item)=>eye==="ALL"||item.eye===eye);
-  return <main className="tt-main"><section className="tt-history"><header><div><h2>镜片使用历史</h2><p>按眼追溯每片实际交付、启用和更换关系</p></div><div className="tt-segment">{(["ALL","OD","OS"] as const).map((item)=><button className={eye===item?"active":""} onClick={()=>setEye(item)} key={item}>{item==="ALL"?"全部":item}</button>)}</div></header>{rows.map((item,index)=><article key={`${item.eye}-${item.start}`}><i>{item.eye}</i><div><b>{item.brand}</b><span>{item.start} 至 {item.end}</span></div><p>{item.reason}</p><em className={index<2?"current":""}>{item.status}</em><button>查看镜片参数</button></article>)}</section></main>;
+  return <main className="tt-main"><section className="tt-history"><header><div><h2>镜片使用历史</h2><p>按眼追溯每片实际交付、启用和更换关系</p></div><div className="tt-segment">{(["ALL","OD","OS"] as const).map((item)=><button className={eye===item?"active":""} onClick={()=>setEye(item)} key={item}>{item==="ALL"?"全部":item}</button>)}</div></header>{rows.map((item,index)=><article key={`${item.eye}-${item.start}`}><i>{item.eye}</i><div><b>{item.brand}</b><span>{item.start} 至 {item.end}</span></div><p>{item.reason}<small>使用时长：{item.duration}</small></p><em className={index<2?"current":""}>{item.status}</em><button>查看镜片参数</button></article>)}</section></main>;
 }
 
 function OrderDrawer({ draft, setDraft, groups, scope=null, onClose, onSubmit, readOnlyMode=false }: { draft: OrderDraft; setDraft: (draft: OrderDraft) => void; groups: ReturnType<typeof groupOrdersByBrand>; scope?: "BOTH" | Eye | null; onClose: () => void; onSubmit: () => void; readOnlyMode?: boolean }) {

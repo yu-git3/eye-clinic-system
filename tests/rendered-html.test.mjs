@@ -56,6 +56,10 @@ test("population legacy remains embedded while treatment tracking uses the share
   assert.match(treatment, /引用试戴参数/);
   assert.match(treatment, /导出参数到 Excel/);
   assert.match(treatment, /厂家订单号/);
+  assert.match(treatment, /useState<"same" \| "different">\("different"\)/);
+  assert.match(treatment, /使用时长/);
+  assert.match(treatment, /交付后0天/);
+  assert.match(treatment, /13月0天（仍在使用）/);
   assert.doesNotMatch(treatment, /拆单预览|预计生成/);
   assert.match(treatment, /tt-eye-orders-row/);
   assert.match(treatment, /draft\.selectedEyes\.map/);
