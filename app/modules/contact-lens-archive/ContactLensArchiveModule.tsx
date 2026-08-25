@@ -9,6 +9,7 @@ import { OrderedBaselineEditor } from "./OrderedBaselineEditor";
 import { ArchivePrintPreview } from "./ArchivePrintPreview";
 import { SpecialtyRecordModule } from "../specialty-record/SpecialtyRecordModule";
 import { HistoricalTreatmentStageView } from "./HistoricalTreatmentStageView";
+import { TreatmentTrackingModule } from "../treatment-tracking/TreatmentTrackingModule";
 
 type EntryMode = "doctor" | "population";
 type SpecialtyTab = "record" | "tracking" | "overview";
@@ -173,7 +174,7 @@ function RecordTab({ archive, readOnly, eyeHealthExam, onEyeHealthChange, onRevi
 }
 
 function TrackingTab() {
-  return <section className="legacy-module-page treatment-legacy-page" aria-label="OK镜治疗管理"><iframe title="OK镜治疗管理" src="/legacy/ok-lens-treatment.html" /></section>;
+  return <TreatmentTrackingModule embedded />;
 }
 
 function OverviewTab({ archive, readOnly, onLoad, onBaseline, onChange, onViewHistory }: { archive: ContactLensArchive | null; readOnly: boolean; onLoad: () => void; onBaseline: () => void; onChange: () => void; onViewHistory: () => void }) {

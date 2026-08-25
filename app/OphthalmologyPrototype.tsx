@@ -6,10 +6,12 @@ import { CheckTemplateModule } from "./modules/check-template/CheckTemplateModul
 import { ContactLensArchiveModule } from "./modules/contact-lens-archive/ContactLensArchiveModule";
 import { ExamReportModule } from "./modules/exam-report/ExamReportModule";
 import { ProductDocsModule } from "./modules/product-docs/ProductDocsModule";
+import { TreatmentTrackingModule } from "./modules/treatment-tracking/TreatmentTrackingModule";
 
-type ModuleKey = "doctor" | "population" | "indicator" | "template" | "docs";
+type ModuleKey = "doctor" | "tracking" | "population" | "indicator" | "template" | "docs";
 const modules: Record<ModuleKey, { label: string; group: string; icon: string }> = {
   doctor: { label: "门诊医生工作台", group: "门诊业务", icon: "♟" },
+  tracking: { label: "治疗跟踪原型", group: "眼科专科", icon: "◉" },
   population: { label: "专科人群管理", group: "眼科专科", icon: "♚" },
   indicator: { label: "临床指标定义", group: "眼科专科", icon: "◎" },
   template: { label: "检查模板配置", group: "眼科专科", icon: "▦" },
@@ -54,12 +56,13 @@ export function OphthalmologyPrototype() {
         <p>门诊业务</p>
         <button className={activeModule === "doctor" ? "active" : ""} onClick={() => openModule("doctor")}><span>♟</span>门诊医生工作台</button>
         <p>眼科专科</p>
-        {(["population", "indicator", "template"] as ModuleKey[]).map((item) => <button key={item} className={activeModule === item ? "active" : ""} onClick={() => openModule(item)}><span>{modules[item].icon}</span>{modules[item].label}</button>)}
+        {(["tracking", "population", "indicator", "template"] as ModuleKey[]).map((item) => <button key={item} className={activeModule === item ? "active" : ""} onClick={() => openModule(item)}><span>{modules[item].icon}</span>{modules[item].label}</button>)}
         <p>产品资料</p>
         <button className={activeModule === "docs" ? "active" : ""} onClick={() => openModule("docs")}><span>{modules.docs.icon}</span>{modules.docs.label}</button>
       </aside>
       <section className="his-workspace">
         {activeModule === "doctor" && <><ContactLensArchiveModule entryMode="doctor" /><button className="doctor-report-float" onClick={() => setReportOpen(true)}><span>▤</span><b>检查报告</b><em>3</em></button>{reportOpen&&<><div className="doctor-report-mask" onClick={()=>setReportOpen(false)}/><section className="doctor-report-panel"><header><div><span>当前患者报告</span><h2>吴四 · 检查报告</h2></div><button onClick={()=>setReportOpen(false)}>×</button></header><ExamReportModule embedded onClose={()=>setReportOpen(false)}/></section></>}</>}
+        {activeModule === "tracking" && <TreatmentTrackingModule />}
         {activeModule === "population" && <section className="legacy-module-page population-legacy-page" aria-label="专科人群管理与治疗方案配置"><iframe title="专科人群管理与治疗方案配置" src="/legacy/population-treatment-config.html" /></section>}
         {activeModule === "indicator" && <ClinicalIndicatorModule onNavigateTemplate={() => openModule("template")} />}
         {activeModule === "template" && <CheckTemplateModule onNavigateIndicator={() => openModule("indicator")} />}

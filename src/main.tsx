@@ -15,6 +15,7 @@ import "../app/exam-report-iteration.css";
 import "../app/product-docs.css";
 import "../app/legacy-embed.css";
 import "../app/antd4-baseline.css";
+import "../app/treatment-tracking.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

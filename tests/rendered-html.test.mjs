@@ -33,16 +33,32 @@ test("the Vite entry and app sources expose the ophthalmology prototype shell", 
   assert.doesNotMatch(source, /Your site is taking shape|codex-preview|react-loading-skeleton/);
 });
 
-test("legacy treatment and population prototypes are embedded in their approved entries", async () => {
+test("population legacy remains embedded while treatment tracking uses the shared native module", async () => {
   const shell = await readFile(new URL("../app/OphthalmologyPrototype.tsx", import.meta.url), "utf8");
   const archive = await readFile(new URL("../app/modules/contact-lens-archive/ContactLensArchiveModule.tsx", import.meta.url), "utf8");
-  const okTreatment = await readFile(new URL("../public/legacy/ok-lens-treatment.html", import.meta.url), "utf8");
+  const treatment = await readFile(new URL("../app/modules/treatment-tracking/TreatmentTrackingModule.tsx", import.meta.url), "utf8");
   const population = await readFile(new URL("../public/legacy/population-treatment-config.html", import.meta.url), "utf8");
   assert.match(shell, /population-treatment-config\.html/);
   assert.match(shell, /专科人群管理与治疗方案配置/);
-  assert.match(archive, /ok-lens-treatment\.html/);
-  assert.match(archive, /OK镜治疗管理/);
-  assert.match(okTreatment, /OK镜全生命周期管理/);
+  assert.match(shell, /TreatmentTrackingModule/);
+  assert.match(shell, /治疗跟踪原型/);
+  assert.match(archive, /TreatmentTrackingModule embedded/);
+  assert.doesNotMatch(archive, /ok-lens-treatment\.html/);
+  assert.match(treatment, /双眼同品牌/);
+  assert.match(treatment, /左右眼不同品牌/);
+  assert.match(treatment, />换片</);
+  assert.match(treatment, /开启新镜片周期/);
+  assert.match(treatment, />仅换 OD<|>仅换 OS<|>双眼换片</);
+  assert.match(treatment, /不会直接生成订单/);
+  assert.match(treatment, /另一眼沿用当前镜片/);
+  assert.match(treatment, />定片</);
+  assert.doesNotMatch(treatment, />定片与镜片下单</);
+  assert.match(treatment, /引用试戴参数/);
+  assert.match(treatment, /导出参数到 Excel/);
+  assert.match(treatment, /厂家订单号/);
+  assert.doesNotMatch(treatment, /拆单预览|预计生成/);
+  assert.match(treatment, /tt-eye-orders-row/);
+  assert.match(treatment, /draft\.selectedEyes\.map/);
   assert.match(population, /患者专科管理/);
 });
 

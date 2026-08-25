@@ -10,7 +10,7 @@
     "build": "vite build",
     "preview": "vite preview --host",
     "start": "vite preview --host",
-    "test": "vite build && node --experimental-strip-types --test app/modules/clinical-indicator/indicator-store.test.ts app/modules/check-template/template-store.test.ts app/modules/contact-lens-archive/archive-store.test.ts app/modules/exam-runtime/exam-engine.test.ts app/modules/specialty-record/specialty-record-store.test.ts app/modules/exam-report/report-store.test.ts && node --test tests/rendered-html.test.mjs",
+    "test": "vite build && node --experimental-strip-types --test app/modules/clinical-indicator/indicator-store.test.ts app/modules/check-template/template-store.test.ts app/modules/contact-lens-archive/archive-store.test.ts app/modules/exam-runtime/exam-engine.test.ts app/modules/specialty-record/specialty-record-store.test.ts app/modules/exam-report/report-store.test.ts app/modules/treatment-tracking/treatment-store.test.ts && node --test tests/rendered-html.test.mjs",
     "lint": "eslint . --ignore-pattern dist"
   },
   "dependencies": {
